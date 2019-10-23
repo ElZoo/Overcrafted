@@ -7,10 +7,18 @@ var config = {
     antialias: false
   },
   banner: false,
-  backgroundColor: '#00000',
+  backgroundColor: '#FFFFFF',
   scene: [
     ScenePrecarga,
+    SceneMenuPrincipal,
   ],
 }
 
 var game = new Phaser.Game(config);
+
+function pw(valor) {
+  return valor*0.01*config.width;
+}
+function ph(valor) {
+  return valor*0.01*config.height;
+}

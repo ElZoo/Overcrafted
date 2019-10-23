@@ -4,10 +4,10 @@ class ScenePrecarga extends Phaser.Scene {
   }
 
   preload() {
-    //Carga de imágenes y atlas
+    this.load.image('totem_of_undying', 'res/totem_of_undying.png');
   }
 
   create() {
-    console.log("Create Precarga");
+    this.scene.launch('menu_principal');
   }
 }
