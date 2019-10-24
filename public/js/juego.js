@@ -1,10 +1,13 @@
 var config = {
-  type: Phaser.AUTO,
+  type: Phaser.CANVAS,
   parent: 'juegoDiv',
-  width: 1280,
-  height: 720,
+//  width: 1280,
+  //height: 720,
   render: {
     antialias: false
+  },
+  scale: {
+    mode: Phaser.Scale.FIT
   },
   banner: false,
   backgroundColor: '#FFFFFF',
@@ -17,10 +20,20 @@ var config = {
 }
 
 var game = new Phaser.Game(config);
+window.addEventListener('resize', resizeGame);
+
+function resizeGame(){
+  let width = document.getElementById('juegoDiv').clientWidth;
+  let height = width*0.5625
+  document.getElementById('juegoDiv').style.height =  height+'px';
+  game.scale.refresh();
+}
+
+//resizeGame();
 
 function pw(valor) {
-  return valor*0.01*config.width;
+  return valor*0.01*document.getElementById('juegoDiv').clientWidth;
 }
 function ph(valor) {
-  return valor*0.01*config.height;
+  return valor*0.01*document.getElementById('juegoDiv').clientHeight;
 }

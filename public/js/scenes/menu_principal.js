@@ -7,6 +7,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
     this.add.image(0, 0, 'fondo_menu').setOrigin(0);
     this.scene.launch('scene_menu_salas');
     this.crearBotonForo();
+    this.scene.setVisible(true, "scene_menu_salas");
     this.crearBotonScore();
   }
 
@@ -35,6 +36,13 @@ class SceneMenuPrincipal extends Phaser.Scene {
     textoInstancia.setOrigin(0.5, 0.5);
     boton.add(textoInstancia);
 
+    cajaBoton.on('pointerover', function() {
+      cajaBoton.setAlpha(0.5);
+    });
+
+    cajaBoton.on('pointerout', function() {
+      cajaBoton.setAlpha(0.33);
+    });
   }
 
   crearBotonScore(){
@@ -53,6 +61,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
     cajaBoton.setInteractive({'cursor': 'pointer'});
     cajaBoton.setAlpha(0.33);
     cajaBoton.on('pointerup', function() {
+      self.scene.setVisible(false, "scene_menu_salas");
       self.scene.start('scene_puntuaciones');
     });
     boton.add(cajaBoton);
@@ -63,6 +72,14 @@ class SceneMenuPrincipal extends Phaser.Scene {
     textoInstancia.setFontStyle('bold');
     textoInstancia.setOrigin(0.5, 0.5);
     boton.add(textoInstancia);
+
+    cajaBoton.on('pointerover', function() {
+      cajaBoton.setAlpha(0.5);
+    });
+
+    cajaBoton.on('pointerout', function() {
+      cajaBoton.setAlpha(0.33);
+    });
 
   }
 

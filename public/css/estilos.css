@@ -3,7 +3,6 @@ html, body {
 }
 
 body {
-  overflow: hidden;
   margin: 0;
   font-family: "Verdana";
   text-align: center;
@@ -15,8 +14,7 @@ body {
 
 #juegoDiv {
   margin: auto;
-  width: fit-content;
-  height: fit-content;
+  width: 80%;
 }
 canvas {
   height: 100%;
