@@ -88,7 +88,7 @@ class SceneMenuSalas extends Phaser.Scene {
 
     cajaUnirse.on('pointerup', function() {
       self.scene.setVisible(false, "scene_menu_salas");
-      self.scene.start('scene_mundo');
+      self.scene.get('menu_principal').scene.start('scene_mundo');
     });
 
     let textoUnirse = this.add.text(0, 0, '►');
