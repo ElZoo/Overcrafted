@@ -33,20 +33,40 @@ class SceneMundo extends Phaser.Scene {
                 this.tilesMundo[x+","+y]= tile;
             }
         }
+        this.drawBG();
+        var
+        this.cursors = this.input.keyboard.createCursorsKeys();
     }
 
+    update(){
+        if(this.cursors.left.isDown)
+    }
+
+    drawBG(){
+        let tam = 70;
+        for(let tileID in this.tilesMundo){
+            let tile = this.tilesMundo[tileID];
+            let x = tile.x *tam;
+            let y = tile.y *tam;
+            console.log(tile);
+            this.add.rectangle(x , y, tam, tam, Phaser.Display.Color.HexStringToColor(tile.tipo).color).setOrigin(0,0);
+        }
+
+    }
+
+
     setFondo(x, y){
-        var type = this.tiles_ids[y][x];
+        let type = this.tiles_ids[y][x];
         switch (type) {
             case 0: // LET'S GOO Suelo
-                return "suelo";
+                return '#787878';
             case 1: // Pared/aire
-                return "bloqueo";
+                return '#01ffdd';
             case 2: // Encimera
-                return "encimera";
+                return '#FF0000';
             case 3:
-                return "entrega";
+                return '#ffa856';
         }
-        return "aire";
+        return '#FFFFFF';
     }
 }
