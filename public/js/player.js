@@ -7,7 +7,7 @@ class Player {
         this.cuerpo = scene.physics.add.image(200,200,'totem_of_undying');
         this.cuerpo.setScale(3,3);
         this.cuerpo.body.setAllowDrag(true);
-        this.cuerpo.setDrag(300);
+        this.cuerpo.setDrag(600);
         this.cuerpo.setMaxVelocity(300);
         this.cuerpo.setCollideWorldBounds(true);
     }

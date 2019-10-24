@@ -41,17 +41,20 @@ class SceneMundo extends Phaser.Scene {
     update(){
       this.jugador.cuerpo.setAcceleration(0);
 
+      let accPos = 600;
+      let accNeg = -600;
+
       if(this.cursors.left.isDown) {
-        this.jugador.cuerpo.setAccelerationX(-300);
+        this.jugador.cuerpo.setAccelerationX(accNeg);
       }
       if(this.cursors.right.isDown) {
-        this.jugador.cuerpo.setAccelerationX(300);
+        this.jugador.cuerpo.setAccelerationX(accPos);
       }
       if(this.cursors.up.isDown) {
-        this.jugador.cuerpo.setAccelerationY(-300);
+        this.jugador.cuerpo.setAccelerationY(accNeg);
       }
       if(this.cursors.down.isDown) {
-        this.jugador.cuerpo.setAccelerationY(300);
+        this.jugador.cuerpo.setAccelerationY(accPos);
       }
     }
 
