@@ -5,6 +5,7 @@ class ScenePrecarga extends Phaser.Scene {
 
   preload() {
     this.load.image('totem_of_undying', 'res/totem_of_undying.png');
+    this.load.image('fondo_menu', 'res/fondo_menu.png');
   }
 
   create() {
