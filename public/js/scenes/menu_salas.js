@@ -8,9 +8,6 @@ class SceneMenuSalas extends Phaser.Scene {
   }
 
   create() {
-    console.log('Holiwis');
-    //this.cameras.main.setSize(pw(100), ph(30));
-
     let self = this;
 
     let width = pw(80);
@@ -38,6 +35,8 @@ class SceneMenuSalas extends Phaser.Scene {
   }
 
   crearBotonInstancia(id) {
+    let self = this;
+
     let width = pw(80);
     let height = width*0.1;
 
@@ -88,7 +87,8 @@ class SceneMenuSalas extends Phaser.Scene {
     });
 
     cajaUnirse.on('pointerup', function() {
-      console.log("Unirse a la instancia " + id);
+      self.scene.setVisible(false, "scene_menu_salas");
+      self.scene.start('scene_mundo');
     });
 
     let textoUnirse = this.add.text(0, 0, '►');

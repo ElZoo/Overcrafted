@@ -16,6 +16,7 @@ var config = {
     SceneMenuPrincipal,
     ScenePuntuaciones,
     SceneMenuSalas,
+    SceneMundo,
   ],
 }
 
