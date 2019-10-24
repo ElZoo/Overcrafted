@@ -34,12 +34,25 @@ class SceneMundo extends Phaser.Scene {
             }
         }
         this.drawBG();
-        var
-        this.cursors = this.input.keyboard.createCursorsKeys();
+        this.jugador = new Player(this);
+        this.cursors = this.input.keyboard.createCursorKeys();
     }
 
     update(){
-        if(this.cursors.left.isDown)
+      this.jugador.cuerpo.setAcceleration(0);
+
+      if(this.cursors.left.isDown) {
+        this.jugador.cuerpo.setAccelerationX(-300);
+      }
+      if(this.cursors.right.isDown) {
+        this.jugador.cuerpo.setAccelerationX(300);
+      }
+      if(this.cursors.up.isDown) {
+        this.jugador.cuerpo.setAccelerationY(-300);
+      }
+      if(this.cursors.down.isDown) {
+        this.jugador.cuerpo.setAccelerationY(300);
+      }
     }
 
     drawBG(){
@@ -48,7 +61,6 @@ class SceneMundo extends Phaser.Scene {
             let tile = this.tilesMundo[tileID];
             let x = tile.x *tam;
             let y = tile.y *tam;
-            console.log(tile);
             this.add.rectangle(x , y, tam, tam, Phaser.Display.Color.HexStringToColor(tile.tipo).color).setOrigin(0,0);
         }
 

@@ -6,6 +6,9 @@ var config = {
   render: {
     antialias: false
   },
+  physics: {
+    default: 'arcade'
+  },
   scale: {
     mode: Phaser.Scale.FIT,
   },
