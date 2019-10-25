@@ -9,14 +9,14 @@ class SceneMundo extends Phaser.Scene {
 
         this.tiles_ids = [
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+          [1,2,2,4,2,2,7,7,2,2,2,6,2,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,3,1],
+          [1,2,5,2,5,2,2,2,2,2,2,3,2,1],
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
 
@@ -59,12 +59,14 @@ class SceneMundo extends Phaser.Scene {
     }
 
     drawBG(){
-        let tam = 70;
+        let tam = 64;
         for(let tileID in this.tilesMundo){
             let tile = this.tilesMundo[tileID];
             let x = tile.x *tam;
             let y = tile.y *tam;
-            this.add.rectangle(x , y, tam, tam, Phaser.Display.Color.HexStringToColor(tile.tipo).color).setOrigin(0,0);
+            if(tile.tipo) {
+              this.add.image(x,y,tile.tipo).setOrigin(0,0).setScale(2,2);
+            }
         }
 
     }
@@ -73,15 +75,23 @@ class SceneMundo extends Phaser.Scene {
     setFondo(x, y){
         let type = this.tiles_ids[y][x];
         switch (type) {
-            case 0: // LET'S GOO Suelo
-                return '#787878';
-            case 1: // Pared/aire
-                return '#01ffdd';
-            case 2: // Encimera
-                return '#FF0000';
-            case 3:
-                return '#ffa856';
+          case 0: // LET'S GOO Suelo
+            return 'suelo';
+          case 1: // Pared/aire
+            return 'barrera';
+          case 2: // Encimera
+            return 'encimera';
+          case 3:
+            return 'basura';
+          case 4:
+            return 'fregadero';
+          case 5:
+            return 'mesa_cortar';
+          case 6:
+            return 'entregar';
+          case 7:
+            return 'horno_off';
         }
-        return '#FFFFFF';
+        return '';
     }
 }
