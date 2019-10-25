@@ -26,8 +26,7 @@ class SceneMundo extends Phaser.Scene {
                 var tile = {
                     x: x,
                     y: y,
-                    tipo: this.setFondo(x, y),
-                    objeto: {}
+                    data: this.getData(x, y),
                 }
 
                 this.tilesMundo[x+","+y]= tile;
@@ -35,62 +34,96 @@ class SceneMundo extends Phaser.Scene {
         }
         this.drawBG();
         this.jugador = new Player(this);
+        this.physics.add.collider(this.jugador.cuerpo, this.fisicaMundo);
+
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
     update(){
-      this.jugador.cuerpo.setAcceleration(0);
-
-      let accPos = 600;
-      let accNeg = -600;
-
-      if(this.cursors.left.isDown) {
-        this.jugador.cuerpo.setAccelerationX(accNeg);
-      }
-      if(this.cursors.right.isDown) {
-        this.jugador.cuerpo.setAccelerationX(accPos);
-      }
-      if(this.cursors.up.isDown) {
-        this.jugador.cuerpo.setAccelerationY(accNeg);
-      }
-      if(this.cursors.down.isDown) {
-        this.jugador.cuerpo.setAccelerationY(accPos);
-      }
+      this.jugador.update();
     }
 
     drawBG(){
         let tam = 64;
+
+        this.fisicaMundo = this.physics.add.staticGroup();
+
         for(let tileID in this.tilesMundo){
             let tile = this.tilesMundo[tileID];
             let x = tile.x *tam;
             let y = tile.y *tam;
-            if(tile.tipo) {
-              this.add.image(x,y,tile.tipo).setOrigin(0,0).setScale(2,2);
+
+            if(tile.data.textura) {
+              let img;
+              if(tile.data.colision) {
+                img = this.fisicaMundo.create(x,y,tile.data.textura);
+                img.setImmovable(true);
+                img.setSize(tam, tam*0.5, true);
+                img.setOffset(-img.width*0.5, -img.height*0.5);
+                img.depth = y;
+              } else {
+                img = this.add.image(x,y,tile.data.textura);
+              }
+
+              img.setScale(2,2);
+              tile.data.objeto = img;
             }
         }
 
     }
 
 
-    setFondo(x, y){
+    getData(x, y){
         let type = this.tiles_ids[y][x];
         switch (type) {
           case 0: // LET'S GOO Suelo
-            return 'suelo';
+            return {
+              textura: 'suelo',
+              colision: false,
+              objeto: false,
+            };
           case 1: // Pared/aire
-            return 'barrera';
+            return {
+              textura: 'barrera',
+              colision: false,
+              objeto: false,
+            };
           case 2: // Encimera
-            return 'encimera';
+            return {
+              textura: 'encimera',
+              colision: true,
+              objeto: false,
+            };
           case 3:
-            return 'basura';
+            return {
+              textura: 'basura',
+              colision: true,
+              objeto: false,
+            };
           case 4:
-            return 'fregadero';
+            return {
+              textura: 'fregadero',
+              colision: true,
+              objeto: false,
+            };
           case 5:
-            return 'mesa_cortar';
+            return {
+              textura: 'mesa_cortar',
+              colision: true,
+              objeto: false,
+            };
           case 6:
-            return 'entregar';
+            return {
+              textura: 'entregar',
+              colision: true,
+              objeto: false,
+            };
           case 7:
-            return 'horno_off';
+            return {
+              textura: 'horno_off',
+              colision: true,
+              objeto: false,
+            };
         }
         return '';
     }

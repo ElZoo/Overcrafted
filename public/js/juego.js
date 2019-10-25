@@ -7,7 +7,10 @@ var config = {
     antialias: false
   },
   physics: {
-    default: 'arcade'
+    default: 'arcade',
+    arcade: {
+      debug: false
+    }
   },
   scale: {
     mode: Phaser.Scale.FIT,
