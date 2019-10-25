@@ -16,6 +16,36 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('horno_on', 'res/horno_on.png');
     this.load.image('mesa_cortar', 'res/mesa_cortar.png');
     this.load.image('suelo', 'res/suelo.png');
+
+    this.load.atlas('zombie', 'res/zombie.png', 'res/zombie.json');
+    this.anims.create({
+      key: 'zombie_walk_front',
+      frames: this.anims.generateFrameNames('zombie', {prefix: 'walk_front_', end: 3}),
+      repeat: -1,
+      yoyo: false,
+      framerate: 3
+    });
+    this.anims.create({
+      key: 'zombie_walk_right',
+      frames: this.anims.generateFrameNames('zombie', {prefix: 'walk_right_', end: 3}),
+      repeat: -1,
+      yoyo: false,
+      framerate: 3
+    });
+    this.anims.create({
+      key: 'zombie_walk_back',
+      frames: this.anims.generateFrameNames('zombie', {prefix: 'walk_back_', end: 3}),
+      repeat: -1,
+      yoyo: false,
+      framerate: 3
+    });
+    this.anims.create({
+      key: 'zombie_walk_left',
+      frames: this.anims.generateFrameNames('zombie', {prefix: 'walk_left_', end: 3}),
+      repeat: -1,
+      yoyo: false,
+      framerate: 3
+    });
   }
 
   create() {
