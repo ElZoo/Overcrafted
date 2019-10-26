@@ -170,9 +170,7 @@ class BloqueMesaCortar extends Bloque {
 
         this.item.textura.destroy();
         this.item = itemRes;
-        console.log('Nombre del nuevo item : ' + itemRes.nombre)
         this.pintarItem();
-
       }
     }
   }
@@ -193,5 +191,38 @@ class BloqueHorno extends Bloque {
     this.colision = true;
     this.usable = true;
     this.setTextura('horno_off');
+  }
+
+  coger(player){
+
+    if(!this.item && player.item) {
+      //Cogerle el item al player
+      if(!player.item.bloquesAceptados.includes(this.nombre)) {
+        return false;
+      }
+
+      this.item = player.item;
+      player.item = null;
+
+      if(this.item.textura) {
+        this.item.textura.destroy();
+      }
+
+      this.item = this.item.fundir(this);
+
+
+
+    }
+
+    else if(this.item && !player.item) {
+      //Darle el item al player
+      player.item = this.item;
+      this.item = null;
+
+      if(player.item.textura) {
+        player.item.textura.destroy();
+      }
+      player.pintarItem();
+    }
   }
 }

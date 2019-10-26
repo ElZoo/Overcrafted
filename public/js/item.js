@@ -7,6 +7,14 @@ class Item {
   }
 
   cortar(bloque) {
+
+
+  }
+
+  fundir(bloque){
+
+
+
   }
 
 }
@@ -96,6 +104,9 @@ class ItemCobweb extends Item {
       'basura',
     ];
   }
+  cortar(bloque) {
+    return new ItemCuerda(bloque.scene);
+  }
 }
 
 class ItemCuerda extends Item {
@@ -118,6 +129,10 @@ class ItemMenaHierro extends Item {
       'horno_off',
       'basura',
     ];
+  }
+
+  fundir(bloque){
+    return new ItemLingoteHierro(bloque.scene);
   }
 }
 
