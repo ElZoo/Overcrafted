@@ -59,9 +59,6 @@ class Bloque {
 
   usar(player){
 
-    if (this.item) {
-      console.log('Item a usar en la mesa: ' + this.item.nombre);
-    }
   }
 
   pintarItem() {}
@@ -159,6 +156,22 @@ class BloqueMesaCortar extends Bloque {
     this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 
+  usar(){
+
+    if (this.item) {
+
+      let itemRes = this.item.cortar(this);
+
+      if (itemRes) {
+
+        this.item.textura.destroy();
+        this.item = itemRes;
+        console.log('Nombre del nuevo item : ' + itemRes.nombre)
+        this.pintarItem();
+
+      }
+    }
+  }
 }
 
 class BloqueEntregar extends Bloque {

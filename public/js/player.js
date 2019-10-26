@@ -30,7 +30,6 @@ class Player {
 
       scene.input.keyboard.on('keydown', function (event) {
         if(event.code == "KeyE") {
-          console.log('Eeeeeeee');
           self.coger();
         }
 

@@ -1,16 +1,22 @@
 class Item {
-  constructor(scene, nombre) {
-    this.scene = scene;
+  constructor(nombre) {
     this.nombre = nombre;
     this.escala = 0.4;
 
     this.bloquesAceptados = [];
   }
+
+  cortar(bloque){
+
+
+
+  }
+
 }
 
 class ItemTronco extends Item {
-  constructor(scene) {
-    super(scene, 'tronco');
+  constructor() {
+    super('tronco');
 
     this.bloquesAceptados = [
       'encimera',
@@ -18,11 +24,18 @@ class ItemTronco extends Item {
       'basura',
     ];
   }
+
+  cortar(bloque){
+
+    return new ItemPalo(bloque.scene);
+
+  }
+
 }
 
 class ItemPalo extends Item {
-  constructor(scene) {
-    super(scene, 'palo');
+  constructor() {
+    super('palo');
 
     this.bloquesAceptados = [
       'encimera',
@@ -32,8 +45,8 @@ class ItemPalo extends Item {
 }
 
 class ItemGrava extends Item {
-  constructor(scene) {
-    super(scene, 'grava');
+  constructor() {
+    super('grava');
 
     this.bloquesAceptados = [
       'encimera',
@@ -41,11 +54,18 @@ class ItemGrava extends Item {
       'basura',
     ];
   }
+
+  cortar(bloque){
+
+    return new ItemFlint(bloque.scene);
+
+  }
+
 }
 
 class ItemFlint extends Item {
-  constructor(scene) {
-    super(scene, 'flint');
+  constructor() {
+    super('flint');
 
     this.bloquesAceptados = [
       'encimera',
@@ -55,8 +75,8 @@ class ItemFlint extends Item {
 }
 
 class ItemPluma extends Item {
-  constructor(scene) {
-    super(scene, 'pluma');
+  constructor() {
+    super('pluma');
 
     this.bloquesAceptados = [
       'encimera',
