@@ -6,14 +6,14 @@ class SceneMundo extends Phaser.Scene {
     create() {
         this.tiles_ids = [
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-          [1,1,2,2,4,2,2,7,7,2,2,2,6,2,1,1],
+          [1,1,2,8,2,8,2,2,2,7,7,2,6,2,1,1],
           [1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1],
           [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
           [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
           [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
           [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
           [1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1],
-          [1,1,2,5,2,5,2,2,2,2,2,2,3,2,1,1],
+          [1,1,2,5,2,5,2,2,2,2,4,2,3,2,1,1],
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
 
@@ -40,28 +40,17 @@ class SceneMundo extends Phaser.Scene {
         this.cameras.main.centerOn(cx,cy);
         this.cameras.main.setZoom(1.25);
 
-        let mesa = this.tilesMundo['3,1'];
+        let cofre = this.tilesMundo['3,1'];
+        cofre.setTipoItem(ItemTronco);
+        cofre = this.tilesMundo['5,1'];
+        cofre.setTipoItem(ItemCobweb);
+
+        let mesa = this.tilesMundo['7,8'];
         mesa.item = new ItemPlatoCrafteo();
         mesa.pintarItem();
-
-        mesa = this.tilesMundo['5,1'];
-        mesa.item = new ItemGrava();
+        mesa = this.tilesMundo['8,8'];
+        mesa.item = new ItemPlatoCrafteo();
         mesa.pintarItem();
-
-        mesa = this.tilesMundo['6,1'];
-        mesa.item = new ItemMenaHierro();
-        mesa.pintarItem();
-
-        mesa = this.tilesMundo['4,8'];
-        mesa.item = new ItemPluma();
-        mesa.pintarItem();
-
-        mesa = this.tilesMundo['6,8'];
-        mesa.item = new ItemCobweb();
-        mesa.pintarItem();
-
-        this.jugador.item = new ItemTronco();
-        this.jugador.pintarItem();
     }
 
     update() {
