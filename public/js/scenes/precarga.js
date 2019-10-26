@@ -67,8 +67,6 @@ class ScenePrecarga extends Phaser.Scene {
       frameRate: 8
     });
 
-    //TODO Cambiar esto al final
-    //this.scene.launch('menu_principal');
-    this.scene.launch('scene_mundo');
+    this.scene.launch('menu_principal');
   }
 }
