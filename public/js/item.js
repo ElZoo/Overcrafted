@@ -6,6 +6,11 @@ class Item {
     this.bloquesAceptados = [];
   }
 
+  pintarItem(dx, dy, scene) {
+    this.textura = scene.add.sprite(dx, dy, this.nombre);
+    this.textura.setScale(this.escala, this.escala);
+  }
+
   cortar(bloque) {
   }
 
@@ -18,6 +23,48 @@ class ItemPlatoCrafteo extends Item {
     this.bloquesAceptados = [
       'encimera',
     ];
+
+    this.items = [];
+    this.escalaItems = 0.15;
+    this.espacioItems = 8;
+    this.offsetItems = -8;
+  }
+
+  craftear(player) {
+    let item = player.item;
+    player.item = null;
+
+    let fila = Math.floor(this.items.length / 3);
+    let col = this.items.length % 3;
+    let ix = this.offsetItems + col*this.espacioItems;
+    let iy = this.offsetItems + fila*this.espacioItems;
+
+    item.textura.destroy();
+    item.pintarItem(ix, iy, player.scene);
+    item.textura.setScale(this.escalaItems, this.escalaItems);
+    this.textura.add(item.textura);
+
+    this.items.push(item);
+  }
+
+  pintarItem(dx, dy, scene) {
+    this.textura = scene.add.container(dx, dy);
+
+    let spriteTabla = scene.add.sprite(0, 0, this.nombre);
+    spriteTabla.setScale(this.escala, this.escala);
+    this.textura.add(spriteTabla);
+
+    for(let i in this.items) {
+      let fila = Math.floor(i / 3);
+      let col = i % 3;
+      let ix = this.offsetItems + col*this.espacioItems;
+      let iy = this.offsetItems + fila*this.espacioItems;
+
+      let item = this.items[i];
+      item.pintarItem(ix, iy, scene);
+      item.textura.setScale(this.escalaItems, this.escalaItems);
+      this.textura.add(item.textura);
+    }
   }
 }
 

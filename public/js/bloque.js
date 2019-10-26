@@ -105,12 +105,19 @@ class BloqueEncimera extends Bloque {
     this.setTextura('encimera');
   }
 
+  coger(player) {
+    if(this.item && player.item && this.item.nombre == 'plato_crafteo') {
+      this.item.craftear(player);
+    } else {
+      super.coger(player);
+    }
+  }
+
   pintarItem() {
     let dx = this.x * this.scene.tileTam;
     let dy = this.y * this.scene.tileTam - this.scene.tileTam * 0.25;
 
-    this.item.textura = this.scene.add.sprite(dx, dy, this.item.nombre);
-    this.item.textura.setScale(this.item.escala, this.item.escala);
+    this.item.pintarItem(dx, dy, this.scene);
     this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 }
@@ -155,8 +162,7 @@ class BloqueMesaCortar extends Bloque {
     let dx = this.x * this.scene.tileTam;
     let dy = this.y * this.scene.tileTam - this.scene.tileTam * 0.25;
 
-    this.item.textura = this.scene.add.sprite(dx, dy, this.item.nombre);
-    this.item.textura.setScale(this.item.escala, this.item.escala);
+    this.item.pintarItem(dx, dy, this.scene);
     this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 
