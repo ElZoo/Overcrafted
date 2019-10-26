@@ -20,6 +20,9 @@ class SceneMundo extends Phaser.Scene {
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
 
+        this.numItems = 0;
+        this.items = [];
+
         this.tilesMundo = {};
         for(var x=0; x<=this.mundoColumnas; x++) {
             for(var y=0; y<=this.mundoFilas; y++) {
@@ -41,6 +44,12 @@ class SceneMundo extends Phaser.Scene {
 
     update(){
       this.jugador.update();
+    }
+
+    crearItem(tipo){
+        this.items.push(new Iron(0, this));
+        this.numItems++;
+        return this.items[this.numItems-1]
     }
 
     drawBG(){
