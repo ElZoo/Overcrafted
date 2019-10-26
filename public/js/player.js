@@ -13,6 +13,8 @@ class Player {
 
         this.cuerpo.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);
         this.cuerpo.setOffset(this.cuerpo.width*0.25, this.cuerpo.height*0.5);
+
+        this.manos = null;
     }
 
     update() {
@@ -28,21 +30,31 @@ class Player {
         down: false
       }
 
-      if(this.scene.cursors.left.isDown) {
+      if(this.scene.cursors.left.isDown || this.scene.input.keyboard.addKey('A').isDown) {
         dirs.left = true;
         this.cuerpo.setAccelerationX(accNeg);
       }
-      if(this.scene.cursors.right.isDown) {
+      if(this.scene.cursors.right.isDown || this.scene.input.keyboard.addKey('D').isDown) {
         dirs.right = true;
         this.cuerpo.setAccelerationX(accPos);
       }
-      if(this.scene.cursors.up.isDown) {
+      if(this.scene.cursors.up.isDown || this.scene.input.keyboard.addKey('W').isDown) {
         dirs.up = true;
         this.cuerpo.setAccelerationY(accNeg);
       }
-      if(this.scene.cursors.down.isDown) {
+      if(this.scene.cursors.down.isDown || this.scene.input.keyboard.addKey('S').isDown) {
         dirs.down = true;
         this.cuerpo.setAccelerationY(accPos);
+      }
+      if(this.scene.input.keyboard.addKey('E').isDown) {
+          if(this.manos == null) {
+              this.manos = this.scene.crearItem("iron");
+          } else {
+
+          }
+      }
+      if(this.manos != null){
+          this.manos.setCoords(this.x, this.y);
       }
 
       this.x = this.cuerpo.x;
