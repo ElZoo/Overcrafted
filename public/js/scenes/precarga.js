@@ -4,9 +4,11 @@ class ScenePrecarga extends Phaser.Scene {
   }
 
   preload() {
+    //GUI
     this.load.image('totem_of_undying', 'res/totem_of_undying.png');
     this.load.image('fondo_menu', 'res/fondo_menu.png');
 
+    //bloques
     this.load.image('basura', 'res/basura.png');
     this.load.image('barrera', 'res/barrera.png');
     this.load.image('encimera', 'res/encimera.png');
@@ -17,7 +19,11 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('mesa_cortar', 'res/mesa_cortar.png');
     this.load.image('suelo', 'res/suelo.png');
 
+    //personajes
     this.load.atlas('zombie', 'res/zombie.png', 'res/zombie.json');
+
+    //items
+    this.load.image('tronco', 'res/tronco.png');
   }
 
 
@@ -51,6 +57,8 @@ class ScenePrecarga extends Phaser.Scene {
       frameRate: 8
     });
 
-    this.scene.launch('menu_principal');
+    //TODO Cambiar esto al final
+    //this.scene.launch('menu_principal');
+    this.scene.launch('scene_mundo');
   }
 }

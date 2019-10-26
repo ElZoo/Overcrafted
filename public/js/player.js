@@ -36,13 +36,13 @@ class Player {
       if(!this.target || this.target.x != dx || this.target.y != dy) {
         if(this.target) {
           let tile = this.target;
-          tile.data.objeto.clearTint();
+          tile.textura.clearTint();
         }
 
         let tile = this.scene.tilesMundo[dx+","+dy];
-        if(tile.data.usable) {
+        if(tile.usable) {
           this.target = tile;
-          tile.data.objeto.setTint(this.colorResaltado.color);
+          tile.textura.setTint(this.colorResaltado.color);
         } else {
           this.target = null;
         }
