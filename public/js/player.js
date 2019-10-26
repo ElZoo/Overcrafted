@@ -11,10 +11,14 @@ class Player {
       this.item = null;
 
       this.container = scene.add.container(200, 200);
+
+      let sombra = scene.add.circle(0, 120, 40, 0x000000);
+      sombra.setAlpha(0.15);
+      this.container.add(sombra);
+
       this.cuerpo = scene.add.sprite(0, 0, 'zombie', 'zombie_walk_front_0');
       this.cuerpo.anims.play('zombie_walk_front');
       this.container.setScale(0.75, 0.75);
-
       this.container.add(this.cuerpo);
 
       scene.physics.world.enable(this.container);

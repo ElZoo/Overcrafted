@@ -44,7 +44,7 @@ class Bloque {
     } else if(!this.item && player.item) {
       //Cogerle el item al player
       if(!player.item.bloquesAceptados.includes(this.nombre)) {
-        return;
+        return false;
       }
 
       this.item = player.item;
@@ -55,6 +55,7 @@ class Bloque {
       }
       this.pintarItem();
     }
+    return true;
   }
 
   usar(player){
@@ -123,6 +124,9 @@ class BloqueBasura extends Bloque {
   }
 
   coger(player) {
+    if(!super.coger(player)) {
+      return;
+    }
     if(player.item) {
       player.item.textura.destroy();
       player.item = null;
