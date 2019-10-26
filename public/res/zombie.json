@@ -16,7 +16,6 @@
       "filename": "zombie_walk_front_3",
       "frame": {"x": 384, "y": 0, "w": 128, "h": 256}
     },
-
     {
       "filename": "zombie_walk_right_0",
       "frame": {"x": 0, "y": 256, "w": 128, "h": 256}
@@ -33,7 +32,6 @@
       "filename": "zombie_walk_right_3",
       "frame": {"x": 384, "y": 256, "w": 128, "h": 256}
     },
-
     {
       "filename": "zombie_walk_back_0",
       "frame": {"x": 0, "y": 512, "w": 128, "h": 256}
@@ -50,7 +48,6 @@
       "filename": "zombie_walk_back_3",
       "frame": {"x": 384, "y": 512, "w": 128, "h": 256}
     },
-
     {
       "filename": "zombie_walk_left_0",
       "frame": {"x": 0, "y": 768, "w": 128, "h": 256}
