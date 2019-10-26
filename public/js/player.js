@@ -53,11 +53,9 @@ class Player {
     }
 
     pintarItem() {
-
       this.item.textura = this.scene.add.sprite(0, -40, this.item.nombre);
-      this.item.textura.setScale(2, 2);
+      this.item.textura.setScale(this.item.escala, this.item.escala);
       this.container.add(this.item.textura);
-
     }
 
     updateTargetBlock() {

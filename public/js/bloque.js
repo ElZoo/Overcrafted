@@ -108,7 +108,7 @@ class BloqueEncimera extends Bloque {
     let dy = this.y * this.scene.tileTam - this.scene.tileTam * 0.25;
 
     this.item.textura = this.scene.add.sprite(dx, dy, this.item.nombre);
-    this.item.textura.setScale(1.5, 1.5);
+    this.item.textura.setScale(this.item.escala, this.item.escala);
     this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 }
@@ -151,7 +151,7 @@ class BloqueMesaCortar extends Bloque {
     let dy = this.y * this.scene.tileTam - this.scene.tileTam * 0.25;
 
     this.item.textura = this.scene.add.sprite(dx, dy, this.item.nombre);
-    this.item.textura.setScale(1.5, 1.5);
+    this.item.textura.setScale(this.item.escala, this.item.escala);
     this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 
