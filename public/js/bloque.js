@@ -44,7 +44,7 @@ class Bloque {
     } else if(!this.item && player.item) {
       //Cogerle el item al player
       if(!player.item.bloquesAceptados.includes(this.nombre)) {
-        return false;
+        return;
       }
 
       this.item = player.item;
@@ -55,7 +55,6 @@ class Bloque {
       }
       this.pintarItem();
     }
-    return true;
   }
 
   usar(player){
@@ -134,7 +133,7 @@ class BloqueBasura extends Bloque {
     if(player.item) {
       //Cogerle el item al player
       if(!player.item.bloquesAceptados.includes(this.nombre)) {
-        return false;
+        return;
       }
 
       if(player.item.nombre == 'plato_crafteo') {
@@ -199,6 +198,31 @@ class BloqueEntregar extends Bloque {
     this.colision = true;
     this.usable = true;
     this.setTextura('entregar');
+  }
+
+  coger(player) {
+    if(this.item && !player.item) {
+      //Darle el item al player
+      player.item = this.item;
+      this.item = null;
+
+      if(player.item.textura) {
+        player.item.textura.destroy();
+      }
+      player.pintarItem();
+    } else if(!this.item && player.item) {
+      //Cogerle el item al player
+      if(!player.item.bloquesAceptados.includes(this.nombre)) {
+        return;
+      }
+
+      let item = player.item;
+      player.item = null;
+
+      if(item.textura) {
+        item.textura.destroy();
+      }
+    }
   }
 }
 

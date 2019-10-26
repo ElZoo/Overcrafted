@@ -23,6 +23,7 @@ class ItemPlatoCrafteo extends Item {
     this.bloquesAceptados = [
       'encimera',
       'basura',
+      'entregar',
     ];
 
     this.items = [];
