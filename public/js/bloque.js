@@ -27,7 +27,33 @@ class Bloque {
 
     this.colision = false;
     this.usable = false;
+
+    this.item = null;
   }
+
+  usar(player) {
+    if(this.item && !player.item) {
+      //Darle el item al player
+      player.item = this.item;
+      this.item = null;
+
+      if(player.item.textura) {
+        player.item.textura.destroy();
+      }
+      player.pintarItem();
+    } else if(!this.item && player.item) {
+      //Cogerle el item al player
+      this.item = player.item;
+      player.item = null;
+
+      if(this.item.textura) {
+        this.item.textura.destroy();
+      }
+      this.pintarItem();
+    }
+  }
+
+  pintarItem() {}
 
   setTextura(val) {
     this.nombre = val;
@@ -68,6 +94,15 @@ class BloqueEncimera extends Bloque {
     this.colision = true;
     this.usable = true;
     this.setTextura('encimera');
+  }
+
+  pintarItem() {
+    let dx = this.x * this.scene.tileTam;
+    let dy = this.y * this.scene.tileTam - this.scene.tileTam * 0.25;
+
+    this.item.textura = this.scene.add.sprite(dx, dy, this.item.nombre);
+    this.item.textura.setScale(1.5, 1.5);
+    this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 }
 

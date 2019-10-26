@@ -17,8 +17,6 @@ class SceneMundo extends Phaser.Scene {
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
 
-        this.itemsMundo = [];
-
         this.mundoColumnas = this.tiles_ids[0].length;
         this.mundoFilas = this.tiles_ids.length;
         this.tileTam = 64;
@@ -43,6 +41,7 @@ class SceneMundo extends Phaser.Scene {
         this.cameras.main.setZoom(1.25);
 
         //new ItemTronco(this, 3, 1);
+        this.jugador.item = new ItemTronco(this);
     }
 
     update() {

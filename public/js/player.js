@@ -1,22 +1,42 @@
 class Player {
     constructor(scene) {
-        this.x = 0;
-        this.y = 0;
-        this.scene = scene;
-        this.dir = 'abajo';
-        this.target = null;
+      let self = this;
 
-        this.cuerpo = scene.physics.add.sprite(200,200,'zombie', 'zombie_walk_front_0');
-        this.cuerpo.anims.play('zombie_walk_front');
-        this.cuerpo.setScale(0.75, 0.75);
-        this.cuerpo.body.setAllowDrag(true);
-        this.cuerpo.setDrag(800);
-        this.cuerpo.setMaxVelocity(300);
+      this.x = 0;
+      this.y = 0;
+      this.scene = scene;
+      this.dir = 'abajo';
+      this.target = null;
 
-        this.cuerpo.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);
-        this.cuerpo.setOffset(this.cuerpo.width*0.25, this.cuerpo.height*0.5);
+      this.item = null;
 
-        this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
+      this.cuerpo = scene.physics.add.sprite(200,200,'zombie', 'zombie_walk_front_0');
+      this.cuerpo.anims.play('zombie_walk_front');
+      this.cuerpo.setScale(0.75, 0.75);
+      this.cuerpo.body.setAllowDrag(true);
+      this.cuerpo.setDrag(800);
+      this.cuerpo.setMaxVelocity(300);
+
+      this.cuerpo.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);
+      this.cuerpo.setOffset(this.cuerpo.width*0.25, this.cuerpo.height*0.5);
+
+      this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
+
+      scene.input.keyboard.on('keydown', function (event) {
+        if(event.code == "KeyE") {
+          self.interactuar();
+        }
+      });
+    }
+
+    interactuar() {
+      if(this.target) {
+        this.target.usar(this);
+      }
+    }
+
+    pintarItem() {
+      //TODO pintar el item en el player
     }
 
     updateTargetBlock() {
