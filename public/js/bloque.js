@@ -31,7 +31,7 @@ class Bloque {
     this.item = null;
   }
 
-  usar(player) {
+  coger(player) {
     if(this.item && !player.item) {
       //Darle el item al player
       player.item = this.item;
@@ -50,6 +50,13 @@ class Bloque {
         this.item.textura.destroy();
       }
       this.pintarItem();
+    }
+  }
+
+  usar(player){
+
+    if (this.item) {
+      console.log('Item a usar en la mesa: ' + this.item.nombre);
     }
   }
 
@@ -114,7 +121,7 @@ class BloqueBasura extends Bloque {
     this.setTextura('basura');
   }
 
-  usar(player) {
+  coger(player) {
     if(player.item) {
       player.item.textura.destroy();
       player.item = null;

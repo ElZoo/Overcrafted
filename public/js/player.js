@@ -30,12 +30,23 @@ class Player {
 
       scene.input.keyboard.on('keydown', function (event) {
         if(event.code == "KeyE") {
-          self.interactuar();
+          console.log('Eeeeeeee');
+          self.coger();
+        }
+
+        else if (event.code == "KeyQ") {
+          self.usar();
         }
       });
     }
 
-    interactuar() {
+    coger() {
+      if(this.target) {
+        this.target.coger(this);
+      }
+    }
+
+    usar(){
       if(this.target) {
         this.target.usar(this);
       }
