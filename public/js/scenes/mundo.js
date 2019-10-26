@@ -40,8 +40,11 @@ class SceneMundo extends Phaser.Scene {
         this.cameras.main.centerOn(cx,cy);
         this.cameras.main.setZoom(1.25);
 
-        //new ItemTronco(this, 3, 1);
+        let mesa = this.tilesMundo['3,1'];
+        mesa.item = new ItemPalo(this);
+        mesa.pintarItem();
         this.jugador.item = new ItemTronco(this);
+        this.jugador.pintarItem();
     }
 
     update() {
