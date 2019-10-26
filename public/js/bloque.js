@@ -16,6 +16,8 @@ function crearBloque(x, y, scene, id) {
       return new BloqueEntregar(x, y, scene);
     case 7:
       return new BloqueHorno(x, y, scene);
+    case 8:
+      return new BloqueCofre(x, y, scene);
   }
 }
 
@@ -78,6 +80,46 @@ class Bloque {
       this.textura = this.scene.add.image(dx, dy, this.nombre);
     }
     this.textura.setScale(2,2);
+  }
+}
+
+class BloqueCofre extends Bloque {
+  constructor(x, y, scene) {
+    super(x, y, scene);
+    this.colision = true;
+    this.usable = true;
+    this.setTextura('cofre');
+    this.tipoItem = undefined;
+  }
+
+  setTipoItem(tipoItem) {
+    this.tipoItem = tipoItem;
+    this.item = new this.tipoItem;
+    this.pintarItem();
+  }
+
+  coger(player) {
+    if(!player.item) {
+      player.item = this.item;
+      this.item = new this.tipoItem;
+
+      if(player.item.textura) {
+        player.item.textura.destroy();
+      }
+      player.pintarItem();
+
+      this.pintarItem();
+    }
+  }
+
+  pintarItem() {
+    let dx = this.x * this.scene.tileTam;
+    let dy = this.y * this.scene.tileTam + 4;
+
+    this.item.pintarItem(dx, dy, this.scene);
+    this.item.textura.setScale(0.15, 0.15);
+    this.item.textura.setTint(Phaser.Display.Color.RGBStringToColor('rgb(192, 192, 192)').color);
+    this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 }
 
