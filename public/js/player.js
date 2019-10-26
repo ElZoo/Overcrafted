@@ -42,7 +42,11 @@ class Player {
     }
 
     pintarItem() {
-      //TODO pintar el item en el player
+
+      this.item.textura = this.scene.add.sprite(0, -48, this.item.nombre);
+      this.item.textura.setScale(2, 2);
+      this.container.add(this.item.textura);
+
     }
 
     updateTargetBlock() {
