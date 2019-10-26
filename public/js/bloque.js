@@ -43,6 +43,10 @@ class Bloque {
       player.pintarItem();
     } else if(!this.item && player.item) {
       //Cogerle el item al player
+      if(!player.item.bloquesAceptados.includes(this.nombre)) {
+        return;
+      }
+
       this.item = player.item;
       player.item = null;
 
