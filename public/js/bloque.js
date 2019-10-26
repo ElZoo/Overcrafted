@@ -113,6 +113,13 @@ class BloqueBasura extends Bloque {
     this.usable = true;
     this.setTextura('basura');
   }
+
+  usar(player) {
+    if(player.item) {
+      player.item.textura.destroy();
+      player.item = null;
+    }
+  }
 }
 
 class BloqueFregadero extends Bloque {
