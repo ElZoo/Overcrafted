@@ -17,16 +17,13 @@ class SceneMundo extends Phaser.Scene {
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
 
-        this.mundoColumnas = 15;
-        this.mundoFilas = 9;
+        this.mundoColumnas = this.tiles_ids[0].length;
+        this.mundoFilas = this.tiles_ids.length;
         this.tileTam = 64;
 
-        this.numItems = 0;
-        this.items = [];
-
         this.tilesMundo = {};
-        for(var x=0; x<=this.mundoColumnas; x++) {
-            for(var y=0; y<=this.mundoFilas; y++) {
+        for(var x=0; x<this.mundoColumnas; x++) {
+            for(var y=0; y<this.mundoFilas; y++) {
                 var tile = {
                     x: x,
                     y: y,
@@ -49,13 +46,7 @@ class SceneMundo extends Phaser.Scene {
     }
 
     update(){
-      this.jugador.update();
-    }
-
-    crearItem(tipo){
-        this.items.push(new Iron(0, this));
-        this.numItems++;
-        return this.items[this.numItems-1]
+      this.jugador.update();      
     }
 
     drawBG(){
@@ -85,57 +76,64 @@ class SceneMundo extends Phaser.Scene {
 
     }
 
-
     getData(x, y){
         let type = this.tiles_ids[y][x];
         switch (type) {
-          case 0: // LET'S GOO Suelo
+          case 0:
             return {
               textura: 'suelo',
               colision: false,
               objeto: false,
+              usable: false,
             };
-          case 1: // Pared/aire
+          case 1:
             return {
               textura: 'barrera',
               colision: true,
               objeto: false,
+              usable: false,
             };
-          case 2: // Encimera
+          case 2:
             return {
               textura: 'encimera',
               colision: true,
               objeto: false,
+              usable: true,
             };
           case 3:
             return {
               textura: 'basura',
               colision: true,
               objeto: false,
+              usable: true,
             };
           case 4:
             return {
               textura: 'fregadero',
               colision: true,
               objeto: false,
+              usable: true,
             };
           case 5:
             return {
               textura: 'mesa_cortar',
               colision: true,
               objeto: false,
+              usable: true,
             };
           case 6:
             return {
               textura: 'entregar',
               colision: true,
               objeto: false,
+              usable: true,
             };
           case 7:
             return {
               textura: 'horno_off',
               colision: true,
               objeto: false,
+              usable: true,
             };
         }
         return '';
