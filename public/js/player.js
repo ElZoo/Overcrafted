@@ -46,8 +46,8 @@ class Player {
     }
 
     updateTargetBlock() {
-      let dx = Math.ceil((this.cuerpo.x-this.cuerpo.width*0.25) / this.scene.tileTam);
-      let dy = Math.ceil((this.cuerpo.y+this.cuerpo.height*0.075) / this.scene.tileTam);
+      let dx = Math.ceil((this.x-this.cuerpo.width*0.25) / this.scene.tileTam);
+      let dy = Math.ceil((this.y+this.cuerpo.height*0.075) / this.scene.tileTam);
 
       if(this.dir == 'up') {
         dy--;
@@ -101,8 +101,8 @@ class Player {
         this.container.body.setAccelerationY(accPos);
       }
 
-      this.x = this.cuerpo.x;
-      this.y = this.cuerpo.y;
+      this.x = this.container.x;
+      this.y = this.container.y;
       this.container.depth = this.y+this.cuerpo.height*0.33;
 
       this.updateAnims();
