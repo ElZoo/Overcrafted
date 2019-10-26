@@ -10,15 +10,21 @@ class Player {
 
       this.item = null;
 
-      this.cuerpo = scene.physics.add.sprite(200,200,'zombie', 'zombie_walk_front_0');
+      this.container = scene.add.container(200, 200);
+      this.cuerpo = scene.add.sprite(0, 0, 'zombie', 'zombie_walk_front_0');
       this.cuerpo.anims.play('zombie_walk_front');
-      this.cuerpo.setScale(0.75, 0.75);
-      this.cuerpo.body.setAllowDrag(true);
-      this.cuerpo.setDrag(800);
-      this.cuerpo.setMaxVelocity(300);
+      this.container.setScale(0.75, 0.75);
 
-      this.cuerpo.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);
-      this.cuerpo.setOffset(this.cuerpo.width*0.25, this.cuerpo.height*0.5);
+      this.container.add(this.cuerpo);
+
+      scene.physics.world.enable(this.container);
+
+      this.container.body.setAllowDrag(true);
+      this.container.body.setDrag(800);
+      this.container.body.setMaxVelocity(300);
+
+      this.container.body.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);
+      this.container.body.setOffset(-this.cuerpo.width*0.25, this.cuerpo.height*0);
 
       this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
 
@@ -60,6 +66,9 @@ class Player {
         }
 
         let tile = this.scene.tilesMundo[dx+","+dy];
+        if (!tile) {
+          return
+        }
         if(tile.usable) {
           this.target = tile;
           tile.textura.setTint(this.colorResaltado.color);
@@ -70,31 +79,31 @@ class Player {
     }
 
     update() {
-      this.cuerpo.setAcceleration(0);
+      this.container.body.setAcceleration(0);
 
       let accPos = 600;
       let accNeg = -600;
 
       if(this.scene.cursors.left.isDown || this.scene.input.keyboard.addKey('A').isDown) {
         this.dir = 'left';
-        this.cuerpo.setAccelerationX(accNeg);
+        this.container.body.setAccelerationX(accNeg);
       }
       if(this.scene.cursors.right.isDown || this.scene.input.keyboard.addKey('D').isDown) {
         this.dir = 'right';
-        this.cuerpo.setAccelerationX(accPos);
+        this.container.body.setAccelerationX(accPos);
       }
       if(this.scene.cursors.up.isDown || this.scene.input.keyboard.addKey('W').isDown) {
         this.dir = 'up';
-        this.cuerpo.setAccelerationY(accNeg);
+        this.container.body.setAccelerationY(accNeg);
       }
       if(this.scene.cursors.down.isDown || this.scene.input.keyboard.addKey('S').isDown) {
         this.dir = 'down';
-        this.cuerpo.setAccelerationY(accPos);
+        this.container.body.setAccelerationY(accPos);
       }
 
       this.x = this.cuerpo.x;
       this.y = this.cuerpo.y;
-      this.cuerpo.depth = this.y+this.cuerpo.height*0.33;
+      this.container.depth = this.y+this.cuerpo.height*0.33;
 
       this.updateAnims();
       this.updateTargetBlock();
@@ -102,38 +111,38 @@ class Player {
 
     updateAnims() {
       if(this.dir == 'down') {
-        if(!this.cuerpo.anims.isPlaying && this.cuerpo.body.velocity.y >= 0) {
+        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.y >= 0) {
           this.cuerpo.anims.play('zombie_walk_front');
         }
-        if(this.cuerpo.body.velocity.y <= 0) {
+        if(this.container.body.velocity.y <= 0) {
           this.cuerpo.anims.stop();
           this.cuerpo.anims.setProgress(0);
         }
       } else if(this.dir == 'up') {
-        if(!this.cuerpo.anims.isPlaying && this.cuerpo.body.velocity.y <= 0) {
+        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.y <= 0) {
           this.cuerpo.anims.play('zombie_walk_back');
         }
-        if(this.cuerpo.body.velocity.y >= 0) {
+        if(this.container.body.velocity.y >= 0) {
           this.cuerpo.anims.stop();
           this.cuerpo.anims.setProgress(0);
         }
       } else if(this.dir == 'right') {
-        if(!this.cuerpo.anims.isPlaying && this.cuerpo.body.velocity.x >= 0) {
+        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.x >= 0) {
           this.cuerpo.anims.play('zombie_walk_right');
         }
-        if(this.cuerpo.body.velocity.x <= 0) {
+        if(this.container.body.velocity.x <= 0) {
           this.cuerpo.anims.stop();
           this.cuerpo.anims.setProgress(0);
         }
       } else if(this.dir == 'left') {
-        if(!this.cuerpo.anims.isPlaying && this.cuerpo.body.velocity.x <= 0) {
+        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.x <= 0) {
           this.cuerpo.anims.play('zombie_walk_left');
         }
-        if(this.cuerpo.body.velocity.x >= 0) {
+        if(this.container.body.velocity.x >= 0) {
           this.cuerpo.anims.stop();
           this.cuerpo.anims.setProgress(0);
         }
-      } else if(this.cuerpo.body.velocity.x == 0 && this.cuerpo.body.velocity.y == 0) {
+      } else if(this.container.body.velocity.x == 0 && this.container.body.velocity.y == 0) {
         this.cuerpo.anims.stop();
         this.cuerpo.anims.setProgress(0);
       }

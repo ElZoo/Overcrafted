@@ -31,7 +31,7 @@ class SceneMundo extends Phaser.Scene {
         }
 
         this.jugador = new Player(this);
-        this.physics.add.collider(this.jugador.cuerpo, this.fisicaMundo);
+        this.physics.add.collider(this.jugador.container, this.fisicaMundo);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
