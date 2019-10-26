@@ -43,6 +43,19 @@ class SceneMundo extends Phaser.Scene {
         let mesa = this.tilesMundo['3,1'];
         mesa.item = new ItemPalo(this);
         mesa.pintarItem();
+
+        mesa = this.tilesMundo['5,1'];
+        mesa.item = new ItemGrava(this);
+        mesa.pintarItem();
+
+        mesa = this.tilesMundo['6,1'];
+        mesa.item = new ItemFlint(this);
+        mesa.pintarItem();
+
+        mesa = this.tilesMundo['4,8'];
+        mesa.item = new ItemPluma(this);
+        mesa.pintarItem();
+
         this.jugador.item = new ItemTronco(this);
         this.jugador.pintarItem();
     }

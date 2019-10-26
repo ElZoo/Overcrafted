@@ -17,3 +17,21 @@ class ItemPalo extends Item {
     super(scene, 'palo');
   }
 }
+
+class ItemGrava extends Item {
+  constructor(scene) {
+    super(scene, 'grava');
+  }
+}
+
+class ItemFlint extends Item {
+  constructor(scene) {
+    super(scene, 'flint');
+  }
+}
+
+class ItemPluma extends Item {
+  constructor(scene) {
+    super(scene, 'pluma');
+  }
+}
