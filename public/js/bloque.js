@@ -131,10 +131,19 @@ class BloqueBasura extends Bloque {
   }
 
   coger(player) {
-    if(!super.coger(player)) {
-      return;
-    }
     if(player.item) {
+      //Cogerle el item al player
+      if(!player.item.bloquesAceptados.includes(this.nombre)) {
+        return false;
+      }
+
+      if(player.item.nombre == 'plato_crafteo') {
+        player.item.items = [];
+        player.item.textura.destroy();
+        player.pintarItem();
+        return;
+      }
+
       player.item.textura.destroy();
       player.item = null;
     }
