@@ -4,21 +4,22 @@ class SceneMundo extends Phaser.Scene {
     }
 
     create() {
-        this.mundoColumnas = 13;
-        this.mundoFilas = 9;
-
         this.tiles_ids = [
-          [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-          [1,2,2,4,2,2,7,7,2,2,2,6,2,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-          [1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,2,1],
-          [1,2,5,2,5,2,2,2,2,2,2,3,2,1],
-          [1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+          [1,1,2,2,4,2,2,7,7,2,2,2,6,2,1,1],
+          [1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1],
+          [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+          [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+          [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+          [1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+          [1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1],
+          [1,1,2,5,2,5,2,2,2,2,2,2,3,2,1,1],
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ];
+
+        this.mundoColumnas = 15;
+        this.mundoFilas = 9;
+        this.tileTam = 64;
 
         this.numItems = 0;
         this.items = [];
@@ -40,6 +41,11 @@ class SceneMundo extends Phaser.Scene {
         this.physics.add.collider(this.jugador.cuerpo, this.fisicaMundo);
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        let cx = this.tiles_ids[0].length*this.tileTam*0.5 - this.tileTam*0.5;
+        let cy = this.tiles_ids.length*this.tileTam*0.5 - this.tileTam*0.5;
+        this.cameras.main.centerOn(cx,cy);
+        this.cameras.main.setZoom(1.25);
     }
 
     update(){
@@ -53,21 +59,19 @@ class SceneMundo extends Phaser.Scene {
     }
 
     drawBG(){
-        let tam = 64;
-
         this.fisicaMundo = this.physics.add.staticGroup();
 
         for(let tileID in this.tilesMundo){
             let tile = this.tilesMundo[tileID];
-            let x = tile.x *tam;
-            let y = tile.y *tam;
+            let x = tile.x *this.tileTam;
+            let y = tile.y *this.tileTam;
 
             if(tile.data.textura) {
               let img;
               if(tile.data.colision) {
                 img = this.fisicaMundo.create(x,y,tile.data.textura);
                 img.setImmovable(true);
-                img.setSize(tam, tam*0.5, true);
+                img.setSize(this.tileTam, this.tileTam*0.5, true);
                 img.setOffset(-img.width*0.5, -img.height*0.5);
                 img.depth = y;
               } else {
@@ -94,7 +98,7 @@ class SceneMundo extends Phaser.Scene {
           case 1: // Pared/aire
             return {
               textura: 'barrera',
-              colision: false,
+              colision: true,
               objeto: false,
             };
           case 2: // Encimera
