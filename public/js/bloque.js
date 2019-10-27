@@ -234,8 +234,8 @@ class BloquePila extends Bloque {
         item.textura.destroy();
       }
 
-      item.pintarItem(dx, dy + i*4, this.scene);
-      item.textura.depth = dy + i*4 + 16;
+      item.pintarItem(dx, dy - i*4, this.scene);
+      item.textura.depth = dy + 16;
     }
   }
 }
