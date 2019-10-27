@@ -146,7 +146,7 @@ class SceneMundo extends Phaser.Scene {
       let cx = this.tiles_ids[0].length*this.tileTam*0.5 - this.tileTam*0.5;
       let cy = this.tiles_ids.length*this.tileTam*0.5 - this.tileTam*0.5;
       this.cameras.main.centerOn(cx,cy);
-      this.cameras.main.setZoom(1.25);
+      this.cameras.main.setZoom(1);
 
       this.generarBloques();
     }

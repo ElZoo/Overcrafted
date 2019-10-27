@@ -28,7 +28,7 @@ class Player {
       scene.physics.world.enable(this.container);
 
       this.container.body.setAllowDrag(true);
-      this.container.body.setDrag(800);
+      this.container.body.setDrag(1000);
       this.container.body.setMaxVelocity(300);
 
       this.container.body.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);

@@ -18,22 +18,24 @@ module.exports = class Instancia {
   }
 
   update_controles(socket_id, data) {
+    let acc = 1200;
+
     let jugador = this.jugadores[socket_id];
     let dirs = data[0];
     jugador.coords = data[1];
 
     if(dirs.right && !dirs.left) {
-      jugador.accX = 600;
+      jugador.accX = acc;
     } else if(dirs.left && !dirs.right) {
-      jugador.accX = -600;
+      jugador.accX = -acc;
     } else {
       jugador.accX = 0;
     }
 
     if(dirs.up && !dirs.down) {
-      jugador.accY = -600;
+      jugador.accY = -acc;
     } else if(dirs.down && !dirs.up) {
-      jugador.accY = 600;
+      jugador.accY = acc;
     } else {
       jugador.accY = 0;
     }
@@ -152,14 +154,14 @@ module.exports = class Instancia {
       }
     }
 
-    let cofre = this.bloques['3,1'];
+    let cofre = this.bloques['5,2'];
     cofre.setTipoItem(ITEMS.ItemTronco);
-    cofre = this.bloques['5,1'];
+    cofre = this.bloques['7,2'];
     cofre.setTipoItem(ITEMS.ItemCobweb);
 
-    let mesa = this.bloques['7,8'];
+    let mesa = this.bloques['9,9'];
     mesa.item = new ITEMS.ItemPlatoCrafteo();
-    mesa = this.bloques['8,8'];
+    mesa = this.bloques['10,9'];
     mesa.item = new ITEMS.ItemPlatoCrafteo();
   }
 
