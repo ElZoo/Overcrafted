@@ -104,6 +104,10 @@ module.exports = {
         jugador.item = item;
       }
     }
+
+    nuevoPlatoLimpio(item) {
+      this.items.push(item);
+    }
   },
 
   BloqueFregadero: class BloqueFregadero extends Bloque {
@@ -121,6 +125,21 @@ module.exports = {
         let item = jugador.item;
         jugador.item = null;
         this.items.push(item);
+      }
+    }
+
+    usar(jugador, instancia) {
+      if(this.items.length > 0) {
+        let item = this.items.pop();
+
+        let nuevoItem = item.lavar();
+        for(let bloque_id in instancia.bloques) {
+          let bloque = instancia.bloques[bloque_id];
+          if(bloque.nombre == 'pila') {
+            bloque.nuevoPlatoLimpio(nuevoItem);
+            break;
+          }
+        }
       }
     }
   },

@@ -214,6 +214,30 @@ class BloquePila extends Bloque {
       this.pintarItem();
     }
   }
+
+  ponerPlatoLimpio(item) {
+    if(item.textura) {
+      item.textura.destroy();
+    }
+    this.items.push(item);
+    this.pintarItem();
+  }
+
+  pintarItem() {
+    let dx = this.x * this.scene.tileTam;
+    let dy = this.y * this.scene.tileTam - 16;
+
+    for(let i in this.items) {
+      let item = this.items[i];
+
+      if(item.textura) {
+        item.textura.destroy();
+      }
+
+      item.pintarItem(dx, dy + i*4, this.scene);
+      item.textura.depth = dy + i*4 + 16;
+    }
+  }
 }
 
 class BloqueFregadero extends Bloque {
@@ -240,6 +264,25 @@ class BloqueFregadero extends Bloque {
     }
   }
 
+  usar(player) {
+    if(this.items.length > 0) {
+      let item = this.items.pop();
+      item.textura.destroy();
+
+      this.pintarItem();
+
+      let nuevoItem = item.lavar();
+
+      for(let bloque_id in player.scene.tilesMundo) {
+        let bloque = player.scene.tilesMundo[bloque_id];
+        if(bloque.nombre == 'pila') {
+          bloque.ponerPlatoLimpio(nuevoItem);
+          break;
+        }
+      }
+    }
+  }
+
   pintarItem() {
     let dx = this.x * this.scene.tileTam;
     let dy = this.y * this.scene.tileTam - 16;
@@ -252,8 +295,8 @@ class BloqueFregadero extends Bloque {
       }
 
       item.pintarItem(dx, dy + i*4, this.scene);
-      item.textura.setScale(0.22, 0.22);
-      item.textura.setTint(Phaser.Display.Color.RGBStringToColor('rgb(192, 192, 192)').color);
+      item.textura.setScale(0.3, 0.3);
+      item.textura.setTint(Phaser.Display.Color.RGBStringToColor('rgb(128, 128, 255)').color);
       item.textura.depth = dy + i*4 + 16;
     }
   }

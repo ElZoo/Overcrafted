@@ -69,7 +69,7 @@ module.exports = class Instancia {
       return;
     }
 
-    bloque.usar(jugador);
+    bloque.usar(jugador, this);
 
     for(let jg_id in this.sockets) {
       let socket_jg = this.sockets[jg_id];

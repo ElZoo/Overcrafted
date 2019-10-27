@@ -42,8 +42,8 @@ module.exports = {
       ];
     }
 
-    limpiar() {
-      return new module.exports.ItemPlatoSucio();
+    lavar() {
+      return new module.exports.ItemPlatoCrafteo();
     }
   },
 
