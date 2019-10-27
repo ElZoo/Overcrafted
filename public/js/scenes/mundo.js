@@ -10,10 +10,12 @@ class SceneMundo extends Phaser.Scene {
         console.log("Nuevo jugador: " + jg.id);
         let jugador = new Player(self, false, jg.id, 200, 200);
         self.physics.add.collider(jugador.container, self.fisicaMundo);
+        /*
         for(let i in self.jugadores) {
           let jg2 = self.jugadores[i];
           self.physics.add.collider(jugador.container, jg2.container);
         }
+        */
         self.jugadores[jg.id] = jugador;
       });
 
@@ -83,6 +85,7 @@ class SceneMundo extends Phaser.Scene {
         }
       }
 
+      /*
       for(let i in this.jugadores) {
         let jg = this.jugadores[i];
         for(let j in this.jugadores) {
@@ -92,6 +95,7 @@ class SceneMundo extends Phaser.Scene {
           }
         }
       }
+      */
 
       this.cursors = this.input.keyboard.createCursorKeys();
 
