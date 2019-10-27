@@ -150,6 +150,9 @@ class BloqueEncimera extends Bloque {
 
   coger(player) {
     if(this.item && player.item && this.item.nombre == 'plato_crafteo') {
+      if(player.item.nombre == 'plato_crafteo' || player.item.nombre == 'plato_sucio') {
+        return;
+      }
       this.item.craftear(player);
     } else {
       super.coger(player);

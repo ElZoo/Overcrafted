@@ -64,6 +64,9 @@ module.exports = {
 
     coger(jugador) {
       if(this.item && jugador.item && this.item.nombre == 'plato_crafteo') {
+        if(jugador.item.nombre == 'plato_crafteo' || jugador.item.nombre == 'plato_sucio') {
+          return;
+        }
         this.item.craftear(jugador);
       } else {
         super.coger(jugador);
