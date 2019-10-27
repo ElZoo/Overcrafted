@@ -23,6 +23,9 @@ module.exports = {
     }
 
     craftear(jugador) {
+      if (this.items.length >= 9) {
+        return;
+      }
       let item = jugador.item;
       jugador.item = null;
       this.items.push(item);
