@@ -150,6 +150,12 @@ class SceneMundo extends Phaser.Scene {
 
       this.generarBloques();
 
+      let vig = this.add.image(0, 0, 'vignette');
+      vig.setOrigin(0,0);
+      vig.setAlpha(0.75);
+      vig.setScrollFactor(0);
+      vig.depth = 99999;
+
       this.scene.launch('hud');
     }
 
