@@ -8,7 +8,7 @@ class SceneMundo extends Phaser.Scene {
 
       this.game.socket.on('instancia_nuevoJugador', function(jg) {
         console.log("Nuevo jugador: " + jg.id);
-        let jugador = new Player(self, false, jg.id);
+        let jugador = new Player(self, false, jg.id, 200, 200);
         self.physics.add.collider(jugador.container, self.fisicaMundo);
         for(let i in self.jugadores) {
           let jg2 = self.jugadores[i];
@@ -75,7 +75,7 @@ class SceneMundo extends Phaser.Scene {
         let jg = this.game.jugadores[i];
 
         let principal = (jg.id == this.game.socket.id);
-        let jugador = new Player(this, principal, jg.id);
+        let jugador = new Player(this, principal, jg.id, jg.coords[0], jg.coords[1]);
         this.physics.add.collider(jugador.container, this.fisicaMundo);
         this.jugadores[jg.id] = jugador;
         if(principal) {
@@ -100,22 +100,31 @@ class SceneMundo extends Phaser.Scene {
       this.cameras.main.centerOn(cx,cy);
       this.cameras.main.setZoom(1.25);
 
-      let cofre = this.tilesMundo['3,1'];
-      cofre.setTipoItem(ItemTronco);
-      cofre = this.tilesMundo['5,1'];
-      cofre.setTipoItem(ItemCobweb);
-
-      let mesa = this.tilesMundo['7,8'];
-      mesa.item = new ItemPlatoCrafteo();
-      mesa.pintarItem();
-      mesa = this.tilesMundo['8,8'];
-      mesa.item = new ItemPlatoCrafteo();
-      mesa.pintarItem();
+      this.generarBloques();
     }
 
     update() {
       for(let i in this.jugadores) {
         this.jugadores[i].update();
+      }
+    }
+
+    generarBloques() {
+      for(let id in this.game.bloques) {
+        let maquina_server = this.game.bloques[id];
+        let maquina = this.tilesMundo[id];
+
+        if(!maquina_server || !maquina) {
+          continue;
+        }
+
+        if(maquina_server.nombre == 'cofre') {
+          maquina.setTipoItem(itemByNombre(maquina_server.item));
+        } else if(maquina_server.item) {
+          let claseItem = itemByNombre(maquina_server.item);
+          maquina.item = new claseItem;
+          maquina.pintarItem();
+        }
       }
     }
 }

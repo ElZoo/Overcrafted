@@ -1,9 +1,13 @@
 var Jugador = require('./jugador.js');
+var BLOQUES = require('./bloques.js');
+var ITEMS = require('./items.js');
 
 module.exports = class Instancia {
   constructor(id, nivel) {
     this.id = id;
     this.nivel = nivel;
+    this.bloques = {};
+    this.crearBloques();
     this.jugadores = {};
     this.sockets = {};
   }
@@ -47,7 +51,7 @@ module.exports = class Instancia {
     this.jugadores[socket.id] = jugador;
     this.sockets[socket.id] = socket;
 
-    socket.emit('instancia_conectado', [this.nivel, this.jugadores]);
+    socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques()]);
 
     console.log("Jugador conectado a la instancia: " + this.id);
 
@@ -90,5 +94,61 @@ module.exports = class Instancia {
       socket_jg.emit('instancia_desconexionJugador', socket.id);
     }
     console.log("Jugador deconectado de la instancia: " + this.id);
+  }
+
+  crearBloques() {
+    for(let y=0; y<this.nivel.length; y++) {
+      for(let x=0; x<this.nivel[y].length; x++) {
+        this.bloques[x+","+y] = crearBloque(x, y, this.nivel[y][x]);
+      }
+    }
+
+    let cofre = this.bloques['3,1'];
+    cofre.setTipoItem(ITEMS.ItemTronco);
+    cofre = this.bloques['5,1'];
+    cofre.setTipoItem(ITEMS.ItemCobweb);
+
+    let mesa = this.bloques['7,8'];
+    mesa.item = new ITEMS.ItemPlatoCrafteo();
+    mesa = this.bloques['8,8'];
+    mesa.item = new ITEMS.ItemPlatoCrafteo();
+  }
+
+  datosBloques() {
+    let datosBloques = {};
+
+    for(let id in this.bloques) {
+      let bloque = this.bloques[id];
+
+      datosBloques[id] = {
+        nombre: bloque.nombre,
+        item: (bloque.item ? bloque.item.nombre : false),
+      };
+    }
+
+    return datosBloques;
+  }
+}
+
+function crearBloque(x, y, id) {
+  switch(id) {
+    case 0:
+      return new BLOQUES.BloqueSuelo(x, y);
+    case 1:
+      return new BLOQUES.BloqueBarrera(x, y);
+    case 2:
+      return new BLOQUES.BloqueEncimera(x, y);
+    case 3:
+      return new BLOQUES.BloqueBasura(x, y);
+    case 4:
+      return new BLOQUES.BloqueFregadero(x, y);
+    case 5:
+      return new BLOQUES.BloqueMesaCortar(x, y);
+    case 6:
+      return new BLOQUES.BloqueEntregar(x, y);
+    case 7:
+      return new BLOQUES.BloqueHorno(x, y);
+    case 8:
+      return new BLOQUES.BloqueCofre(x, y);
   }
 }

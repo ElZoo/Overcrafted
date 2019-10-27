@@ -1,3 +1,28 @@
+function itemByNombre(nombre) {
+  switch(nombre) {
+    case 'plato_crafteo':
+      return ItemPlatoCrafteo;
+    case 'tronco':
+      return ItemTronco;
+    case 'palo':
+      return ItemPalo;
+    case 'grava':
+      return ItemGrava;
+    case 'flint':
+      return ItemFlint;
+    case 'pluma':
+      return ItemPluma;
+    case 'cobweb':
+      return ItemCobweb;
+    case 'cuerda':
+      return ItemCuerda;
+    case 'mena_hierro':
+      return ItemMenaHierro;
+    case 'lingote_hierro':
+      return ItemLingoteHierro;
+  }
+}
+
 class Item {
   constructor(nombre) {
     this.nombre = nombre;

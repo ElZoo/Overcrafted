@@ -1,11 +1,11 @@
 class Player {
-    constructor(scene, principal, id) {
+    constructor(scene, principal, id, x, y) {
       let self = this;
 
       this.id = id;
       this.principal = principal;
-      this.x = 0;
-      this.y = 0;
+      this.x = x;
+      this.y = y;
       this.accX = 0;
       this.accY = 0;
       this.scene = scene;
@@ -14,7 +14,7 @@ class Player {
 
       this.item = null;
 
-      this.container = scene.add.container(200, 200);
+      this.container = scene.add.container(x, y);
 
       let sombra = scene.add.circle(0, 120, 40, 0x000000);
       sombra.setAlpha(0.15);

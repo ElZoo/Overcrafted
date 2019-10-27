@@ -4,5 +4,7 @@ module.exports = class Jugador {
     this.coords = [200, 200];
     this.accX = 0;
     this.accY = 0;
+
+    this.item = null;
   }
 }
