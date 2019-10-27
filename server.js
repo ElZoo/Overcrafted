@@ -5,7 +5,12 @@ var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 
 var Instancia = require('./server/instancia.js');
+var RECETAS = require('./server/receta.js');
 var instancias = {};
+
+var recetas = [
+  RECETAS.RecetaArco,
+];
 
 var nivel = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -114,7 +119,7 @@ server.listen(80, function() {
 
 function crearInstancias() {
   for(let i=0; i<5; i++) {
-    let instancia = new Instancia(i, nivel);
+    let instancia = new Instancia(i, nivel, recetas);
     instancias[instancia.id] = instancia;
   }
 }

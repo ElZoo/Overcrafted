@@ -1,15 +1,69 @@
 var Jugador = require('./jugador.js');
 var BLOQUES = require('./bloques.js');
 var ITEMS = require('./items.js');
+var uuid = require('uuid/v4');
 
 module.exports = class Instancia {
-  constructor(id, nivel) {
+  constructor(id, nivel, recetas) {
     this.id = id;
     this.nivel = nivel;
+    this.recetas = recetas;
+    this.comandas = {};
     this.bloques = {};
     this.crearBloques();
     this.jugadores = {};
     this.sockets = {};
+
+    let self = this;
+    setInterval(function() {
+      self.nuevaComanda();
+    }, 10000);
+  }
+
+  nuevaComanda() {
+    if(Object.keys(this.jugadores).length <= 0) {
+      return;
+    }
+
+    if(Object.keys(this.comandas).length > 4) {
+      return;
+    }
+
+    let self = this;
+    let recetaClase = this.recetas[Math.floor(Math.random()*this.recetas.length)];
+    let comanda = new recetaClase(uuid());
+
+    this.comandas[comanda.id] = comanda;
+
+    for(let jg_id in this.sockets) {
+      let socket = this.sockets[jg_id];
+      socket.emit('nueva_comanda', comanda);
+    }
+
+    let inter = setInterval(function() {
+      let tiempoAhora = new Date();
+      let diff = (tiempoAhora - comanda.tiempoInicio) / 1000;
+      let rel = 1 - (diff / comanda.tiempoMax);
+
+      if(rel <= 0) {
+        clearInterval(inter);
+        delete self.comandas[comanda.id];
+
+        for(let jg_id in self.sockets) {
+          let socket = self.sockets[jg_id];
+          socket.emit('quitar_comanda', comanda.id);
+        }
+
+        return;
+      }
+
+      comanda.tiempo = rel;
+
+      for(let jg_id in self.sockets) {
+        let socket = self.sockets[jg_id];
+        socket.emit('update_comanda', [comanda.id, comanda.tiempo]);
+      }
+    }, 500);
   }
 
   update_coords(socket_id, coords) {
@@ -91,7 +145,7 @@ module.exports = class Instancia {
     this.jugadores[socket.id] = jugador;
     this.sockets[socket.id] = socket;
 
-    socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques()]);
+    socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas]);
 
     console.log("Jugador conectado a la instancia: " + this.id);
 
