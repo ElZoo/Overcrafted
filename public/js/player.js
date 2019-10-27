@@ -32,7 +32,7 @@ class Player {
       this.container.body.setMaxVelocity(300);
 
       this.container.body.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);
-      this.container.body.setOffset(-this.cuerpo.width*0.25, this.cuerpo.height*0);
+      this.container.body.setOffset(-this.cuerpo.width*0.25, 32);
 
       this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
 

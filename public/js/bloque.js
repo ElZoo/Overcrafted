@@ -73,7 +73,7 @@ class Bloque {
     if(this.colision) {
       this.textura = this.scene.fisicaMundo.create(dx, dy, this.nombre);
       this.textura.setImmovable(true);
-      this.textura.setSize(this.scene.tileTam, this.scene.tileTam*0.5, true);
+      this.textura.setSize(this.scene.tileTam, this.scene.tileTam, true);
       this.textura.setOffset(-this.textura.width*0.5, -this.textura.height*0.5);
       this.textura.depth = dy;
     } else {
