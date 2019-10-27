@@ -259,18 +259,37 @@ class BloqueRecibir extends Bloque {
     super(x, y, scene);
     this.colision = true;
     this.usable = true;
+    this.items = [];
     this.setTextura('recibir');
   }
 
+  nuevoPlatoSucio() {
+    this.items.push(new ItemPlatoCrafteo());
+    this.pintarItem();
+  }
+
   coger(player) {
-    if(!player.item && this.item) {
-      player.item = this.item;
-      this.item = null;
+    if(!player.item && this.items.length > 0) {
+      player.item = this.items.pop();
 
       if(player.item.textura) {
         player.item.textura.destroy();
       }
       player.pintarItem();
+    }
+  }
+
+  pintarItem() {
+    let dx = this.x * this.scene.tileTam;
+    let dy = this.y * this.scene.tileTam - 16;
+
+    for(let i in this.items) {
+      let item = this.items[i];
+      if(item.textura) {
+        item.textura.destroy();
+      }
+      item.pintarItem(dx, dy+i*4, this.scene);
+      item.textura.depth = dy + i*4 + this.scene.tileTam*0.25;
     }
   }
 }

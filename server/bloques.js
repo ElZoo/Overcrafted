@@ -1,3 +1,5 @@
+var ITEMS = require('./items.js');
+
 class Bloque {
   constructor(x, y, nombre) {
     this.x = x;
@@ -116,12 +118,20 @@ module.exports = {
       super(x, y, 'entregar');
     }
 
-    coger(jugador) {
+    coger(jugador, instancia) {
       if (jugador.item) {
         if(!jugador.item.bloquesAceptados.includes(this.nombre)) {
           return;
         }
-        jugador.item = null;
+        jugador.item = null
+
+        for(let bloque_id in instancia.bloques) {
+          let bloque = instancia.bloques[bloque_id];
+          if(bloque.nombre == 'recibir') {
+            bloque.nuevoPlatoSucio(instancia);
+            break;
+          }
+        }
       }
     }
   },
@@ -129,12 +139,20 @@ module.exports = {
   BloqueRecibir: class BloqueRecibir extends Bloque {
     constructor(x, y) {
       super(x, y, 'recibir');
+      this.items = [];
     }
 
     coger(jugador) {
-      if (!jugador.item && this.item) {
-        jugador.item = this.item;
-        this.item = null;
+      if (!jugador.item && this.items.length > 0) {
+        jugador.item = this.items.pop();
+      }
+    }
+
+    nuevoPlatoSucio(instancia) {
+      this.items.push(new ITEMS.ItemPlatoCrafteo());
+      for(let jg_id in instancia.sockets) {
+        let socket = instancia.sockets[jg_id];
+        socket.emit('nuevo_plato_sucio');
       }
     }
   },

@@ -80,6 +80,17 @@ class SceneMundo extends Phaser.Scene {
 
         jugador.usar(bloque);
       });
+
+      this.game.socket.on('nuevo_plato_sucio', function() {
+        console.log("Nuevo plato sucio");
+        for(let bloque_id in self.tilesMundo) {
+          let bloque = self.tilesMundo[bloque_id];
+          if(bloque.nombre == 'recibir') {
+            bloque.nuevoPlatoSucio();
+            break;
+          }
+        }
+      });
     }
 
     create() {
@@ -160,6 +171,15 @@ class SceneMundo extends Phaser.Scene {
         } else if(maquina_server.item) {
           let claseItem = itemByNombre(maquina_server.item);
           maquina.item = new claseItem;
+          maquina.pintarItem();
+        }
+
+        if(maquina_server.nombre == 'recibir') {
+          maquina.items = [];
+          for(let it in maquina_server.items) {
+            let claseItem = itemByNombre(maquina_server.items[it]);
+            maquina.items.push(new claseItem);
+          }
           maquina.pintarItem();
         }
 

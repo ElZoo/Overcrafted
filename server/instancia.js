@@ -50,7 +50,7 @@ module.exports = class Instancia {
       return;
     }
 
-    bloque.coger(jugador);
+    bloque.coger(jugador, this);
 
     for(let jg_id in this.sockets) {
       let socket_jg = this.sockets[jg_id];
@@ -124,6 +124,17 @@ module.exports = class Instancia {
   }
 
   desconectar(socket) {
+    let jg = this.jugadores[socket.id];
+    if(jg.item && jg.item.nombre == 'plato_crafteo') {
+      for(let bloque_id in this.bloques) {
+        let bloque = this.bloques[bloque_id];
+        if(bloque.nombre == 'recibir') {
+          bloque.nuevoPlatoSucio(this);
+          break;
+        }
+      }
+    }
+
     delete this.jugadores[socket.id];
     delete this.sockets[socket.id];
 
@@ -167,6 +178,13 @@ module.exports = class Instancia {
         datosBloques[id]['itemsPlato'] = [];
         for(let it in bloque.item.items) {
           datosBloques[id]['itemsPlato'].push(bloque.item.items[it].nombre);
+        }
+      }
+
+      if(bloque.nombre == 'recibir') {
+        datosBloques[id]['items'] = [];
+        for(let it in bloque.items) {
+          datosBloques[id]['items'].push(bloque.items[it].nombre);
         }
       }
     }
