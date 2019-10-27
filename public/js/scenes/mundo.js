@@ -29,11 +29,14 @@ class SceneMundo extends Phaser.Scene {
           let jg = jugadores[i];
           let jugador = self.jugadores[jg.id];
           if(jugador) {
-            jugador.container.x = jg.coords[0];
-            jugador.container.y = jg.coords[1];
-            jugador.x = jg.coords[0];
-            jugador.y = jg.coords[1];
-            jugador.container.depth = jugador.y+jugador.cuerpo.height*0.33;
+            if(jugador.accX == 0 && jugador.accY == 0) {
+              jugador.container.x = jg.coords[0];
+              jugador.container.y = jg.coords[1];
+
+              jugador.x = jg.coords[0];
+              jugador.y = jg.coords[1];
+              jugador.container.depth = jugador.y+jugador.cuerpo.height*0.33;
+            }
           }
         }
       });
