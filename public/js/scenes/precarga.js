@@ -7,6 +7,12 @@ class ScenePrecarga extends Phaser.Scene {
     //GUI
     this.load.image('totem_of_undying', 'res/totem_of_undying.png');
     this.load.image('fondo_menu', 'res/fondo_menu.png');
+    this.load.image('mapa', 'res/mapa.png');
+    this.load.image('reloj', 'res/reloj.png');
+    this.load.image('barraFondo', 'res/barraFondo.png');
+    this.load.image('barraArriba', 'res/barraArriba.png');
+    this.load.image('item_frame', 'res/item_frame.png');
+    this.load.image('cajaItem', 'res/cajaItem.png');
 
     //bloques
     this.load.image('basura', 'res/basura.png');
@@ -37,6 +43,11 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('mena_hierro', 'res/mena_hierro.png');
     this.load.image('plato_crafteo', 'res/plato_crafteo.png');
     this.load.image('plato_sucio', 'res/plato_sucio.png');
+
+    //items finales
+    this.load.image('arco', 'res/arco.png');
+    this.load.image('flecha', 'res/flecha.png');
+    this.load.image('espada_hierro', 'res/espada_hierro.png');
   }
 
 

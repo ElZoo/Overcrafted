@@ -149,6 +149,8 @@ class SceneMundo extends Phaser.Scene {
       this.cameras.main.setZoom(1);
 
       this.generarBloques();
+
+      this.scene.launch('hud');
     }
 
     update() {

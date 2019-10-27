@@ -23,6 +23,7 @@ var config = {
     ScenePuntuaciones,
     SceneMenuSalas,
     SceneMundo,
+    SceneHud,
   ],
 }
 
