@@ -118,6 +118,24 @@ class SceneMundo extends Phaser.Scene {
         if(principal) {
           this.jugador = jugador;
         }
+
+        if(jg.item) {
+          let claseItem = itemByNombre(jg.item.nombre);
+          jugador.item = new claseItem;
+          jugador.pintarItem();
+
+          if(jugador.item.nombre == 'plato_crafteo') {
+            jugador.item.textura.destroy();
+
+            jugador.item.items = [];
+            for(let it in jg.item.items) {
+              let claseItem = itemByNombre(jg.item.items[it].nombre);
+              jugador.item.items.push(new claseItem);
+            }
+
+            jugador.pintarItem();
+          }
+        }
       }
 
       /*
@@ -166,7 +184,6 @@ class SceneMundo extends Phaser.Scene {
         }
 
         if(maquina_server.itemsPlato) {
-          console.log(maquina_server.itemsPlato);
           maquina.item.textura.destroy();
 
           maquina.item.items = [];
