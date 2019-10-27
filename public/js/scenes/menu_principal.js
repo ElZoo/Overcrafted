@@ -4,7 +4,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(0, 0, 'fondo_menu').setOrigin(0);
+    this.add.image(0, 0, 'fondo_menu').setOrigin(0.25, 0.25);
     this.scene.launch('scene_menu_salas');
     this.crearBotonForo();
     this.scene.setVisible(true, "scene_menu_salas");
