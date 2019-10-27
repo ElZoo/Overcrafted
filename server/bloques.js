@@ -97,6 +97,13 @@ module.exports = {
       super(x, y, 'pila');
       this.items = [];
     }
+
+    coger(jugador) {
+      if(!jugador.item && this.items.length > 0) {
+        let item = this.items.pop();
+        jugador.item = item;
+      }
+    }
   },
 
   BloqueFregadero: class BloqueFregadero extends Bloque {

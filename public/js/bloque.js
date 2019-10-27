@@ -202,6 +202,18 @@ class BloquePila extends Bloque {
 
     this.setTextura('pila');
   }
+
+  coger(player) {
+    if(!player.item && this.items.length > 0) {
+      let item = this.items.pop();
+
+      player.item = item;
+      player.item.textura.destroy();
+      player.pintarItem();
+
+      this.pintarItem();
+    }
+  }
 }
 
 class BloqueFregadero extends Bloque {
