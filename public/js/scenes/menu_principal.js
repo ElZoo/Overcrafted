@@ -5,6 +5,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
   create() {
     this.add.image(0, 0, 'fondo_menu').setOrigin(0.25, 0.25);
+    this.add.image(0, 0, 'vignette').setOrigin(0,0);
     this.scene.launch('scene_menu_salas');
     this.crearBotonForo();
     this.scene.setVisible(true, "scene_menu_salas");
@@ -21,9 +22,9 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
     let boton = this.add.container(x, y);
 
-    let cajaBoton = this.add.rectangle(0, 0, width, height, 0x000000);
+    let cajaBoton = this.add.sprite(0,0, 'boton');
+    cajaBoton.setScale(1.5,2.5);
     cajaBoton.setInteractive({'cursor': 'pointer'});
-    cajaBoton.setAlpha(0.33);
     cajaBoton.on('pointerup', function() {
       window.location = 'https://elzoo.es';
     });
@@ -37,11 +38,11 @@ class SceneMenuPrincipal extends Phaser.Scene {
     boton.add(textoInstancia);
 
     cajaBoton.on('pointerover', function() {
-      cajaBoton.setAlpha(0.5);
+      cajaBoton.setTint(0xaa99ff);
     });
 
     cajaBoton.on('pointerout', function() {
-      cajaBoton.setAlpha(0.33);
+      cajaBoton.clearTint();
     });
   }
 
@@ -57,9 +58,9 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
     let boton = this.add.container(x, y);
 
-    let cajaBoton = this.add.rectangle(0, 0, width, height, 0x000000);
+    let cajaBoton = this.add.sprite(0,0, 'boton');
+    cajaBoton.setScale(1.5,2.5);
     cajaBoton.setInteractive({'cursor': 'pointer'});
-    cajaBoton.setAlpha(0.33);
     cajaBoton.on('pointerup', function() {
       self.scene.setVisible(false, "scene_menu_salas");
       self.scene.start('scene_puntuaciones');
@@ -74,11 +75,11 @@ class SceneMenuPrincipal extends Phaser.Scene {
     boton.add(textoInstancia);
 
     cajaBoton.on('pointerover', function() {
-      cajaBoton.setAlpha(0.5);
+      cajaBoton.setTint(0xaa99ff);
     });
 
     cajaBoton.on('pointerout', function() {
-      cajaBoton.setAlpha(0.33);
+      cajaBoton.clearTint();
     });
 
   }

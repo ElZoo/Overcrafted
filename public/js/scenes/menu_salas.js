@@ -54,11 +54,12 @@ class SceneMenuSalas extends Phaser.Scene {
 
     let boton = this.add.container(x, y);
 
-    let cajaBoton = this.add.rectangle(0, 0, width, height, 0x000000);
-    cajaBoton.setAlpha(0.33);
+    let cajaBoton = this.add.sprite(0,0, 'backTexto');
+    cajaBoton.setScale(4,3.3);
+    cajaBoton.setAlpha(1);
     boton.add(cajaBoton);
 
-    let containerIcono = this.add.container(0-width*0.5+width*0.06, 0);
+    let containerIcono = this.add.container(0-width*0.5+width*0.25, 0);
     boton.add(containerIcono);
 
     let iconoPlayers = this.add.image(0, 0, 'totem_of_undying');
@@ -79,20 +80,20 @@ class SceneMenuSalas extends Phaser.Scene {
     textoInstancia.setOrigin(0.5, 0.5);
     boton.add(textoInstancia);
 
-    let containerUnirse = this.add.container(width*0.5 - width * 0.06, 0);
+    let containerUnirse = this.add.container(width*0.5 - width * 0.25, 0);
     boton.add(containerUnirse);
 
-    let cajaUnirse = this.add.rectangle(0, 0, width*0.05, width*0.05, 0x000000);
+    let cajaUnirse = this.add.sprite(0,0, 'botonAlto');
+    cajaUnirse.setScale(0.27,0.6);
     cajaUnirse.setInteractive({'cursor': 'pointer'});
-    cajaUnirse.setAlpha(0.33);
     containerUnirse.add(cajaUnirse);
 
     cajaUnirse.on('pointerover', function() {
-      cajaUnirse.setAlpha(0.5);
+      cajaUnirse.setTint(0xaa99ff);
     });
 
     cajaUnirse.on('pointerout', function() {
-      cajaUnirse.setAlpha(0.33);
+      cajaUnirse.clearTint();
     });
 
     cajaUnirse.on('pointerup', function() {
