@@ -1,9 +1,13 @@
 class Player {
-    constructor(scene) {
+    constructor(scene, principal, id) {
       let self = this;
 
+      this.id = id;
+      this.principal = principal;
       this.x = 0;
       this.y = 0;
+      this.accX = 0;
+      this.accY = 0;
       this.scene = scene;
       this.dir = 'abajo';
       this.target = null;
@@ -32,15 +36,17 @@ class Player {
 
       this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
 
-      scene.input.keyboard.on('keydown', function (event) {
-        if(event.code == "KeyE") {
-          self.coger();
-        }
+      if(principal) {
+        scene.input.keyboard.on('keydown', function (event) {
+          if(event.code == "KeyE") {
+            self.coger();
+          }
 
-        else if (event.code == "KeyQ") {
-          self.usar();
-        }
-      });
+          else if (event.code == "KeyQ") {
+            self.usar();
+          }
+        });
+      }
     }
 
     coger() {
@@ -56,7 +62,7 @@ class Player {
     }
 
     pintarItem() {
-      this.item.pintarItem(0, -40, this.scene);      
+      this.item.pintarItem(0, -40, this.scene);
       this.container.add(this.item.textura);
     }
 
@@ -94,26 +100,44 @@ class Player {
     }
 
     update() {
-      this.container.body.setAcceleration(0);
+      if(this.principal) {
+        let dirs = {
+          up: false,
+          down: false,
+          left: false,
+          right: false,
+        }
 
-      let accPos = 600;
-      let accNeg = -600;
+        if(this.scene.cursors.left.isDown || this.scene.input.keyboard.addKey('A').isDown) {
+          dirs.left = true;
+        }
+        if(this.scene.cursors.right.isDown || this.scene.input.keyboard.addKey('D').isDown) {
+          dirs.right = true;
+        }
+        if(this.scene.cursors.up.isDown || this.scene.input.keyboard.addKey('W').isDown) {
+          dirs.up = true;
+        }
+        if(this.scene.cursors.down.isDown || this.scene.input.keyboard.addKey('S').isDown) {
+          dirs.down = true;
+        }
 
-      if(this.scene.cursors.left.isDown || this.scene.input.keyboard.addKey('A').isDown) {
-        this.dir = 'left';
-        this.container.body.setAccelerationX(accNeg);
+        this.scene.game.socket.emit('update_controles', [dirs, [this.x, this.y]]);
       }
-      if(this.scene.cursors.right.isDown || this.scene.input.keyboard.addKey('D').isDown) {
+
+      this.container.body.setAccelerationX(this.accX);
+      this.container.body.setAccelerationY(this.accY);
+
+      if(this.accX > 0) {
         this.dir = 'right';
-        this.container.body.setAccelerationX(accPos);
       }
-      if(this.scene.cursors.up.isDown || this.scene.input.keyboard.addKey('W').isDown) {
-        this.dir = 'up';
-        this.container.body.setAccelerationY(accNeg);
+      if(this.accX < 0) {
+        this.dir = 'left';
       }
-      if(this.scene.cursors.down.isDown || this.scene.input.keyboard.addKey('S').isDown) {
+      if(this.accY > 0) {
         this.dir = 'down';
-        this.container.body.setAccelerationY(accPos);
+      }
+      if(this.accY < 0) {
+        this.dir = 'up';
       }
 
       this.x = this.container.x;

@@ -3,10 +3,6 @@ class SceneMenuSalas extends Phaser.Scene {
     super('scene_menu_salas');
   }
 
-  preload() {
-
-  }
-
   create() {
     let self = this;
 
@@ -17,9 +13,6 @@ class SceneMenuSalas extends Phaser.Scene {
     let y = ph(20);
     this.cameras.main.setViewport(x, y, width, height);
     this.numInstancias = 0;
-    for(let n=1; n<=10; n++) {
-      this.crearBotonInstancia(n);
-    }
 
     this.input.on('wheel', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
       let width = pw(80);
@@ -32,9 +25,23 @@ class SceneMenuSalas extends Phaser.Scene {
       self.cameras.main.scrollY = Math.min(yMax, self.cameras.main.scrollY);
     });
 
+    this.game.socket = io();
+    this.game.socket.on('instancias', function(instancias) {
+      for(let i in instancias) {
+        let instancia = instancias[i];
+        self.crearBotonInstancia(instancia.id, instancia.jugadores);
+      }
+    });
+
+    this.game.socket.on('instancia_conectado', function(datos) {
+      self.game.nivel = datos[0];
+      self.game.jugadores = datos[1];
+      self.scene.setVisible(false, "scene_menu_salas");
+      self.scene.get('menu_principal').scene.start('scene_mundo');
+    });
   }
 
-  crearBotonInstancia(id) {
+  crearBotonInstancia(id, jugadores) {
     let self = this;
 
     let width = pw(80);
@@ -56,7 +63,7 @@ class SceneMenuSalas extends Phaser.Scene {
     iconoPlayers.setScale(4,4);
     containerIcono.add(iconoPlayers);
 
-    let numP = Math.round(Math.random() * 4);
+    let numP = jugadores;
     let textoPlayers = this.add.text(10, 10, numP+'/4');
     textoPlayers.setFontSize(25);
     textoPlayers.setFontFamily('Verdana');
@@ -87,8 +94,7 @@ class SceneMenuSalas extends Phaser.Scene {
     });
 
     cajaUnirse.on('pointerup', function() {
-      self.scene.setVisible(false, "scene_menu_salas");
-      self.scene.get('menu_principal').scene.start('scene_mundo');
+      self.game.socket.emit('joinInstancia', id);
     });
 
     let textoUnirse = this.add.text(0, 0, '►');

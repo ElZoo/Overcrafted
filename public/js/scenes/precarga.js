@@ -66,7 +66,7 @@ class ScenePrecarga extends Phaser.Scene {
       yoyo: false,
       frameRate: 8
     });
-
+    
     this.scene.launch('menu_principal');
   }
 }
