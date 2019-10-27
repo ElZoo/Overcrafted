@@ -58,6 +58,11 @@ class ItemPlatoCrafteo extends Item {
   }
 
   craftear(player) {
+
+    if (this.items.length >= 9) {
+      return;
+    }
+
     let item = player.item;
     player.item = null;
 
