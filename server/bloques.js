@@ -117,15 +117,24 @@ module.exports = {
     }
 
     coger(jugador) {
-      if(this.item && !jugador.item) {
-        jugador.item = this.item;
-        this.item = null;
-      } else if(!this.item && jugador.item) {
+      if (jugador.item) {
         if(!jugador.item.bloquesAceptados.includes(this.nombre)) {
           return;
         }
-
         jugador.item = null;
+      }
+    }
+  },
+
+  BloqueRecibir: class BloqueRecibir extends Bloque {
+    constructor(x, y) {
+      super(x, y, 'recibir');
+    }
+
+    coger(jugador) {
+      if (!jugador.item && this.item) {
+        jugador.item = this.item;
+        this.item = null;
       }
     }
   },

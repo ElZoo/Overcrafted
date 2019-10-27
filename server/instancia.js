@@ -195,5 +195,7 @@ function crearBloque(x, y, id) {
       return new BLOQUES.BloqueHorno(x, y);
     case 8:
       return new BLOQUES.BloqueCofre(x, y);
+    case 9:
+      return new BLOQUES.BloqueRecibir(x, y);
   }
 }
