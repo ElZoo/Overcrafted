@@ -18,6 +18,8 @@ function crearBloque(x, y, scene, id) {
       return new BloqueHorno(x, y, scene);
     case 8:
       return new BloqueCofre(x, y, scene);
+    case 9:
+      return new BloqueRecibir(x, y, scene);
   }
 }
 
@@ -236,16 +238,7 @@ class BloqueEntregar extends Bloque {
   }
 
   coger(player) {
-    if(this.item && !player.item) {
-      //Darle el item al player
-      player.item = this.item;
-      this.item = null;
-
-      if(player.item.textura) {
-        player.item.textura.destroy();
-      }
-      player.pintarItem();
-    } else if(!this.item && player.item) {
+    if(player.item) {
       //Cogerle el item al player
       if(!player.item.bloquesAceptados.includes(this.nombre)) {
         return;
@@ -257,6 +250,27 @@ class BloqueEntregar extends Bloque {
       if(item.textura) {
         item.textura.destroy();
       }
+    }
+  }
+}
+
+class BloqueRecibir extends Bloque {
+  constructor(x, y, scene) {
+    super(x, y, scene);
+    this.colision = true;
+    this.usable = true;
+    this.setTextura('recibir');
+  }
+
+  coger(player) {
+    if(!player.item && this.item) {
+      player.item = this.item;
+      this.item = null;
+
+      if(player.item.textura) {
+        player.item.textura.destroy();
+      }
+      player.pintarItem();
     }
   }
 }
