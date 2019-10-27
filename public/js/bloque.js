@@ -387,11 +387,13 @@ class BloqueRecibir extends Bloque {
 
     for(let i in this.items) {
       let item = this.items[i];
+
       if(item.textura) {
         item.textura.destroy();
       }
-      item.pintarItem(dx, dy+i*4, this.scene);
-      item.textura.depth = dy + i*4 + this.scene.tileTam*0.25;
+
+      item.pintarItem(dx, dy - i*4, this.scene);
+      item.textura.depth = dy + 16;
     }
   }
 }
