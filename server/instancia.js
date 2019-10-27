@@ -181,7 +181,7 @@ module.exports = class Instancia {
         }
       }
 
-      if(bloque.nombre == 'recibir' || bloque.nombre == 'fregadero') {
+      if(bloque.items) {
         datosBloques[id]['items'] = [];
         for(let it in bloque.items) {
           datosBloques[id]['items'].push(bloque.items[it].nombre);
@@ -215,5 +215,7 @@ function crearBloque(x, y, id) {
       return new BLOQUES.BloqueCofre(x, y);
     case 9:
       return new BLOQUES.BloqueRecibir(x, y);
+    case 10:
+      return new BLOQUES.BloquePila(x, y);
   }
 }

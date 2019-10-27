@@ -92,6 +92,13 @@ module.exports = {
     }
   },
 
+  BloquePila: class BloquePila extends Bloque {
+    constructor(x, y) {
+      super(x, y, 'pila');
+      this.items = [];
+    }
+  },
+
   BloqueFregadero: class BloqueFregadero extends Bloque {
     constructor(x, y) {
       super(x, y, 'fregadero');

@@ -20,6 +20,8 @@ function crearBloque(x, y, scene, id) {
       return new BloqueCofre(x, y, scene);
     case 9:
       return new BloqueRecibir(x, y, scene);
+    case 10:
+      return new BloquePila(x, y, scene);
   }
 }
 
@@ -188,6 +190,17 @@ class BloqueBasura extends Bloque {
       player.item.textura.destroy();
       player.item = null;
     }
+  }
+}
+
+class BloquePila extends Bloque {
+  constructor(x, y, scene) {
+    super(x, y, scene);
+    this.colision = true;
+    this.usable = true;
+    this.items = [];
+
+    this.setTextura('pila');
   }
 }
 
