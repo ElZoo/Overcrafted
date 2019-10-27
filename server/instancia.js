@@ -181,7 +181,7 @@ module.exports = class Instancia {
         }
       }
 
-      if(bloque.nombre == 'recibir') {
+      if(bloque.nombre == 'recibir' || bloque.nombre == 'fregadero') {
         datosBloques[id]['items'] = [];
         for(let it in bloque.items) {
           datosBloques[id]['items'].push(bloque.items[it].nombre);

@@ -95,6 +95,19 @@ module.exports = {
   BloqueFregadero: class BloqueFregadero extends Bloque {
     constructor(x, y) {
       super(x, y, 'fregadero');
+      this.items = [];
+    }
+
+    coger(jugador) {
+      if(jugador.item) {
+        if(!jugador.item.bloquesAceptados.includes(this.nombre)) {
+          return;
+        }
+
+        let item = jugador.item;
+        jugador.item = null;
+        this.items.push(item);
+      }
     }
   },
 

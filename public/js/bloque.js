@@ -196,7 +196,41 @@ class BloqueFregadero extends Bloque {
     super(x, y, scene);
     this.colision = true;
     this.usable = true;
+    this.items = [];
+
     this.setTextura('fregadero');
+  }
+
+  coger(player) {
+    if(player.item) {
+      if(!player.item.bloquesAceptados.includes(this.nombre)) {
+        return;
+      }
+
+      let item = player.item;
+      player.item = null;
+
+      this.items.push(item);
+      this.pintarItem();
+    }
+  }
+
+  pintarItem() {
+    let dx = this.x * this.scene.tileTam;
+    let dy = this.y * this.scene.tileTam - 16;
+
+    for(let i in this.items) {
+      let item = this.items[i];
+
+      if(item.textura) {
+        item.textura.destroy();
+      }
+
+      item.pintarItem(dx, dy + i*4, this.scene);
+      item.textura.setScale(0.22, 0.22);
+      item.textura.setTint(Phaser.Display.Color.RGBStringToColor('rgb(192, 192, 192)').color);
+      item.textura.depth = dy + i*4 + 16;
+    }
   }
 }
 

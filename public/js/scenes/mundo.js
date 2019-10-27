@@ -174,7 +174,7 @@ class SceneMundo extends Phaser.Scene {
           maquina.pintarItem();
         }
 
-        if(maquina_server.nombre == 'recibir') {
+        if(maquina_server.nombre == 'recibir' || maquina_server.nombre == 'fregadero') {
           maquina.items = [];
           for(let it in maquina_server.items) {
             let claseItem = itemByNombre(maquina_server.items[it]);
