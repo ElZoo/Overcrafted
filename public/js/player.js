@@ -54,15 +54,11 @@ class Player {
     }
 
     coger(bloque) {
-      if(this.target && this.target.x == bloque.x && this.target.y == bloque.y) {
-        bloque.coger(this);
-      }
+      bloque.coger(this);
     }
 
     usar(bloque){
-      if(this.target && this.target.x == bloque.x && this.target.y == bloque.y) {
-        this.target.usar(this);
-      }
+      bloque.usar(this);
     }
 
     pintarItem() {
