@@ -7,20 +7,12 @@ class SceneMundo extends Phaser.Scene {
       let self = this;
 
       this.game.socket.on('instancia_nuevoJugador', function(jg) {
-        console.log("Nuevo jugador: " + jg.id);
         let jugador = new Player(self, false, jg.id, 200, 200);
         self.physics.add.collider(jugador.container, self.fisicaMundo);
-        /*
-        for(let i in self.jugadores) {
-          let jg2 = self.jugadores[i];
-          self.physics.add.collider(jugador.container, jg2.container);
-        }
-        */
         self.jugadores[jg.id] = jugador;
       });
 
       this.game.socket.on('instancia_desconexionJugador', function(jugador_id) {
-        console.log("Desconexión jugador: " + jugador_id);
         let jg = self.jugadores[jugador_id];
         jg.container.destroy();
         delete self.jugadores[jugador_id];
@@ -137,18 +129,6 @@ class SceneMundo extends Phaser.Scene {
           }
         }
       }
-
-      /*
-      for(let i in this.jugadores) {
-        let jg = this.jugadores[i];
-        for(let j in this.jugadores) {
-          let jg2 = this.jugadores[j];
-          if(jg2.id != jg.id) {
-            this.physics.add.collider(jg.container, jg2.container);
-          }
-        }
-      }
-      */
 
       this.cursors = this.input.keyboard.createCursorKeys();
 

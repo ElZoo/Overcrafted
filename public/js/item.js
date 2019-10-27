@@ -36,17 +36,9 @@ class Item {
     this.textura.setScale(this.escala, this.escala);
   }
 
-  cortar(bloque) {
-
-
-  }
-
-  fundir(bloque){
-
-
-
-  }
-
+  cortar() {}
+  fundir() {}
+  craftear(player) {}
 }
 
 class ItemPlatoCrafteo extends Item {
@@ -114,8 +106,8 @@ class ItemTronco extends Item {
     ];
   }
 
-  cortar(bloque){
-    return new ItemPalo(bloque.scene);
+  cortar(){
+    return new ItemPalo();
   }
 }
 
@@ -141,8 +133,8 @@ class ItemGrava extends Item {
     ];
   }
 
-  cortar(bloque) {
-    return new ItemFlint(bloque.scene);
+  cortar() {
+    return new ItemFlint();
   }
 }
 
@@ -178,8 +170,8 @@ class ItemCobweb extends Item {
       'basura',
     ];
   }
-  cortar(bloque) {
-    return new ItemCuerda(bloque.scene);
+  cortar() {
+    return new ItemCuerda();
   }
 }
 
@@ -205,8 +197,8 @@ class ItemMenaHierro extends Item {
     ];
   }
 
-  fundir(bloque){
-    return new ItemLingoteHierro(bloque.scene);
+  fundir(){
+    return new ItemLingoteHierro();
   }
 }
 

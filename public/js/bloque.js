@@ -59,9 +59,7 @@ class Bloque {
     }
   }
 
-  usar(player){
-
-  }
+  usar(player) {}
 
   pintarItem() {}
 
@@ -216,14 +214,11 @@ class BloqueMesaCortar extends Bloque {
     this.item.textura.depth = dy + this.scene.tileTam*0.25;
   }
 
-  usar(){
+  usar() {
+    if(this.item) {
+      let itemRes = this.item.cortar();
 
-    if (this.item) {
-
-      let itemRes = this.item.cortar(this);
-
-      if (itemRes) {
-
+      if(itemRes) {
         this.item.textura.destroy();
         this.item = itemRes;
         this.pintarItem();
@@ -274,12 +269,11 @@ class BloqueHorno extends Bloque {
     this.setTextura('horno_off');
   }
 
-  coger(player){
-
+  coger(player) {
     if(!this.item && player.item) {
       //Cogerle el item al player
       if(!player.item.bloquesAceptados.includes(this.nombre)) {
-        return false;
+        return;
       }
 
       this.item = player.item;
@@ -289,13 +283,8 @@ class BloqueHorno extends Bloque {
         this.item.textura.destroy();
       }
 
-      this.item = this.item.fundir(this);
-
-
-
-    }
-
-    else if(this.item && !player.item) {
+      this.item = this.item.fundir();
+    } else if(this.item && !player.item) {
       //Darle el item al player
       player.item = this.item;
       this.item = null;
