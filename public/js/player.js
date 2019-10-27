@@ -39,24 +39,28 @@ class Player {
       if(principal) {
         scene.input.keyboard.on('keydown', function (event) {
           if(event.code == "KeyE") {
-            self.coger();
+            if(self.target) {
+              scene.game.socket.emit('coger_bloque', [self.target.x, self.target.y]);
+            }
           }
 
           else if (event.code == "KeyQ") {
-            self.usar();
+            if(self.target) {
+              scene.game.socket.emit('usar_bloque', [self.target.x, self.target.y]);
+            }
           }
         });
       }
     }
 
-    coger() {
-      if(this.target) {
-        this.target.coger(this);
+    coger(bloque) {
+      if(this.target && this.target.x == bloque.x && this.target.y == bloque.y) {
+        bloque.coger(this);
       }
     }
 
-    usar(){
-      if(this.target) {
+    usar(bloque){
+      if(this.target && this.target.x == bloque.x && this.target.y == bloque.y) {
         this.target.usar(this);
       }
     }

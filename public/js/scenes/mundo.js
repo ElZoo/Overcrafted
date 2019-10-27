@@ -42,6 +42,7 @@ class SceneMundo extends Phaser.Scene {
           }
         }
       });
+
       this.game.socket.on('update_jugadores_fast', function(jugadores) {
         for(let i in jugadores) {
           let jg = jugadores[i];
@@ -52,6 +53,40 @@ class SceneMundo extends Phaser.Scene {
             jugador.accY = jg.accY;
           }
         }
+      });
+
+      this.game.socket.on('server_coger', function(data) {
+        let coords = data[0];
+        let jg_id = data[1];
+
+        let bloque = self.tilesMundo[coords[0]+","+coords[1]];
+        if(!bloque) {
+          return;
+        }
+
+        let jugador = self.jugadores[jg_id];
+        if(!jugador) {
+          return;
+        }
+
+        jugador.coger(bloque);
+      });
+
+      this.game.socket.on('server_usar', function(data) {
+        let coords = data[0];
+        let jg_id = data[1];
+
+        let bloque = self.tilesMundo[coords[0]+","+coords[1]];
+        if(!bloque) {
+          return;
+        }
+
+        let jugador = self.jugadores[jg_id];
+        if(!jugador) {
+          return;
+        }
+
+        jugador.usar(bloque);
       });
     }
 
@@ -127,6 +162,19 @@ class SceneMundo extends Phaser.Scene {
         } else if(maquina_server.item) {
           let claseItem = itemByNombre(maquina_server.item);
           maquina.item = new claseItem;
+          maquina.pintarItem();
+        }
+
+        if(maquina_server.itemsPlato) {
+          console.log(maquina_server.itemsPlato);
+          maquina.item.textura.destroy();
+
+          maquina.item.items = [];
+          for(let it in maquina_server.itemsPlato) {
+            let claseItem = itemByNombre(maquina_server.itemsPlato[it]);
+            maquina.item.items.push(new claseItem);
+          }
+
           maquina.pintarItem();
         }
       }

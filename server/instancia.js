@@ -39,6 +39,44 @@ module.exports = class Instancia {
     }
   }
 
+  coger_bloque(socket_id, coords) {
+    let bloque = this.bloques[coords[0]+","+coords[1]];
+    if(!bloque) {
+      return;
+    }
+
+    let jugador = this.jugadores[socket_id];
+    if(!jugador) {
+      return;
+    }
+
+    bloque.coger(jugador);
+
+    for(let jg_id in this.sockets) {
+      let socket_jg = this.sockets[jg_id];
+      socket_jg.emit('server_coger', [coords, socket_id]);
+    }
+  }
+
+  usar_bloque(socket_id, coords) {
+    let bloque = this.bloques[coords[0]+","+coords[1]];
+    if(!bloque) {
+      return;
+    }
+
+    let jugador = this.jugadores[socket_id];
+    if(!jugador) {
+      return;
+    }
+
+    bloque.usar(jugador);
+
+    for(let jg_id in this.sockets) {
+      let socket_jg = this.sockets[jg_id];
+      socket_jg.emit('server_usar', [coords, socket_id]);
+    }
+  }
+
   conectar(socket) {
     let self = this;
     let jugador = new Jugador(socket.id);
@@ -124,6 +162,13 @@ module.exports = class Instancia {
         nombre: bloque.nombre,
         item: (bloque.item ? bloque.item.nombre : false),
       };
+
+      if(bloque.item && bloque.item.nombre == 'plato_crafteo') {
+        datosBloques[id]['itemsPlato'] = [];
+        for(let it in bloque.item.items) {
+          datosBloques[id]['itemsPlato'].push(bloque.item.items[it].nombre);
+        }
+      }
     }
 
     return datosBloques;

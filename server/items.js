@@ -41,7 +41,7 @@ module.exports = {
     }
 
     cortar(bloque) {
-      return new ItemPalo();
+      return new module.exports.ItemPalo();
     }
   },
 
@@ -68,7 +68,7 @@ module.exports = {
     }
 
     cortar(bloque) {
-      return new ItemFlint();
+      return new module.exports.ItemFlint();
     }
   },
 
@@ -106,7 +106,7 @@ module.exports = {
     }
 
     cortar(bloque) {
-      return new ItemCuerda();
+      return new module.exports.ItemCuerda();
     }
   },
 
@@ -133,7 +133,7 @@ module.exports = {
     }
 
     fundir(bloque) {
-      return new ItemLingoteHierro();
+      return new module.exports.ItemLingoteHierro();
     }
   },
 

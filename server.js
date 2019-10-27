@@ -67,6 +67,26 @@ io.on('connection', function(socket) {
     }
   });
 
+  socket.on('coger_bloque', function(coords) {
+    for(let instancia_id in instancias) {
+      let instancia = instancias[instancia_id];
+      if(instancia.sockets[socket.id]) {
+        instancia.coger_bloque(socket.id, coords);
+        break;
+      }
+    }
+  });
+
+  socket.on('usar_bloque', function(coords) {
+    for(let instancia_id in instancias) {
+      let instancia = instancias[instancia_id];
+      if(instancia.sockets[socket.id]) {
+        instancia.usar_bloque(socket.id, coords);
+        break;
+      }
+    }
+  });
+
   socket.on('disconnect', function() {
     console.log(`Usuario desconectado: ${socket.id}`);
 
