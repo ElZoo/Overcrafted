@@ -125,7 +125,7 @@ module.exports = class Instancia {
 
   desconectar(socket) {
     let jg = this.jugadores[socket.id];
-    if(jg.item && jg.item.nombre == 'plato_crafteo') {
+    if(jg.item && (jg.item.nombre == 'plato_crafteo' || jg.item.nombre == 'plato_sucio')) {
       for(let bloque_id in this.bloques) {
         let bloque = this.bloques[bloque_id];
         if(bloque.nombre == 'recibir') {

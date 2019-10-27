@@ -32,6 +32,21 @@ module.exports = {
     }
   },
 
+  ItemPlatoSucio: class ItemPlatoSucio extends Item {
+    constructor() {
+      super('plato_sucio');
+
+      this.bloquesAceptados = [
+        'fregadero',
+        'encimera',
+      ];
+    }
+
+    limpiar() {
+      return new module.exports.ItemPlatoSucio();
+    }
+  },
+
   ItemTronco: class ItemTronco extends Item {
     constructor() {
       super('tronco');

@@ -149,7 +149,7 @@ module.exports = {
     }
 
     nuevoPlatoSucio(instancia) {
-      this.items.push(new ITEMS.ItemPlatoCrafteo());
+      this.items.push(new ITEMS.ItemPlatoSucio());
       for(let jg_id in instancia.sockets) {
         let socket = instancia.sockets[jg_id];
         socket.emit('nuevo_plato_sucio');

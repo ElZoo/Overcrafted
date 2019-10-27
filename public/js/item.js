@@ -2,6 +2,8 @@ function itemByNombre(nombre) {
   switch(nombre) {
     case 'plato_crafteo':
       return ItemPlatoCrafteo;
+    case 'plato_sucio':
+      return ItemPlatoSucio;
     case 'tronco':
       return ItemTronco;
     case 'palo':
@@ -97,6 +99,21 @@ class ItemPlatoCrafteo extends Item {
       item.textura.setScale(this.escalaItems, this.escalaItems);
       this.textura.add(item.textura);
     }
+  }
+}
+
+class ItemPlatoSucio extends Item {
+  constructor() {
+    super('plato_sucio');
+
+    this.bloquesAceptados = [
+      'encimera',
+      'fregadero',
+    ];
+  }
+
+  lavar() {
+    return new ItemPlatoCrafteo();
   }
 }
 

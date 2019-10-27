@@ -264,7 +264,7 @@ class BloqueRecibir extends Bloque {
   }
 
   nuevoPlatoSucio() {
-    this.items.push(new ItemPlatoCrafteo());
+    this.items.push(new ItemPlatoSucio());
     this.pintarItem();
   }
 
