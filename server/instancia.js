@@ -14,6 +14,12 @@ module.exports = class Instancia {
     this.jugadores = {};
     this.sockets = {};
     this.recetasTimers = {};
+    this.pjs = {
+      'zombie': false,
+      'esqueleto': false,
+      'pigman': false,
+      'creeper': false
+    };
 
     let self = this;
     setInterval(function() {
@@ -201,7 +207,18 @@ module.exports = class Instancia {
 
   conectar(socket) {
     let self = this;
-    let jugador = new Jugador(socket.id);
+
+    let pj = '';
+    for(let p in this.pjs) {
+      let pjn = this.pjs[p];
+      if(!pjn) {
+        pj = p;
+        this.pjs[p] = true;
+        break;
+      }
+    }
+
+    let jugador = new Jugador(socket.id, pj);
 
     for(let socket_id in this.sockets) {
       let socket_jg = this.sockets[socket_id];
@@ -211,7 +228,7 @@ module.exports = class Instancia {
     this.jugadores[socket.id] = jugador;
     this.sockets[socket.id] = socket;
 
-    socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas]);
+    socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas, pj]);
 
     console.log("Jugador conectado a la instancia: " + this.id);
 
@@ -259,6 +276,7 @@ module.exports = class Instancia {
 
     delete this.jugadores[socket.id];
     delete this.sockets[socket.id];
+    this.pjs[jg.pj] = false;
 
     for(let socket_id in this.sockets) {
       let socket_jg = this.sockets[socket_id];

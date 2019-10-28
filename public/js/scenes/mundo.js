@@ -7,7 +7,7 @@ class SceneMundo extends Phaser.Scene {
       let self = this;
 
       this.game.socket.on('instancia_nuevoJugador', function(jg) {
-        let jugador = new Player(self, false, jg.id, 200, 200);
+        let jugador = new Player(self, false, jg.id, 200, 200, jg.pj);
         self.physics.add.collider(jugador.container, self.fisicaMundo);
         self.jugadores[jg.id] = jugador;
       });
@@ -160,7 +160,7 @@ class SceneMundo extends Phaser.Scene {
         let jg = this.game.jugadores[i];
 
         let principal = (jg.id == this.game.socket.id);
-        let jugador = new Player(this, principal, jg.id, jg.coords[0], jg.coords[1]);
+        let jugador = new Player(this, principal, jg.id, jg.coords[0], jg.coords[1], jg.pj);
         this.physics.add.collider(jugador.container, this.fisicaMundo);
         this.jugadores[jg.id] = jugador;
         if(principal) {
