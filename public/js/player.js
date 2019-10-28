@@ -16,13 +16,9 @@ class Player {
 
       this.container = scene.add.container(x, y);
 
-      let sombra = scene.add.circle(0, 120, 40, 0x000000);
-      sombra.setAlpha(0.15);
-      this.container.add(sombra);
-
       this.cuerpo = scene.add.sprite(0, 0, 'zombie', 'zombie_walk_front_0');
       this.cuerpo.anims.play('zombie_walk_front');
-      this.container.setScale(0.75, 0.75);
+      this.cuerpo.setScale(0.25, 0.25);
       this.container.add(this.cuerpo);
 
       scene.physics.world.enable(this.container);
@@ -31,8 +27,8 @@ class Player {
       this.container.body.setDrag(1000);
       this.container.body.setMaxVelocity(300);
 
-      this.container.body.setSize(this.cuerpo.width*0.5, this.cuerpo.height*0.25, true);
-      this.container.body.setOffset(-this.cuerpo.width*0.25, 32);
+      this.container.body.setSize(64, 64);
+      this.container.body.setOffset(-32, -32);
 
       this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
 
@@ -62,13 +58,13 @@ class Player {
     }
 
     pintarItem() {
-      this.item.pintarItem(0, -40, this.scene);
+      this.item.pintarItem(0, -55, this.scene);
       this.container.add(this.item.textura);
     }
 
     updateTargetBlock() {
-      let dx = Math.ceil((this.x-this.cuerpo.width*0.25) / this.scene.tileTam);
-      let dy = Math.ceil((this.y+this.cuerpo.height*0.075) / this.scene.tileTam);
+      let dx = Math.ceil((this.x-32) / this.scene.tileTam);
+      let dy = Math.ceil((this.y) / this.scene.tileTam);
 
       if(this.dir == 'up') {
         dy--;
@@ -142,7 +138,7 @@ class Player {
 
       this.x = this.container.x;
       this.y = this.container.y;
-      this.container.depth = this.y+this.cuerpo.height*0.33;
+      this.container.depth = this.y+32;
 
       this.updateAnims();
       this.updateTargetBlock();
