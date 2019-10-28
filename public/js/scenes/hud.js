@@ -16,7 +16,16 @@ class SceneHud extends Phaser.Scene {
 
         if(comanda && comanda.id == comanda_id) {
           if(comanda.container) {
-            comanda.container.destroy();
+            self.sound.play('out', {volume: 4});
+
+            self.tweens.add({
+              targets: comanda.container,
+              x: -300,
+              duration: 1000,
+              onComplete: function() {
+                comanda.container.destroy();
+              }
+            });
           }
 
           self.comandas[i] = false;
@@ -106,6 +115,8 @@ class SceneHud extends Phaser.Scene {
   }
 
   nuevaComanda(comanda) {
+    let self = this;
+
     let numComandas = Object.keys(this.comandas).length;
     let itemPrincipal = comanda.itemPrincipal;
     let subItems = comanda.items;
@@ -129,7 +140,10 @@ class SceneHud extends Phaser.Scene {
       targets: ctComanda,
       x: 12,
       duration: 1000,
-      delay: 100 * numComanda
+      delay: 100 * numComanda,
+      onStart: function() {
+        self.sound.play('in', {volume: 4});
+      }
     });
 
     this.comandas[numComanda]['container'] = ctComanda;

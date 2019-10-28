@@ -59,6 +59,7 @@ class Bloque {
       if(this.item.textura) {
         this.item.textura.destroy();
       }
+      this.scene.sound.play('colocar');
       this.pintarItem();
     }
   }
@@ -190,6 +191,7 @@ class BloqueBasura extends Bloque {
         return;
       }
 
+      this.scene.sound.play('basura');
       player.item.textura.destroy();
       player.item = null;
     }
@@ -262,6 +264,7 @@ class BloqueFregadero extends Bloque {
       let item = player.item;
       player.item = null;
 
+      this.scene.sound.play('fregadero');
       this.items.push(item);
       this.pintarItem();
     }
@@ -274,6 +277,7 @@ class BloqueFregadero extends Bloque {
 
       this.pintarItem();
 
+      this.scene.sound.play('lavar');
       let nuevoItem = item.lavar();
 
       for(let bloque_id in player.scene.tilesMundo) {
@@ -323,6 +327,7 @@ class BloqueMesaCortar extends Bloque {
 
   usar() {
     if(this.item) {
+      this.scene.sound.play('cortar');
       let itemRes = this.item.cortar();
 
       if(itemRes) {
@@ -355,7 +360,7 @@ class BloqueEntregar extends Bloque {
       }
 
       player.scene.scene.get('hud').sumarPuntos(comanda.puntos);
-
+      this.scene.sound.play('colocar');
       let item = player.item;
       player.item = null;
 
@@ -429,7 +434,7 @@ class BloqueHorno extends Bloque {
       if(this.item.textura) {
         this.item.textura.destroy();
       }
-
+      this.scene.sound.play('meter_horno');
       this.item = this.item.fundir();
     } else if(this.item && !player.item) {
       //Darle el item al player

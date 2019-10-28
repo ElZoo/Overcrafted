@@ -59,10 +59,28 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('arco', 'res/arco.png');
     this.load.image('flecha', 'res/flecha.png');
     this.load.image('espada_hierro', 'res/espada_hierro.png');
+
+    //audio
+    this.load.audio('pop', 'res/audio/pop.ogg');
+    this.load.audio('colocar', 'res/audio/colocar.ogg');
+    this.load.audio('basura', 'res/audio/basura.ogg');
+    this.load.audio('fregadero', 'res/audio/fregadero.ogg');
+    this.load.audio('lavar', 'res/audio/lavar.ogg');
+    this.load.audio('meter_horno', 'res/audio/meter_horno.ogg');
+    this.load.audio('cortar', 'res/audio/cortar.ogg');
+    this.load.audio('craftear', 'res/audio/craftear.ogg');
+    this.load.audio('in', 'res/audio/in.ogg');
+    this.load.audio('out', 'res/audio/out.ogg');
+
+    for(let i=1; i<=6; i++) {
+      this.load.audio('step_'+i, 'res/audio/step_'+i+'.ogg');
+    }
   }
 
 
   create() {
+    var self = this;
+
     let dirs = [
       'front', 'right', 'back', 'left',
       'frontright', 'frontleft', 'backright', 'backleft',
@@ -81,7 +99,7 @@ class ScenePrecarga extends Phaser.Scene {
           frames: this.anims.generateFrameNames(pj, {prefix: pj+'_walk_'+dir+'_', end: 3}),
           repeat: -1,
           yoyo: false,
-          frameRate: 8
+          frameRate: 8,
         });
       }
     }

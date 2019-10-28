@@ -48,6 +48,19 @@ class Player {
           }
         });
       }
+
+      this.cuerpo.on('animationupdate', function(animation, frame) {
+        if(animation.key.includes('_walk_') && frame.index % 2 != 0) {
+          let rnd = Math.floor(Math.random() * 6) + 1;
+          self.scene.sound.play('step_'+rnd, {volume: 0.2});
+        }
+      });
+      this.cuerpo.on('animationstart', function(animation, frame) {
+        if(animation.key.includes('_walk_')) {
+          let rnd = Math.floor(Math.random() * 6) + 1;
+          self.scene.sound.play('step_'+rnd, {volume: 0.2});
+        }
+      });
     }
 
     coger(bloque) {
@@ -61,6 +74,7 @@ class Player {
     pintarItem() {
       this.item.pintarItem(0, -55, this.scene);
       this.container.add(this.item.textura);
+      this.scene.sound.play('pop');
     }
 
     updateTargetBlock() {

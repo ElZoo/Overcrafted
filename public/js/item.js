@@ -77,6 +77,7 @@ class ItemPlatoCrafteo extends Item {
     item.textura.setScale(this.escalaItems, this.escalaItems);
     this.textura.add(item.textura);
 
+    player.scene.sound.play('craftear');
     this.items.push(item);
 
     let comanda = player.scene.checkReceta(this);

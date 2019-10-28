@@ -6,6 +6,8 @@ class SceneMundo extends Phaser.Scene {
     preload() {
       let self = this;
 
+      this.sound.setVolume(0.2);
+
       this.game.socket.on('instancia_nuevoJugador', function(jg) {
         let jugador = new Player(self, false, jg.id, 200, 200, jg.pj);
         self.physics.add.collider(jugador.container, self.fisicaMundo);
