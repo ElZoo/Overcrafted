@@ -7,10 +7,10 @@ class SceneMenuSalas extends Phaser.Scene {
     let self = this;
 
     let width = pw(80);
-    let height = ph(50);
+    let height = ph(46);
 
     let x = pw(10);
-    let y = ph(20);
+    let y = ph(34);
     this.cameras.main.setViewport(x, y, width, height);
     this.numInstancias = 0;
 

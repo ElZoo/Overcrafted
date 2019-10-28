@@ -6,19 +6,22 @@ class SceneMenuPrincipal extends Phaser.Scene {
   create() {
     this.add.image(0, 0, 'fondo_menu').setOrigin(0.25, 0.25);
     this.add.image(0, 0, 'vignette').setOrigin(0,0);
+
+    this.add.image(this.game.config.width*0.5, 125, 'logo');
+
     this.scene.launch('scene_menu_salas');
-    this.crearBotonForo();
     this.scene.setVisible(true, "scene_menu_salas");
+
+    this.crearBotonForo();
     this.crearBotonScore();
   }
 
-  crearBotonForo(){
-
+  crearBotonForo() {
     let width = pw(25);
     let height = width*0.25;
 
     let x = pw(10) + width*0.5;
-    let y = ph(80);
+    let y = ph(90);
 
     let boton = this.add.container(x, y);
 
@@ -54,7 +57,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
     let height = width*0.25;
 
     let x = pw(90) - width*0.5;
-    let y = ph(80);
+    let y = ph(90);
 
     let boton = this.add.container(x, y);
 

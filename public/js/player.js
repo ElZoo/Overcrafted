@@ -1,10 +1,10 @@
 class Player {
-    constructor(scene, principal, id, x, y) {
+    constructor(scene, principal, id, x, y, nombre) {
       let self = this;
 
       this.id = id;
       this.principal = principal;
-      this.nombre = 'esqueleto';
+      this.nombre = nombre;
       this.x = x;
       this.y = y;
       this.accX = 0;

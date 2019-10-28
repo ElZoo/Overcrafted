@@ -19,6 +19,7 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('botonAlto', 'res/botonAlto.png');
     this.load.image('emerald', 'res/emerald.png');
     this.load.image('reloj','res/reloj.png');
+    this.load.image('logo','res/logo.png');
 
 
     //bloques
