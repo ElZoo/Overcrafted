@@ -60,7 +60,6 @@ class ItemPlatoCrafteo extends Item {
   }
 
   craftear(player) {
-
     if (this.items.length >= 9) {
       return;
     }
@@ -79,6 +78,24 @@ class ItemPlatoCrafteo extends Item {
     this.textura.add(item.textura);
 
     this.items.push(item);
+
+    let itemFinal = player.scene.checkReceta(this);
+    if(itemFinal) {
+      if(this.itemFinalTextura) {
+        this.itemFinalTextura.destroy();
+      }
+
+      for(let i in this.items) {
+        let item = this.items[i];
+        if(item.textura) {
+          item.textura.destroy();
+        }
+      }
+
+      this.itemFinalTextura = player.scene.add.sprite(0, 0, itemFinal);
+      this.itemFinalTextura.setScale(0.5);
+      this.textura.add(this.itemFinalTextura);
+    }
   }
 
   pintarItem(dx, dy, scene) {
@@ -98,6 +115,24 @@ class ItemPlatoCrafteo extends Item {
       item.pintarItem(ix, iy, scene);
       item.textura.setScale(this.escalaItems, this.escalaItems);
       this.textura.add(item.textura);
+    }
+
+    let itemFinal = scene.checkReceta(this);
+    if(itemFinal) {
+      if(this.itemFinalTextura) {
+        this.itemFinalTextura.destroy();
+      }
+
+      for(let i in this.items) {
+        let item = this.items[i];
+        if(item.textura) {
+          item.textura.destroy();
+        }
+      }
+
+      this.itemFinalTextura = scene.add.sprite(0, 0, itemFinal);
+      this.itemFinalTextura.setScale(0.5);
+      this.textura.add(this.itemFinalTextura);
     }
   }
 }

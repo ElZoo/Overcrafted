@@ -131,7 +131,7 @@ class SceneMundo extends Phaser.Scene {
         }
 
         if(recetaOk) {
-          return true;
+          return comanda.itemPrincipal;
         }
       }
 
@@ -140,6 +140,9 @@ class SceneMundo extends Phaser.Scene {
 
     create() {
       let self = this;
+
+      this.scene.launch('hud');
+
       this.tiles_ids = this.game.nivel;
 
       this.mundoColumnas = this.tiles_ids[0].length;
@@ -201,12 +204,25 @@ class SceneMundo extends Phaser.Scene {
       vig.setScrollFactor(0);
       vig.depth = 99999;
 
-      this.scene.launch('hud');
+      setTimeout(function() {
+        self.actualizarMesas();
+      }, 100);
     }
 
     update() {
       for(let i in this.jugadores) {
         this.jugadores[i].update();
+      }
+    }
+
+    actualizarMesas() {
+      for(let id in this.tilesMundo) {
+        let bloque = this.tilesMundo[id];
+
+        if(bloque.item && bloque.item.nombre == 'plato_crafteo') {
+          bloque.item.textura.destroy();
+          bloque.pintarItem();
+        }
       }
     }
 
