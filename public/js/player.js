@@ -4,6 +4,7 @@ class Player {
 
       this.id = id;
       this.principal = principal;
+      this.nombre = 'esqueleto';
       this.x = x;
       this.y = y;
       this.accX = 0;
@@ -17,15 +18,15 @@ class Player {
 
       this.container = scene.add.container(x, y);
 
-      this.cuerpo = scene.add.sprite(0, 0, 'zombie', 'zombie_walk_front_0');
+      let sombra = scene.add.circle(0, 48, 28, 0x000000);
+      sombra.setAlpha(0.25);
+      this.container.add(sombra);
+
+      this.cuerpo = scene.add.sprite(0, 0, this.nombre, this.nombre+'_walk_front_0');
       this.cuerpo.setScale(0.25, 0.25);
       this.container.add(this.cuerpo);
 
       scene.physics.world.enable(this.container);
-
-      //this.container.body.setAllowDrag(true);
-      //this.container.body.setDrag(1000);
-      //this.container.body.setMaxVelocity(300);
 
       this.container.body.setSize(64, 64);
       this.container.body.setOffset(-32, -32);
@@ -160,16 +161,16 @@ class Player {
     }
 
     updateAnims() {
-      let anim = 'zombie_walk';
+      let anim = this.nombre+'_walk';
 
       if(this.dirY == 'down') {
-        anim = 'zombie_walk_front';
+        anim = this.nombre+'_walk_front';
       } else if(this.dirY == 'up') {
-        anim = 'zombie_walk_back';
+        anim = this.nombre+'_walk_back';
       }
 
-      if(anim == 'zombie_walk') {
-        anim = 'zombie_walk_';
+      if(anim == this.nombre+'_walk') {
+        anim = this.nombre+'_walk_';
       }
       if(this.dirX == 'left') {
         anim += 'left';
@@ -177,7 +178,7 @@ class Player {
         anim += 'right';
       }
 
-      if(anim == 'zombie_walk_') {
+      if(anim == this.nombre+'_walk_') {
         if(this.cuerpo.anims.currentAnim) {
           this.cuerpo.anims.stop();
           this.cuerpo.anims.setProgress(0);
