@@ -101,7 +101,14 @@ class SceneHud extends Phaser.Scene {
     }
 
     this.comandas[numComanda] = comanda;
-    let ctComanda = this.add.container(12, 20 + numComanda * 128);
+    let ctComanda = this.add.container(-300, 20 + numComanda * 128);
+
+    this.tweens.add({
+      targets: ctComanda,
+      x: 12,
+      duration: 1000,
+      delay: 100 * numComanda
+    });
 
     this.comandas[numComanda]['container'] = ctComanda;
 

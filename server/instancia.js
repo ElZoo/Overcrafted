@@ -24,7 +24,7 @@ module.exports = class Instancia {
     let self = this;
     setInterval(function() {
       self.nuevaComanda();
-    }, 10000);
+    }, 20000);
   }
 
   nuevaComanda() {
@@ -229,6 +229,12 @@ module.exports = class Instancia {
     this.sockets[socket.id] = socket;
 
     socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas, pj]);
+
+    setTimeout(function() {
+      if(Object.keys(self.comandas).length <= 0) {
+        self.nuevaComanda();
+      }
+    }, 2000);
 
     console.log("Jugador conectado a la instancia: " + this.id);
 
