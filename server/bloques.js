@@ -173,11 +173,14 @@ module.exports = {
           return;
         }
 
-        if(!instancia.checkReceta(jugador.item)) {
+        let comanda_id = instancia.checkReceta(jugador.item);
+        if(!comanda_id) {
           return;
         }
 
         jugador.item = null
+
+        instancia.borrarComanda(comanda_id);
 
         for(let bloque_id in instancia.bloques) {
           let bloque = instancia.bloques[bloque_id];

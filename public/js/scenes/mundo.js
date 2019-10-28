@@ -82,7 +82,6 @@ class SceneMundo extends Phaser.Scene {
       });
 
       this.game.socket.on('nuevo_plato_sucio', function() {
-        console.log("Nuevo plato sucio");
         for(let bloque_id in self.tilesMundo) {
           let bloque = self.tilesMundo[bloque_id];
           if(bloque.nombre == 'recibir') {

@@ -13,6 +13,7 @@ module.exports = class Instancia {
     this.crearBloques();
     this.jugadores = {};
     this.sockets = {};
+    this.recetasTimers = {};
 
     let self = this;
     setInterval(function() {
@@ -40,20 +41,13 @@ module.exports = class Instancia {
       socket.emit('nueva_comanda', comanda);
     }
 
-    let inter = setInterval(function() {
+    let interval = setInterval(function() {
       let tiempoAhora = new Date();
       let diff = (tiempoAhora - comanda.tiempoInicio) / 1000;
       let rel = 1 - (diff / comanda.tiempoMax);
 
       if(rel <= 0) {
-        clearInterval(inter);
-        delete self.comandas[comanda.id];
-
-        for(let jg_id in self.sockets) {
-          let socket = self.sockets[jg_id];
-          socket.emit('quitar_comanda', comanda.id);
-        }
-
+        self.borrarComanda(comanda.id);
         return;
       }
 
@@ -64,6 +58,24 @@ module.exports = class Instancia {
         socket.emit('update_comanda', [comanda.id, comanda.tiempo]);
       }
     }, 500);
+
+    this.recetasTimers[comanda.id] = interval;
+  }
+
+  borrarComanda(comanda_id) {
+    let comanda = this.comandas[comanda_id];
+    if(!comanda) {
+      return;
+    }
+
+    clearInterval(this.recetasTimers[comanda.id]);
+    delete this.comandas[comanda.id];
+    delete this.recetasTimers[comanda.id];
+
+    for(let jg_id in this.sockets) {
+      let socket = this.sockets[jg_id];
+      socket.emit('quitar_comanda', comanda.id);
+    }
   }
 
   checkReceta(plato) {
@@ -105,7 +117,7 @@ module.exports = class Instancia {
       }
 
       if(recetaOk) {
-        return true;
+        return comanda.id;
       }
     }
 
@@ -152,12 +164,12 @@ module.exports = class Instancia {
       return;
     }
 
-    bloque.coger(jugador, this);
-
     for(let jg_id in this.sockets) {
       let socket_jg = this.sockets[jg_id];
       socket_jg.emit('server_coger', [coords, socket_id]);
     }
+
+    bloque.coger(jugador, this);
   }
 
   usar_bloque(socket_id, coords) {
@@ -190,6 +202,8 @@ module.exports = class Instancia {
 
     this.jugadores[socket.id] = jugador;
     this.sockets[socket.id] = socket;
+
+    console.log(this.comandas);
 
     socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas]);
 
