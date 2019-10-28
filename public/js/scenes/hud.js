@@ -44,6 +44,43 @@ class SceneHud extends Phaser.Scene {
       let comanda = this.game.comandas[id];
       this.nuevaComanda(comanda);
     }
+    this.cronometro();
+    this.crearPuntuacion();
+  }
+
+  cronometro(){
+      let ctCronometro = this.add.container(this.game.config.width*0.85,this.game.config.height*0.2);
+      let fondoPuntuacion = this.add.image(-44,-25,'backTexto').setOrigin(0,0);
+      fondoPuntuacion.setScale(1.4,2.5)
+      ctCronometro.add(fondoPuntuacion);
+
+      let iconoReloj = this.add.image(0,13, 'reloj');
+      iconoReloj.setScale(0.8)
+      ctCronometro.add(iconoReloj);
+
+      let textoCronometro = this.add.text(40,0,'1230');
+      textoCronometro.setFontSize(25);
+      textoCronometro.setFontFamily('Verdana');
+      textoCronometro.setFontStyle('bold');
+      ctCronometro.add(textoCronometro);
+    }
+
+  crearPuntuacion(){
+    let ctPuntuacion = this.add.container(this.game.config.width*0.85,this.game.config.height*0.8);
+
+    let fondoPuntuacion = this.add.image(-44,-25,'backTexto').setOrigin(0,0);
+    fondoPuntuacion.setScale(1.4,2.5)
+    ctPuntuacion.add(fondoPuntuacion);
+
+    let iconoEmerald = this.add.image(0,13, 'emerald');
+    iconoEmerald.setScale(3,3)
+    ctPuntuacion.add(iconoEmerald);
+
+    let textoPuntuacion = this.add.text(40,0,'1230');
+    textoPuntuacion.setFontSize(25);
+    textoPuntuacion.setFontFamily('Verdana');
+    textoPuntuacion.setFontStyle('bold');
+    ctPuntuacion.add(textoPuntuacion);
   }
 
   nuevaComanda(comanda) {
