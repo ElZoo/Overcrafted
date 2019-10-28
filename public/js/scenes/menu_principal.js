@@ -14,6 +14,9 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
     this.crearBotonForo();
     this.crearBotonScore();
+
+    this.game.cancion = this.sound.add('musica_menu', {loop: true, volume: 0.25});
+    this.game.cancion.play();
   }
 
   crearBotonForo() {

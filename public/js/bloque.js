@@ -360,7 +360,7 @@ class BloqueEntregar extends Bloque {
       }
 
       player.scene.scene.get('hud').sumarPuntos(comanda.puntos);
-      this.scene.sound.play('colocar');
+      this.scene.sound.play('bell');
       let item = player.item;
       player.item = null;
 

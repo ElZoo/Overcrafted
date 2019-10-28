@@ -145,6 +145,13 @@ class SceneMundo extends Phaser.Scene {
 
       this.scene.launch('hud');
 
+      if(this.game.cancion) {
+        console.log(this.game.cancion);
+        this.game.cancion.destroy();
+      }
+      this.game.cancion = this.sound.add('musica_juego', {loop: true, volume: 0.5});
+      this.game.cancion.play();
+
       this.tiles_ids = this.game.nivel;
 
       this.mundoColumnas = this.tiles_ids[0].length;
