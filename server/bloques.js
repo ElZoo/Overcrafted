@@ -172,6 +172,11 @@ module.exports = {
         if(!jugador.item.bloquesAceptados.includes(this.nombre)) {
           return;
         }
+
+        if(!instancia.checkReceta(jugador.item)) {
+          return;
+        }
+
         jugador.item = null
 
         for(let bloque_id in instancia.bloques) {

@@ -349,6 +349,10 @@ class BloqueEntregar extends Bloque {
         return;
       }
 
+      if(!player.scene.checkReceta(player.item)) {
+        return;
+      }
+
       let item = player.item;
       player.item = null;
 

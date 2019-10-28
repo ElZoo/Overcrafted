@@ -93,6 +93,52 @@ class SceneMundo extends Phaser.Scene {
       });
     }
 
+    checkReceta(plato) {
+      let comandas = this.scene.get('hud').comandas;
+
+      for(let ic in comandas) {
+        let comanda = comandas[ic];
+        if(!comanda){
+          continue;
+        }
+
+        let itemsReceta = [];
+        for(let i in comanda.itemsFinales) {
+          let item = comanda.itemsFinales[i];
+          itemsReceta.push(item.nombre);
+        }
+
+        let itemsPlato = [];
+        for(let i in plato.items) {
+          let item = plato.items[i];
+          itemsPlato.push(item.nombre);
+        }
+
+        let recetaOk = true;
+
+        for(let i in itemsPlato) {
+          let item = itemsPlato[i];
+          let x = itemsReceta.indexOf(item);
+          if(x > -1) {
+            itemsReceta.splice(x, 1);
+          } else {
+            recetaOk = false;
+            break;
+          }
+        }
+
+        if(itemsReceta.length > 0) {
+          recetaOk = false;
+        }
+
+        if(recetaOk) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     create() {
       let self = this;
       this.tiles_ids = this.game.nivel;

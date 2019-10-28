@@ -66,6 +66,52 @@ module.exports = class Instancia {
     }, 500);
   }
 
+  checkReceta(plato) {
+    let comandas = this.comandas;
+
+    for(let ic in comandas) {
+      let comanda = comandas[ic];
+      if(!comanda){
+        continue;
+      }
+
+      let itemsReceta = [];
+      for(let i in comanda.itemsFinales) {
+        let item = comanda.itemsFinales[i];
+        itemsReceta.push(item.nombre);
+      }
+
+      let itemsPlato = [];
+      for(let i in plato.items) {
+        let item = plato.items[i];
+        itemsPlato.push(item.nombre);
+      }
+
+      let recetaOk = true;
+
+      for(let i in itemsPlato) {
+        let item = itemsPlato[i];
+        let x = itemsReceta.indexOf(item);
+        if(x > -1) {
+          itemsReceta.splice(x, 1);
+        } else {
+          recetaOk = false;
+          break;
+        }
+      }
+
+      if(itemsReceta.length > 0) {
+        recetaOk = false;
+      }
+
+      if(recetaOk) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   update_coords(socket_id, coords) {
     let jugador = this.jugadores[socket_id];
     jugador.coords = coords;
