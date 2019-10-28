@@ -14,6 +14,7 @@ module.exports = class Instancia {
     this.jugadores = {};
     this.sockets = {};
     this.recetasTimers = {};
+    this.timers = [];
     this.puntos = 0;
     this.pjs = {
       'zombie': false,
@@ -23,9 +24,20 @@ module.exports = class Instancia {
     };
 
     let self = this;
-    setInterval(function() {
+    let interval = setInterval(function() {
       self.nuevaComanda();
     }, 20000);
+
+    this.timers.push(interval);
+  }
+
+  destroy() {
+    for(let i in this.timers) {
+      clearInterval(this.timers[i]);
+    }
+    for(let id in this.recetasTimers) {
+      clearInterval(this.recetasTimers[id]);
+    }
   }
 
   nuevaComanda() {
@@ -239,7 +251,7 @@ module.exports = class Instancia {
 
     console.log("Jugador conectado a la instancia: " + this.id);
 
-    setInterval(function() {
+    let intervalUpdate = setInterval(function() {
       let data = [];
 
       for(let id in self.jugadores) {
@@ -252,8 +264,9 @@ module.exports = class Instancia {
 
       socket.emit('update_jugadores', data);
     }, 1250);
+    this.timers.push(intervalUpdate);
 
-    setInterval(function() {
+    let intervalFast = setInterval(function() {
       let data = [];
 
       for(let id in self.jugadores) {
@@ -267,6 +280,7 @@ module.exports = class Instancia {
 
       socket.emit('update_jugadores_fast', data);
     }, 20);
+    this.timers.push(intervalFast);
   }
 
   desconectar(socket) {

@@ -6,6 +6,7 @@ var io = require('socket.io').listen(server);
 
 var Instancia = require('./server/instancia.js');
 var RECETAS = require('./server/receta.js');
+var uuid = require('uuid/v4');
 var instancias = {};
 
 var recetas = [
@@ -26,7 +27,7 @@ var nivel = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
-crearInstancias();
+//crearInstancias();
 
 io.on('connection', function(socket) {
   console.log(`Nuevo usuario: ${socket.id}`);
@@ -41,27 +42,25 @@ io.on('connection', function(socket) {
   }
   socket.emit('instancias', instancias_emit);
 
-  socket.on('joinInstancia', function(id) {
-    let yaOnline = false;
-
-    for(let instancia_id in instancias) {
-      let instancia = instancias[instancia_id];
-      if(instancia.sockets[socket.id]) {
-        yaOnline = true;
-        break;
+  socket.on('matchMaking', function() {
+    let llaves = Object.keys(instancias);
+    if(llaves.length > 0) {
+      let index = Math.floor(Math.random() * llaves.length);
+      let id = llaves[index];
+      let instancia = instancias[id];
+      if(Object.keys(instancia.jugadores).length < 4) {
+        joinInstancia(socket, id);
+        return;
       }
     }
 
-    if(yaOnline) {
-      return;
-    }
+    let instancia = new Instancia(uuid(), nivel, recetas);
+    instancias[instancia.id] = instancia;
+    joinInstancia(socket, instancia.id);
+  });
 
-    let instancia = instancias[id];
-    if(!instancia || Object.keys(instancia.jugadores).length >= 4) {
-      return;
-    }
-
-    instancia.conectar(socket);
+  socket.on('joinInstancia', function(id) {
+    joinInstancia(socket, id);
   });
 
   socket.on('update_controles', function(data) {
@@ -101,6 +100,11 @@ io.on('connection', function(socket) {
       let instancia = instancias[instancia_id];
       if(instancia.sockets[socket.id]) {
         instancia.desconectar(socket);
+
+        if(Object.keys(instancia.jugadores).length <= 0) {
+          instancia.destroy();
+          delete instancias[instancia.id];
+        }
         break;
       }
     }
@@ -122,4 +126,27 @@ function crearInstancias() {
     let instancia = new Instancia(i, nivel, recetas);
     instancias[instancia.id] = instancia;
   }
+}
+
+function joinInstancia(socket, id) {
+  let yaOnline = false;
+
+  for(let instancia_id in instancias) {
+    let instancia = instancias[instancia_id];
+    if(instancia.sockets[socket.id]) {
+      yaOnline = true;
+      break;
+    }
+  }
+
+  if(yaOnline) {
+    return;
+  }
+
+  let instancia = instancias[id];
+  if(!instancia || Object.keys(instancia.jugadores).length >= 4) {
+    return;
+  }
+
+  instancia.conectar(socket);
 }

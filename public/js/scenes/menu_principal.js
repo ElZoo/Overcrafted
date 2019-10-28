@@ -3,6 +3,23 @@ class SceneMenuPrincipal extends Phaser.Scene {
     super('menu_principal');
   }
 
+  init() {
+    let self = this;
+
+    this.game.socket = io();
+
+    this.game.socket.on('instancia_conectado', function(datos) {
+      self.game.nivel = datos[0];
+      self.game.jugadores = datos[1];
+      self.game.bloques = datos[2];
+      self.game.comandas = datos[3];
+      self.game.nombrePj = datos[4];
+      self.game.puntos = datos[5];
+      self.scene.setVisible(false, "scene_menu_salas");
+      self.scene.get('menu_principal').scene.start('scene_mundo');
+    });
+  }
+
   create() {
     this.add.image(0, 0, 'fondo_menu').setOrigin(0.25, 0.25);
     this.add.image(0, 0, 'vignette').setOrigin(0,0);
@@ -14,6 +31,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
     this.crearBotonForo();
     this.crearBotonScore();
+    this.crearBotonJugar();
 
     this.game.cancion = this.sound.add('musica_menu', {loop: true, volume: 0.25});
     this.game.cancion.play();
@@ -37,6 +55,40 @@ class SceneMenuPrincipal extends Phaser.Scene {
     boton.add(cajaBoton);
 
     let textoInstancia = this.add.text(0, 0, 'Vente al foro');
+    textoInstancia.setFontSize(35);
+    textoInstancia.setFontFamily('Verdana');
+    textoInstancia.setFontStyle('bold');
+    textoInstancia.setOrigin(0.5, 0.5);
+    boton.add(textoInstancia);
+
+    cajaBoton.on('pointerover', function() {
+      cajaBoton.setTint(0xaa99ff);
+    });
+
+    cajaBoton.on('pointerout', function() {
+      cajaBoton.clearTint();
+    });
+  }
+
+  crearBotonJugar() {
+    let width = pw(25);
+    let height = width*0.25;
+
+    let x = pw(50);
+    let y = ph(90);
+
+    let boton = this.add.container(x, y);
+    let self = this;
+
+    let cajaBoton = this.add.sprite(0,0, 'boton');
+    cajaBoton.setScale(1.5,2.5);
+    cajaBoton.setInteractive({'cursor': 'pointer'});
+    cajaBoton.on('pointerup', function() {
+      self.game.socket.emit('matchMaking');
+    });
+    boton.add(cajaBoton);
+
+    let textoInstancia = this.add.text(0, 0, 'JUGAR');
     textoInstancia.setFontSize(35);
     textoInstancia.setFontFamily('Verdana');
     textoInstancia.setFontStyle('bold');

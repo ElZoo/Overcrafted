@@ -24,24 +24,12 @@ class SceneMenuSalas extends Phaser.Scene {
       self.cameras.main.scrollY = Math.max(0, self.cameras.main.scrollY);
       self.cameras.main.scrollY = Math.min(yMax, self.cameras.main.scrollY);
     });
-
-    this.game.socket = io();
+    
     this.game.socket.on('instancias', function(instancias) {
       for(let i in instancias) {
         let instancia = instancias[i];
         self.crearBotonInstancia(instancia.id, instancia.jugadores);
       }
-    });
-
-    this.game.socket.on('instancia_conectado', function(datos) {
-      self.game.nivel = datos[0];
-      self.game.jugadores = datos[1];
-      self.game.bloques = datos[2];
-      self.game.comandas = datos[3];
-      self.game.nombrePj = datos[4];
-      self.game.puntos = datos[5];
-      self.scene.setVisible(false, "scene_menu_salas");
-      self.scene.get('menu_principal').scene.start('scene_mundo');
     });
   }
 
