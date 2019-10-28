@@ -180,6 +180,9 @@ module.exports = {
 
         jugador.item = null
 
+        let comanda = instancia.comandas[comanda_id];
+        instancia.puntos += comanda.puntos;
+
         instancia.borrarComanda(comanda_id);
 
         for(let bloque_id in instancia.bloques) {

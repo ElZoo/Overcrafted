@@ -349,9 +349,12 @@ class BloqueEntregar extends Bloque {
         return;
       }
 
-      if(!player.scene.checkReceta(player.item)) {
+      let comanda = player.scene.checkReceta(player.item);
+      if(!comanda) {
         return;
       }
+
+      player.scene.scene.get('hud').sumarPuntos(comanda.puntos);
 
       let item = player.item;
       player.item = null;

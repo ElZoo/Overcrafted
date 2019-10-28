@@ -1,5 +1,5 @@
 class Receta {
-  constructor(id, itemPrincipal, tiempoMax) {
+  constructor(id, itemPrincipal, tiempoMax, puntos) {
     this.id = id;
     this.itemPrincipal = itemPrincipal;
     this.items = [];
@@ -7,6 +7,7 @@ class Receta {
     this.tiempoMax = tiempoMax;
     this.tiempoInicio = new Date();
     this.tiempo = 1;
+    this.puntos = puntos;
   }
 }
 
@@ -20,7 +21,7 @@ class ItemReceta {
 module.exports = {
   RecetaArco: class RecetaArco extends Receta {
     constructor(id) {
-      super(id, 'arco', 60);
+      super(id, 'arco', 60, 10);
 
       this.items = [
         new ItemReceta('tronco', false),
@@ -36,7 +37,7 @@ module.exports = {
 
   RecetaFlecha: class RecetaFlecha extends Receta {
     constructor(id) {
-      super(id, 'flecha', 60);
+      super(id, 'flecha', 60, 15);
 
       this.items = [
         new ItemReceta('tronco', false),
@@ -54,7 +55,7 @@ module.exports = {
 
   RecetaEspadaHierro: class RecetaEspadaHierro extends Receta {
     constructor(id) {
-      super(id, 'espada_hierro', 60);
+      super(id, 'espada_hierro', 60, 20);
 
       this.items = [
         new ItemReceta('tronco', false),

@@ -48,8 +48,15 @@ class SceneHud extends Phaser.Scene {
     this.crearPuntuacion();
   }
 
-  cronometro(){
-      let ctCronometro = this.add.container(this.game.config.width*0.85,this.game.config.height*0.2);
+  sumarPuntos(cant) {
+    this.game.puntos += cant;
+    this.textoPuntuacion.setText(this.game.puntos);
+  }
+
+  cronometro() {
+      let xFinal = this.game.config.width*0.85;
+
+      let ctCronometro = this.add.container(this.game.config.width+200, 40);
       let fondoPuntuacion = this.add.image(-44,-25,'backTexto').setOrigin(0,0);
       fondoPuntuacion.setScale(1.4,2.5)
       ctCronometro.add(fondoPuntuacion);
@@ -63,10 +70,17 @@ class SceneHud extends Phaser.Scene {
       textoCronometro.setFontFamily('Verdana');
       textoCronometro.setFontStyle('bold');
       ctCronometro.add(textoCronometro);
+
+      this.tweens.add({
+        targets: ctCronometro,
+        x: xFinal,
+        duration: 200
+      });
     }
 
   crearPuntuacion(){
-    let ctPuntuacion = this.add.container(this.game.config.width*0.85,this.game.config.height*0.8);
+    let xFinal = this.game.config.width*0.85;
+    let ctPuntuacion = this.add.container(this.game.config.width+200,this.game.config.height*0.9);
 
     let fondoPuntuacion = this.add.image(-44,-25,'backTexto').setOrigin(0,0);
     fondoPuntuacion.setScale(1.4,2.5)
@@ -76,11 +90,19 @@ class SceneHud extends Phaser.Scene {
     iconoEmerald.setScale(3,3)
     ctPuntuacion.add(iconoEmerald);
 
-    let textoPuntuacion = this.add.text(40,0,'1230');
+    let textoPuntuacion = this.add.text(40,0,this.game.puntos);
     textoPuntuacion.setFontSize(25);
     textoPuntuacion.setFontFamily('Verdana');
     textoPuntuacion.setFontStyle('bold');
     ctPuntuacion.add(textoPuntuacion);
+
+    this.textoPuntuacion = textoPuntuacion;
+
+    this.tweens.add({
+      targets: ctPuntuacion,
+      x: xFinal,
+      duration: 200
+    });
   }
 
   nuevaComanda(comanda) {

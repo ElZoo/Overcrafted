@@ -39,6 +39,7 @@ class SceneMenuSalas extends Phaser.Scene {
       self.game.bloques = datos[2];
       self.game.comandas = datos[3];
       self.game.nombrePj = datos[4];
+      self.game.puntos = datos[5];
       self.scene.setVisible(false, "scene_menu_salas");
       self.scene.get('menu_principal').scene.start('scene_mundo');
     });

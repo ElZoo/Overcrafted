@@ -14,6 +14,7 @@ module.exports = class Instancia {
     this.jugadores = {};
     this.sockets = {};
     this.recetasTimers = {};
+    this.puntos = 0;
     this.pjs = {
       'zombie': false,
       'esqueleto': false,
@@ -228,7 +229,7 @@ module.exports = class Instancia {
     this.jugadores[socket.id] = jugador;
     this.sockets[socket.id] = socket;
 
-    socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas, pj]);
+    socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas, pj, this.puntos]);
 
     setTimeout(function() {
       if(Object.keys(self.comandas).length <= 0) {

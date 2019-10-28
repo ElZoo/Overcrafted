@@ -79,8 +79,9 @@ class ItemPlatoCrafteo extends Item {
 
     this.items.push(item);
 
-    let itemFinal = player.scene.checkReceta(this);
-    if(itemFinal) {
+    let comanda = player.scene.checkReceta(this);
+    if(comanda) {
+      let itemFinal = comanda.itemPrincipal;
       if(this.itemFinalTextura) {
         this.itemFinalTextura.destroy();
       }
@@ -117,8 +118,9 @@ class ItemPlatoCrafteo extends Item {
       this.textura.add(item.textura);
     }
 
-    let itemFinal = scene.checkReceta(this);
-    if(itemFinal) {
+    let comanda = scene.checkReceta(this);
+    if(comanda) {
+      let itemFinal = comanda.itemPrincipal;
       if(this.itemFinalTextura) {
         this.itemFinalTextura.destroy();
       }

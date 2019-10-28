@@ -131,7 +131,7 @@ class SceneMundo extends Phaser.Scene {
         }
 
         if(recetaOk) {
-          return comanda.itemPrincipal;
+          return comanda;
         }
       }
 
