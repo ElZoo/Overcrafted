@@ -29,7 +29,7 @@ class SceneMundo extends Phaser.Scene {
 
               jugador.x = jg.coords[0];
               jugador.y = jg.coords[1];
-              jugador.container.depth = jugador.y+jugador.cuerpo.height*0.33;
+              jugador.container.depth = jugador.y+32;
             }
           }
         }

@@ -9,7 +9,8 @@ class Player {
       this.accX = 0;
       this.accY = 0;
       this.scene = scene;
-      this.dir = 'abajo';
+      this.dirX = false;
+      this.dirY = 'abajo';
       this.target = null;
 
       this.item = null;
@@ -17,15 +18,14 @@ class Player {
       this.container = scene.add.container(x, y);
 
       this.cuerpo = scene.add.sprite(0, 0, 'zombie', 'zombie_walk_front_0');
-      this.cuerpo.anims.play('zombie_walk_front');
       this.cuerpo.setScale(0.25, 0.25);
       this.container.add(this.cuerpo);
 
       scene.physics.world.enable(this.container);
 
-      this.container.body.setAllowDrag(true);
-      this.container.body.setDrag(1000);
-      this.container.body.setMaxVelocity(300);
+      //this.container.body.setAllowDrag(true);
+      //this.container.body.setDrag(1000);
+      //this.container.body.setMaxVelocity(300);
 
       this.container.body.setSize(64, 64);
       this.container.body.setOffset(-32, -32);
@@ -66,13 +66,14 @@ class Player {
       let dx = Math.ceil((this.x-32) / this.scene.tileTam);
       let dy = Math.ceil((this.y) / this.scene.tileTam);
 
-      if(this.dir == 'up') {
+      if(this.lastDirY == 'up') {
         dy--;
-      } else if(this.dir == 'down') {
+      } else if(this.lastDirY == 'down') {
         dy++;
-      } else if(this.dir == 'left') {
+      }
+      if(this.lastDirX == 'left') {
         dx--;
-      } else if(this.dir == 'right') {
+      } else if(this.lastDirX == 'right') {
         dx++;
       }
 
@@ -120,20 +121,34 @@ class Player {
         this.scene.game.socket.emit('update_controles', [dirs, [this.x, this.y]]);
       }
 
-      this.container.body.setAccelerationX(this.accX);
-      this.container.body.setAccelerationY(this.accY);
+      this.container.body.setVelocity(this.accX, this.accY);
+      //this.container.body.setAccelerationY(this.accY);
 
       if(this.accX > 0) {
-        this.dir = 'right';
-      }
-      if(this.accX < 0) {
-        this.dir = 'left';
+        this.dirX = 'right';
+
+        this.lastDirX = 'right';
+        this.lastDirY = false;
+      } else if(this.accX < 0) {
+        this.dirX = 'left';
+
+        this.lastDirX = 'left';
+        this.lastDirY = false;
+      } else {
+        this.dirX = false;
       }
       if(this.accY > 0) {
-        this.dir = 'down';
-      }
-      if(this.accY < 0) {
-        this.dir = 'up';
+        this.dirY = 'down';
+
+        this.lastDirY = 'down';
+        this.lastDirX = false;
+      } else if(this.accY < 0) {
+        this.dirY = 'up';
+
+        this.lastDirY = 'up';
+        this.lastDirX = false;
+      } else {
+        this.dirY = false;
       }
 
       this.x = this.container.x;
@@ -145,41 +160,33 @@ class Player {
     }
 
     updateAnims() {
-      if(this.dir == 'down') {
-        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.y >= 0) {
-          this.cuerpo.anims.play('zombie_walk_front');
-        }
-        if(this.container.body.velocity.y <= 0) {
+      let anim = 'zombie_walk';
+
+      if(this.dirY == 'down') {
+        anim = 'zombie_walk_front';
+      } else if(this.dirY == 'up') {
+        anim = 'zombie_walk_back';
+      }
+
+      if(anim == 'zombie_walk') {
+        anim = 'zombie_walk_';
+      }
+      if(this.dirX == 'left') {
+        anim += 'left';
+      } else if(this.dirX == 'right') {
+        anim += 'right';
+      }
+
+      if(anim == 'zombie_walk_') {
+        if(this.cuerpo.anims.currentAnim) {
           this.cuerpo.anims.stop();
           this.cuerpo.anims.setProgress(0);
         }
-      } else if(this.dir == 'up') {
-        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.y <= 0) {
-          this.cuerpo.anims.play('zombie_walk_back');
+      } else {
+        if(!this.cuerpo.anims.currentAnim || this.cuerpo.anims.currentAnim.key != anim || !this.cuerpo.anims.isPlaying) {
+          this.cuerpo.anims.play(anim);
+          this.cuerpo.anims.setProgress(0.25);
         }
-        if(this.container.body.velocity.y >= 0) {
-          this.cuerpo.anims.stop();
-          this.cuerpo.anims.setProgress(0);
-        }
-      } else if(this.dir == 'right') {
-        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.x >= 0) {
-          this.cuerpo.anims.play('zombie_walk_right');
-        }
-        if(this.container.body.velocity.x <= 0) {
-          this.cuerpo.anims.stop();
-          this.cuerpo.anims.setProgress(0);
-        }
-      } else if(this.dir == 'left') {
-        if(!this.cuerpo.anims.isPlaying && this.container.body.velocity.x <= 0) {
-          this.cuerpo.anims.play('zombie_walk_left');
-        }
-        if(this.container.body.velocity.x >= 0) {
-          this.cuerpo.anims.stop();
-          this.cuerpo.anims.setProgress(0);
-        }
-      } else if(this.container.body.velocity.x == 0 && this.container.body.velocity.y == 0) {
-        this.cuerpo.anims.stop();
-        this.cuerpo.anims.setProgress(0);
       }
     }
 }

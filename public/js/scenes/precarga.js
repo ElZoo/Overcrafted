@@ -59,34 +59,21 @@ class ScenePrecarga extends Phaser.Scene {
 
 
   create() {
-    this.anims.create({
-      key: 'zombie_walk_front',
-      frames: this.anims.generateFrameNames('zombie', {prefix: 'zombie_walk_front_', end: 3}),
-      repeat: -1,
-      yoyo: false,
-      frameRate: 8
-    });
-    this.anims.create({
-      key: 'zombie_walk_right',
-      frames: this.anims.generateFrameNames('zombie', {prefix: 'zombie_walk_right_', end: 3}),
-      repeat: -1,
-      yoyo: false,
-      frameRate: 8
-    });
-    this.anims.create({
-      key: 'zombie_walk_back',
-      frames: this.anims.generateFrameNames('zombie', {prefix: 'zombie_walk_back_', end: 3}),
-      repeat: -1,
-      yoyo: false,
-      frameRate: 8
-    });
-    this.anims.create({
-      key: 'zombie_walk_left',
-      frames: this.anims.generateFrameNames('zombie', {prefix: 'zombie_walk_left_', end: 3}),
-      repeat: -1,
-      yoyo: false,
-      frameRate: 8
-    });
+    let dirs = [
+      'front', 'right', 'back', 'left',
+      'frontright', 'frontleft', 'backright', 'backleft',
+    ];
+    
+    for(let i in dirs) {
+      let dir = dirs[i];
+      this.anims.create({
+        key: 'zombie_walk_'+dir,
+        frames: this.anims.generateFrameNames('zombie', {prefix: 'zombie_walk_'+dir+'_', end: 3}),
+        repeat: -1,
+        yoyo: false,
+        frameRate: 8
+      });
+    }
 
     this.scene.launch('menu_principal');
   }

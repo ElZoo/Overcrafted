@@ -130,7 +130,7 @@ module.exports = class Instancia {
   }
 
   update_controles(socket_id, data) {
-    let acc = 1200;
+    let acc = 300;
 
     let jugador = this.jugadores[socket_id];
     let dirs = data[0];
@@ -144,12 +144,20 @@ module.exports = class Instancia {
       jugador.accX = 0;
     }
 
+    if(dirs.up || dirs.down) {
+      jugador.accX *= 0.75;
+    }
+
     if(dirs.up && !dirs.down) {
       jugador.accY = -acc;
     } else if(dirs.down && !dirs.up) {
       jugador.accY = acc;
     } else {
       jugador.accY = 0;
+    }
+
+    if(dirs.right || dirs.left) {
+      jugador.accY *= 0.75;
     }
   }
 
@@ -202,8 +210,6 @@ module.exports = class Instancia {
 
     this.jugadores[socket.id] = jugador;
     this.sockets[socket.id] = socket;
-
-    console.log(this.comandas);
 
     socket.emit('instancia_conectado', [this.nivel, this.jugadores, this.datosBloques(), this.comandas]);
 
