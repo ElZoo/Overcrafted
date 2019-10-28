@@ -37,6 +37,9 @@ class ScenePrecarga extends Phaser.Scene {
 
     //personajes
     this.load.atlas('zombie', 'res/zombie.png', 'res/zombie.json');
+    this.load.atlas('esqueleto', 'res/esqueleto.png', 'res/esqueleto.json');
+    this.load.atlas('pigman', 'res/pigman.png', 'res/pigman.json');
+    this.load.atlas('creeper', 'res/creeper.png', 'res/creeper.json');
 
     //items
     this.load.image('tronco', 'res/tronco.png');
@@ -63,16 +66,23 @@ class ScenePrecarga extends Phaser.Scene {
       'front', 'right', 'back', 'left',
       'frontright', 'frontleft', 'backright', 'backleft',
     ];
-    
-    for(let i in dirs) {
-      let dir = dirs[i];
-      this.anims.create({
-        key: 'zombie_walk_'+dir,
-        frames: this.anims.generateFrameNames('zombie', {prefix: 'zombie_walk_'+dir+'_', end: 3}),
-        repeat: -1,
-        yoyo: false,
-        frameRate: 8
-      });
+    let pjs = [
+      'zombie', 'esqueleto', 'pigman', 'creeper'
+    ];
+
+    for(let p in pjs) {
+      let pj = pjs[p];
+
+      for(let i in dirs) {
+        let dir = dirs[i];
+        this.anims.create({
+          key: pj+'_walk_'+dir,
+          frames: this.anims.generateFrameNames(pj, {prefix: pj+'_walk_'+dir+'_', end: 3}),
+          repeat: -1,
+          yoyo: false,
+          frameRate: 8
+        });
+      }
     }
 
     this.scene.launch('menu_principal');
