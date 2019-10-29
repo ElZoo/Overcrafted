@@ -47,7 +47,7 @@ module.exports = {
         "10,9": ITEMS.ItemPlatoCrafteo,
       };
 
-      super(casillas, recetas, cofres, items, 120, 15000, 20, [608, 250], module.exports.MapaFacil);
+      super(casillas, recetas, cofres, items, 100, 15000, 20, [608, 250], module.exports.MapaFacil);
     }
   },
 
@@ -70,6 +70,7 @@ module.exports = {
 
       let recetas = [
         RECETAS.RecetaArco,
+        RECETAS.RecetaFlecha,
         RECETAS.RecetaFlecha,
       ];
 
@@ -108,6 +109,8 @@ module.exports = {
 
       let recetas = [
         RECETAS.RecetaArco,
+        RECETAS.RecetaEspadaHierro,
+        RECETAS.RecetaEspadaHierro,
         RECETAS.RecetaEspadaHierro,
       ];
 

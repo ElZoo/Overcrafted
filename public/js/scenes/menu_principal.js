@@ -28,6 +28,12 @@ class SceneMenuPrincipal extends Phaser.Scene {
   create() {
     let self = this;
 
+    if(this.game.segunda) {
+      return;
+    } else {
+      this.game.segunda = true;
+    }
+
     this.add.image(0, 0, 'fondo_menu').setOrigin(0.25, 0.25);
     this.add.image(0, 0, 'vignette').setOrigin(0,0);
 

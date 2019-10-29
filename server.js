@@ -31,10 +31,15 @@ setInterval(function() {
     let instancia = instancias_borrar[i];
     let sockets_reconect = [];
 
+    let gameover = false;
+    if(instancia.puntos < instancia.puntosMinimos || !instancia.siguienteNivel) {
+      gameover = true;
+    }
+
     for(let socket_id in instancia.sockets) {
       let socket = instancia.sockets[socket_id];
       sockets_reconect.push(socket);
-      socket.emit('dejarInstancia');
+      socket.emit('dejarInstancia', gameover);
     }
 
     instancia.destroy();
