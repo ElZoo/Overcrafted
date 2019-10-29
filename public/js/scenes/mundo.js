@@ -32,6 +32,9 @@ class SceneMundo extends Phaser.Scene {
           let jugador = self.jugadores[jg.id];
           if(jugador) {
             if(jugador.accX == 0 && jugador.accY == 0) {
+              if(Math.abs(jg.coords[0]-jugador.container.x) < 16 && Math.abs(jg.coords[1]-jugador.container.y) < 16) {
+                continue;
+              }
               jugador.container.x = jg.coords[0];
               jugador.container.y = jg.coords[1];
 

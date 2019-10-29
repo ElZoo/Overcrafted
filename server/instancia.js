@@ -4,7 +4,8 @@ var ITEMS = require('./items.js');
 var uuid = require('uuid/v4');
 
 module.exports = class Instancia {
-  constructor(id, mapa) {
+  constructor(id, claseMapa) {
+    let mapa = new claseMapa();
     this.id = id;
     this.nivel = mapa.casillas;
     this.recetas = mapa.recetas;
@@ -16,8 +17,11 @@ module.exports = class Instancia {
     this.recetasTimers = {};
     this.timers = [];
     this.puntos = 0;
+    this.puntosMinimos = mapa.puntosMinimos;
+    this.siguienteNivel = mapa.siguienteNivel;
     this.fechaCreacion = new Date();
     this.tiempoMax = mapa.tiempoMax;
+    this.coordsSpawn = mapa.coords;
     this.pjs = {
       'zombie': false,
       'esqueleto': false,
@@ -233,7 +237,7 @@ module.exports = class Instancia {
       }
     }
 
-    let jugador = new Jugador(socket.id, pj);
+    let jugador = new Jugador(socket.id, pj, this.coordsSpawn);
 
     for(let socket_id in this.sockets) {
       let socket_jg = this.sockets[socket_id];
@@ -273,7 +277,7 @@ module.exports = class Instancia {
       }
 
       socket.emit('update_jugadores', data);
-    }, 1250);
+    }, 200);
     this.timers.push(intervalUpdate);
 
     let intervalFast = setInterval(function() {

@@ -1,7 +1,7 @@
 module.exports = class Jugador {
-  constructor(id, pj) {
+  constructor(id, pj, coords) {
     this.id = id;
-    this.coords = [608, 250];
+    this.coords = coords;
     this.accX = 0;
     this.accY = 0;
     this.pj = pj;

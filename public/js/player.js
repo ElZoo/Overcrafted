@@ -28,8 +28,8 @@ class Player {
 
       scene.physics.world.enable(this.container);
 
-      this.container.body.setSize(64, 64);
-      this.container.body.setOffset(-32, -32);
+      this.container.body.setSize(32, 64);
+      this.container.body.setOffset(-16, -32);
 
       this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
 

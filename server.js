@@ -10,7 +10,7 @@ var uuid = require('uuid/v4');
 var instancias = {};
 
 let mapas = [
-  new MAPA.MapaTutorial,
+  MAPA.MapaTutorial,
 ];
 
 setInterval(function() {
@@ -29,15 +29,33 @@ setInterval(function() {
 
   for(let i in instancias_borrar) {
     let instancia = instancias_borrar[i];
+    let sockets_reconect = [];
 
     for(let socket_id in instancia.sockets) {
       let socket = instancia.sockets[socket_id];
+      sockets_reconect.push(socket);
       socket.emit('dejarInstancia');
     }
 
     instancia.destroy();
     if(instancias[instancia.id]) {
       delete instancias[instancia.id];
+    }
+
+    if(instancia.puntos >= instancia.puntosMinimos && instancia.siguienteNivel) {
+      let nuevaInstancia = new Instancia(uuid(), instancia.siguienteNivel);
+      instancias[nuevaInstancia.id] = nuevaInstancia;
+
+      setTimeout(function() {
+        let acum = 0;
+        for(let s in sockets_reconect) {
+          acum += 20;
+          setTimeout(function() {
+            let socket = sockets_reconect[s];
+            joinInstancia(socket, nuevaInstancia.id);
+          }, acum);
+        }
+      }, 250);
     }
   }
 }, 250);
@@ -67,7 +85,7 @@ io.on('connection', function(socket) {
       }
     }
 
-    let mapa = mapas[Math.floor(Math.random() * mapas.length)];
+    let mapa = mapas[0];
 
     let instancia = new Instancia(uuid(), mapa);
     instancias[instancia.id] = instancia;

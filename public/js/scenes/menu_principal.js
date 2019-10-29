@@ -10,7 +10,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
       this.game.socket = io();
     } else {
       this.game.socket.removeAllListeners();
-    }   
+    }
 
     this.game.socket.on('instancia_conectado', function(datos) {
       self.game.nivel = datos[0];
@@ -21,7 +21,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
       self.game.puntos = datos[5];
       self.game.fechaCreacion = new Date(datos[6]);
       self.game.tiempoMax = datos[7];
-      self.scene.get('menu_principal').scene.start('scene_mundo');
+      self.scene.start('scene_mundo');
     });
   }
 
