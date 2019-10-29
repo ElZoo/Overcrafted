@@ -16,7 +16,7 @@ var config = {
     mode: Phaser.Scale.FIT,
   },
   banner: false,
-  backgroundColor: '#FFFFFF',
+  backgroundColor: '#212121',
   scene: [
     ScenePrecarga,
     SceneMenuPrincipal,

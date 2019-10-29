@@ -4,13 +4,27 @@ class ScenePrecarga extends Phaser.Scene {
   }
 
   preload() {
+    let px = this.game.config.width * 0.5;
+    let py = this.game.config.height * 0.5;
+
+    let progreso = this.add.graphics();
+    progreso.fillStyle(0xffffff, 1);
+    let progresoCaja = this.add.graphics();
+    progresoCaja.fillStyle(0x616161, 0.4);
+    progresoCaja.fillRect(px-160, py, 320, 50);
+
+    this.add.text(px-90, py-60, "CARGANDO...").setFontSize(24).setFontFamily('Verdana').setFontStyle('bold');
+
+    this.load.on('progress', function (value) {
+      progreso.clear();
+      progreso.fillRect(px-150, py+10, 300 * value, 30);
+    });
+
     //GUI
     this.load.image('totem_of_undying', 'res/totem_of_undying.png');
     this.load.image('fondo_menu', 'res/fondo_menu.png');
     this.load.image('mapa', 'res/mapa.png');
     this.load.image('reloj', 'res/reloj.png');
-    this.load.image('barraFondo', 'res/barraFondo.png');
-    this.load.image('barraArriba', 'res/barraArriba.png');
     this.load.image('item_frame', 'res/item_frame.png');
     this.load.image('cajaItem', 'res/cajaItem.png');
     this.load.image('boton', 'res/boton.png');
