@@ -154,6 +154,15 @@ class SceneMundo extends Phaser.Scene {
 
       this.scene.launch('hud');
 
+      this.game.events.on('blur', function() {
+        self.sound.setVolume(0);
+      });
+      this.game.events.on('focus', function() {
+        setTimeout(function() {
+          self.sound.setVolume(0.2);
+        }, 500);        
+      });
+
       if(this.game.cancion) {
         this.game.cancion.destroy();
       }
