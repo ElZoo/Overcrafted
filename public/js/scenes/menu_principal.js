@@ -13,6 +13,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
     }
 
     this.game.socket.on('instancia_conectado', function(datos) {
+      document.getElementById('nick').style.display = "none";
       self.game.nivel = datos[0];
       self.game.jugadores = datos[1];
       self.game.bloques = datos[2];
@@ -39,8 +40,18 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
     this.add.image(this.game.config.width*0.5, 190, 'logo');
 
+    let elemento = document.getElementById('nick');
+    elemento.style.display = "block";
+    elemento.focus();
+
     this.crearBoton(50, 60, 'JUGAR', function() {
-      self.game.socket.emit('matchMaking');
+      if(!elemento.value || !elemento.value.trim()) {
+        elemento.value = "";
+        elemento.placeholder = "¡Debes introducir tu nick!";
+        elemento.focus();
+        return;
+      }
+      self.game.socket.emit('matchMaking', elemento.value);
     });
 
     this.crearBoton(50, 70, 'Puntuaciones', function() {
@@ -60,9 +71,6 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
   crearBoton(px, py, texto, callback) {
     let self = this;
-
-    let width = pw(25);
-    let height = width*0.25;
 
     let x = pw(px);
     let y = ph(py);

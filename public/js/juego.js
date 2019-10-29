@@ -31,9 +31,16 @@ window.addEventListener('resize', resizeGame);
 
 function resizeGame(){
   game.scale.refresh();
+  let nick = document.getElementById('nick');
+  let juegoDiv = document.getElementById('juegoDiv');
+  let canvas = juegoDiv.childNodes[0];
+  let width = Math.round(canvas.clientWidth * 0.23);
+  nick.style.width = width+'px';
 }
 
-//resizeGame();
+setTimeout(function() {
+  resizeGame();
+}, 250);
 
 function pw(valor) {
   return valor*0.01*game.canvas.width;

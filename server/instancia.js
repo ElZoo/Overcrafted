@@ -224,7 +224,7 @@ module.exports = class Instancia {
     }
   }
 
-  conectar(socket) {
+  conectar(socket, nick) {
     let self = this;
 
     let pj = '';
@@ -237,7 +237,7 @@ module.exports = class Instancia {
       }
     }
 
-    let jugador = new Jugador(socket.id, pj, this.coordsSpawn);
+    let jugador = new Jugador(socket.id, pj, this.coordsSpawn, nick);
 
     for(let socket_id in this.sockets) {
       let socket_jg = this.sockets[socket_id];
@@ -293,7 +293,7 @@ module.exports = class Instancia {
       }
 
       socket.emit('update_jugadores_fast', data);
-    }, 20);
+    }, 10);
     this.timers.push(intervalFast);
   }
 

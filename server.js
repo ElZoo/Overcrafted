@@ -57,7 +57,7 @@ setInterval(function() {
           acum += 20;
           setTimeout(function() {
             let socket = sockets_reconect[s];
-            joinInstancia(socket, nuevaInstancia.id);
+            joinInstancia(socket, nuevaInstancia.id, instancia.jugadores[socket.id].nick);
           }, acum);
         }
       }, 250);
@@ -78,14 +78,19 @@ io.on('connection', function(socket) {
   }
   socket.emit('instancias', instancias_emit);
 
-  socket.on('matchMaking', function() {
+  socket.on('matchMaking', function(nick) {
+    if(!nick || !nick.trim()) {
+      return;
+    }
+    nick = nick.trim().substring(0,12);
+
     let llaves = Object.keys(instancias);
     if(llaves.length > 0) {
       let index = Math.floor(Math.random() * llaves.length);
       let id = llaves[index];
       let instancia = instancias[id];
       if(Object.keys(instancia.jugadores).length < 4) {
-        joinInstancia(socket, id);
+        joinInstancia(socket, id, nick);
         return;
       }
     }
@@ -94,11 +99,7 @@ io.on('connection', function(socket) {
 
     let instancia = new Instancia(uuid(), mapa);
     instancias[instancia.id] = instancia;
-    joinInstancia(socket, instancia.id);
-  });
-
-  socket.on('joinInstancia', function(id) {
-    joinInstancia(socket, id);
+    joinInstancia(socket, instancia.id, nick);
   });
 
   socket.on('update_controles', function(data) {
@@ -159,7 +160,7 @@ server.listen(80, function() {
   console.log(`Escuchando en ${server.address().port}`);
 });
 
-function joinInstancia(socket, id) {
+function joinInstancia(socket, id, nick) {
   let yaOnline = false;
 
   for(let instancia_id in instancias) {
@@ -179,5 +180,5 @@ function joinInstancia(socket, id) {
     return;
   }
 
-  instancia.conectar(socket);
+  instancia.conectar(socket, nick);
 }

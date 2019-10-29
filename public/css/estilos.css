@@ -20,3 +20,26 @@ body {
 canvas {
   box-shadow: 0 10px 15px 2px black;
 }
+
+#nick {
+  position: fixed;
+  top: 50%;
+  background: rgba(0, 0, 0, 0.75);
+  border: none;
+  padding: 0.75vh;
+  text-align: center;
+  font-weight: bold;
+  caret-color: white;
+  color: white;
+  display: none;
+}
+
+#nick:placeholder {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+#nick:focus {
+  outline: none;
+}

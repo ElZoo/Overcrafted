@@ -1,10 +1,11 @@
 class Player {
-    constructor(scene, principal, id, x, y, nombre) {
+    constructor(scene, principal, id, x, y, nombre, nick) {
       let self = this;
 
       this.id = id;
       this.principal = principal;
       this.nombre = nombre;
+      this.nick = nick;
       this.x = x;
       this.y = y;
       this.accX = 0;
@@ -25,6 +26,25 @@ class Player {
       this.cuerpo = scene.add.sprite(0, 0, this.nombre, this.nombre+'_walk_front_0');
       this.cuerpo.setScale(0.25, 0.25);
       this.container.add(this.cuerpo);
+
+      let ctTexto = scene.add.container(0,0);
+      this.container.add(ctTexto);
+
+      let nickTexto = scene.make.text({
+        x: 0, y: -96,
+        text: nick,
+        padding: {
+          x: 12,
+          y: 6,
+        },
+        style: {
+          fontSize: '12px',
+          fontFamily: 'Verdana',
+          backgroundColor: 'rgba(0,0,0,0.5)'
+        }
+      });
+      nickTexto.setOrigin(0.5);
+      ctTexto.add(nickTexto);
 
       scene.physics.world.enable(this.container);
 
