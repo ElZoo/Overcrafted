@@ -24,8 +24,8 @@ module.exports = {
       super(id, 'arco', 60, 10);
 
       this.items = [
-        new ItemReceta('tronco', false),
-        new ItemReceta('cobweb', false),
+        new ItemReceta('tronco', 'cortar'),
+        new ItemReceta('cobweb', 'cortar'),
       ];
 
       this.itemsFinales = [
@@ -40,8 +40,8 @@ module.exports = {
       super(id, 'flecha', 60, 15);
 
       this.items = [
-        new ItemReceta('tronco', false),
-        new ItemReceta('grava', false),
+        new ItemReceta('tronco', 'cortar'),
+        new ItemReceta('grava', 'cortar'),
         new ItemReceta('pluma', false),
       ];
 
@@ -58,8 +58,8 @@ module.exports = {
       super(id, 'espada_hierro', 60, 20);
 
       this.items = [
-        new ItemReceta('tronco', false),
-        new ItemReceta('mena_hierro', 'horno_item'),
+        new ItemReceta('tronco', 'cortar'),
+        new ItemReceta('mena_hierro', 'fundir'),
       ];
 
       this.itemsFinales = [

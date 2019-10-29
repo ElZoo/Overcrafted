@@ -238,7 +238,7 @@ class SceneHud extends Phaser.Scene {
 
         let imgItemExtra = this.add.image(16, 16, subItem.extra);
         imgItemExtra.setScale(0.2);
-        ctSubItemExtra.add(imgItem);
+        ctSubItemExtra.add(imgItemExtra);
       }
     }
   }
