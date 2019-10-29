@@ -160,7 +160,7 @@ class SceneMundo extends Phaser.Scene {
       this.game.events.on('focus', function() {
         setTimeout(function() {
           self.sound.setVolume(0.2);
-        }, 500);        
+        }, 500);
       });
 
       if(this.game.cancion) {
