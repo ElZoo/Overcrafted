@@ -5,29 +5,13 @@ var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 
 var Instancia = require('./server/instancia.js');
-var RECETAS = require('./server/receta.js');
+var MAPA = require('./server/mapas.js');
 var uuid = require('uuid/v4');
 var instancias = {};
 
-var recetas = [
-  RECETAS.RecetaArco,
+let mapas = [
+  new MAPA.MapaTutorial,
 ];
-
-var nivel = [
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,2,8,2,8,2,2,7,7,2,9,6,2,1,1,1,1],
-  [1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1],
-  [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-  [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-  [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-  [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-  [1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1],
-  [1,1,1,1,2,5,2,5,2,2,2,10,4,2,3,2,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-];
-//crearInstancias();
 
 setInterval(function() {
   let instancias_borrar = [];
@@ -83,7 +67,9 @@ io.on('connection', function(socket) {
       }
     }
 
-    let instancia = new Instancia(uuid(), nivel, recetas);
+    let mapa = mapas[Math.floor(Math.random() * mapas.length)];
+
+    let instancia = new Instancia(uuid(), mapa);
     instancias[instancia.id] = instancia;
     joinInstancia(socket, instancia.id);
   });

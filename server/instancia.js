@@ -4,20 +4,20 @@ var ITEMS = require('./items.js');
 var uuid = require('uuid/v4');
 
 module.exports = class Instancia {
-  constructor(id, nivel, recetas) {
+  constructor(id, mapa) {
     this.id = id;
-    this.nivel = nivel;
-    this.recetas = recetas;
+    this.nivel = mapa.casillas;
+    this.recetas = mapa.recetas;
     this.comandas = {};
     this.bloques = {};
-    this.crearBloques();
+    this.crearBloques(mapa);
     this.jugadores = {};
     this.sockets = {};
     this.recetasTimers = {};
     this.timers = [];
     this.puntos = 0;
     this.fechaCreacion = new Date();
-    this.tiempoMax = 200;
+    this.tiempoMax = mapa.tiempoMax;
     this.pjs = {
       'zombie': false,
       'esqueleto': false,
@@ -28,7 +28,7 @@ module.exports = class Instancia {
     let self = this;
     let interval = setInterval(function() {
       self.nuevaComanda();
-    }, 20000);
+    }, mapa.tiempoComandas);
 
     this.timers.push(interval);
   }
@@ -316,22 +316,26 @@ module.exports = class Instancia {
     console.log("Jugador deconectado de la instancia: " + this.id);
   }
 
-  crearBloques() {
+  crearBloques(mapa) {
     for(let y=0; y<this.nivel.length; y++) {
       for(let x=0; x<this.nivel[y].length; x++) {
         this.bloques[x+","+y] = crearBloque(x, y, this.nivel[y][x]);
       }
     }
 
-    let cofre = this.bloques['5,2'];
-    cofre.setTipoItem(ITEMS.ItemTronco);
-    cofre = this.bloques['7,2'];
-    cofre.setTipoItem(ITEMS.ItemCobweb);
+    for(let coords in mapa.cofres) {
+      let cofre = this.bloques[coords];
+      if(cofre) {
+        cofre.setTipoItem(mapa.cofres[coords]);
+      }
+    }
 
-    let mesa = this.bloques['9,9'];
-    mesa.item = new ITEMS.ItemPlatoCrafteo();
-    mesa = this.bloques['10,9'];
-    mesa.item = new ITEMS.ItemPlatoCrafteo();
+    for(let coords in mapa.items) {
+      let mesa = this.bloques[coords];
+      if(mesa) {
+        mesa.item = new mapa.items[coords];
+      }
+    }
   }
 
   datosBloques() {

@@ -3,10 +3,14 @@ class SceneMenuPrincipal extends Phaser.Scene {
     super('menu_principal');
   }
 
-  init() {
+  preload() {
     let self = this;
 
-    this.game.socket = io();
+    if(!this.game.socket) {
+      this.game.socket = io();
+    } else {
+      this.game.socket.removeAllListeners();
+    }   
 
     this.game.socket.on('instancia_conectado', function(datos) {
       self.game.nivel = datos[0];
