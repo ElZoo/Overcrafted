@@ -61,6 +61,16 @@ class Player {
           self.scene.sound.play('step_'+rnd, {volume: 0.5});
         }
       });
+
+      this.scene.time.addEvent({
+        delay: 4000,
+        loop: true,
+        callback: function() {
+          if(Math.random() < 0.2) {
+              self.scene.sound.play(self.nombre, {volume: 0.5});
+          }
+        },
+      });
     }
 
     coger(bloque) {

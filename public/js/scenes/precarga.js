@@ -91,6 +91,10 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.audio('out', 'res/audio/out.ogg');
     this.load.audio('bell', 'res/audio/bell.ogg');
     this.load.audio('click', 'res/audio/click.ogg');
+    this.load.audio('zombie', 'res/audio/zombie.ogg');
+    this.load.audio('pigman', 'res/audio/pigman.ogg');
+    this.load.audio('esqueleto', 'res/audio/esqueleto.ogg');
+    this.load.audio('creeper', 'res/audio/creeper.ogg');
 
     this.load.audio('musica_juego', 'res/audio/musica_juego.ogg');
     this.load.audio('musica_menu', 'res/audio/musica_menu.ogg');

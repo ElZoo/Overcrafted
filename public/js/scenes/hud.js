@@ -93,8 +93,20 @@ class SceneHud extends Phaser.Scene {
       loop: true,
       callback: function() {
         let tiempoAhora = new Date();
-        let diff = (tiempoAhora - self.game.fechaCreacion) / 1000;
-        diff = self.game.tiempoMax - diff;
+        let pr = (tiempoAhora - self.game.fechaCreacion) / 1000;
+        let diff = self.game.tiempoMax - pr;
+
+        let prct = pr/self.game.tiempoMax;
+        if(prct > 0.9) {
+          self.game.cancion.rate = 1.3;
+        } else if(prct > 0.8) {
+          self.game.cancion.rate = 1.2;
+        } else if(prct > 0.75) {
+          self.game.cancion.rate = 1.1;
+        } else {
+          self.game.cancion.rate = 1;
+        }
+
 
         let mins = Math.floor(diff / 60);
         if(mins < 0) {
