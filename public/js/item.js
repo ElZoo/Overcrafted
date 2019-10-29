@@ -74,7 +74,7 @@ class ItemPlatoCrafteo extends Item {
 
     item.textura.destroy();
     item.pintarItem(ix, iy, player.scene);
-    item.textura.setScale(this.escalaItems, this.escalaItems);
+    item.textura.setScale(this.escalaItems+0.1, this.escalaItems+0.1);
     this.textura.add(item.textura);
 
     player.scene.sound.play('craftear');
@@ -95,7 +95,7 @@ class ItemPlatoCrafteo extends Item {
       }
 
       this.itemFinalTextura = player.scene.add.sprite(0, 0, itemFinal);
-      this.itemFinalTextura.setScale(0.5);
+      this.itemFinalTextura.setScale(0.7);
       this.textura.add(this.itemFinalTextura);
     }
   }
@@ -115,7 +115,7 @@ class ItemPlatoCrafteo extends Item {
 
       let item = this.items[i];
       item.pintarItem(ix, iy, scene);
-      item.textura.setScale(this.escalaItems, this.escalaItems);
+      item.textura.setScale(this.escalaItems+0.1, this.escalaItems+0.1);
       this.textura.add(item.textura);
     }
 
@@ -134,7 +134,7 @@ class ItemPlatoCrafteo extends Item {
       }
 
       this.itemFinalTextura = scene.add.sprite(0, 0, itemFinal);
-      this.itemFinalTextura.setScale(0.5);
+      this.itemFinalTextura.setScale(0.7);
       this.textura.add(this.itemFinalTextura);
     }
   }
