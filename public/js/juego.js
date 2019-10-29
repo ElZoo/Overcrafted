@@ -21,7 +21,6 @@ var config = {
     ScenePrecarga,
     SceneMenuPrincipal,
     ScenePuntuaciones,
-    SceneMenuSalas,
     SceneMundo,
     SceneHud,
   ],

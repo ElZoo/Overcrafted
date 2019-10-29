@@ -15,122 +15,62 @@ class SceneMenuPrincipal extends Phaser.Scene {
       self.game.comandas = datos[3];
       self.game.nombrePj = datos[4];
       self.game.puntos = datos[5];
-      self.scene.setVisible(false, "scene_menu_salas");
       self.scene.get('menu_principal').scene.start('scene_mundo');
     });
   }
 
   create() {
+    let self = this;
+
     this.add.image(0, 0, 'fondo_menu').setOrigin(0.25, 0.25);
     this.add.image(0, 0, 'vignette').setOrigin(0,0);
 
-    this.add.image(this.game.config.width*0.5, 125, 'logo');
+    this.add.image(this.game.config.width*0.5, 190, 'logo');
 
-    this.scene.launch('scene_menu_salas');
-    this.scene.setVisible(true, "scene_menu_salas");
+    this.crearBoton(50, 60, 'JUGAR', function() {
+      self.game.socket.emit('matchMaking');
+    });
 
-    this.crearBotonForo();
-    this.crearBotonScore();
-    this.crearBotonJugar();
+    this.crearBoton(50, 70, 'Puntuaciones', function() {
+      self.scene.start('scene_puntuaciones');
+    });
+
+    this.crearBoton(50, 80, 'Ir al foro', function() {
+      window.location = 'https://elzoo.es/';
+    });
 
     this.game.cancion = this.sound.add('musica_menu', {loop: true, volume: 0.25});
     this.game.cancion.play();
   }
 
-  crearBotonForo() {
-    let width = pw(25);
-    let height = width*0.25;
-
-    let x = pw(10) + width*0.5;
-    let y = ph(90);
-
-    let boton = this.add.container(x, y);
-
-    let cajaBoton = this.add.sprite(0,0, 'boton');
-    cajaBoton.setScale(1.5,2.5);
-    cajaBoton.setInteractive({'cursor': 'pointer'});
-    cajaBoton.on('pointerup', function() {
-      window.location = 'https://elzoo.es';
-    });
-    boton.add(cajaBoton);
-
-    let textoInstancia = this.add.text(0, 0, 'Vente al foro');
-    textoInstancia.setFontSize(35);
-    textoInstancia.setFontFamily('Verdana');
-    textoInstancia.setFontStyle('bold');
-    textoInstancia.setOrigin(0.5, 0.5);
-    boton.add(textoInstancia);
-
-    cajaBoton.on('pointerover', function() {
-      cajaBoton.setTint(0xaa99ff);
-    });
-
-    cajaBoton.on('pointerout', function() {
-      cajaBoton.clearTint();
-    });
-  }
-
-  crearBotonJugar() {
-    let width = pw(25);
-    let height = width*0.25;
-
-    let x = pw(50);
-    let y = ph(90);
-
-    let boton = this.add.container(x, y);
-    let self = this;
-
-    let cajaBoton = this.add.sprite(0,0, 'boton');
-    cajaBoton.setScale(1.5,2.5);
-    cajaBoton.setInteractive({'cursor': 'pointer'});
-    cajaBoton.on('pointerup', function() {
-      self.game.socket.emit('matchMaking');
-    });
-    boton.add(cajaBoton);
-
-    let textoInstancia = this.add.text(0, 0, 'JUGAR');
-    textoInstancia.setFontSize(35);
-    textoInstancia.setFontFamily('Verdana');
-    textoInstancia.setFontStyle('bold');
-    textoInstancia.setOrigin(0.5, 0.5);
-    boton.add(textoInstancia);
-
-    cajaBoton.on('pointerover', function() {
-      cajaBoton.setTint(0xaa99ff);
-    });
-
-    cajaBoton.on('pointerout', function() {
-      cajaBoton.clearTint();
-    });
-  }
-
-  crearBotonScore(){
-
+  crearBoton(px, py, texto, callback) {
     let self = this;
 
     let width = pw(25);
     let height = width*0.25;
 
-    let x = pw(90) - width*0.5;
-    let y = ph(90);
+    let x = pw(px);
+    let y = ph(py);
 
     let boton = this.add.container(x, y);
 
     let cajaBoton = this.add.sprite(0,0, 'boton');
     cajaBoton.setScale(1.5,2.5);
     cajaBoton.setInteractive({'cursor': 'pointer'});
-    cajaBoton.on('pointerup', function() {
-      self.scene.setVisible(false, "scene_menu_salas");
-      self.scene.start('scene_puntuaciones');
-    });
     boton.add(cajaBoton);
 
-    let textoInstancia = this.add.text(0, 0, 'Puntuaciones');
-    textoInstancia.setFontSize(35);
+    let textoInstancia = this.add.text(0, 0, texto);
+    textoInstancia.setFontSize(25);
     textoInstancia.setFontFamily('Verdana');
     textoInstancia.setFontStyle('bold');
     textoInstancia.setOrigin(0.5, 0.5);
     boton.add(textoInstancia);
+
+    cajaBoton.on('pointerdown', function() {
+      self.sound.play('click', {volume: 0.5});
+    });
+
+    cajaBoton.on('pointerup', callback);
 
     cajaBoton.on('pointerover', function() {
       cajaBoton.setTint(0xaa99ff);
@@ -139,7 +79,5 @@ class SceneMenuPrincipal extends Phaser.Scene {
     cajaBoton.on('pointerout', function() {
       cajaBoton.clearTint();
     });
-
   }
-
 }

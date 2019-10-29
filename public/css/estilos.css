@@ -14,8 +14,9 @@ body {
 
 #juegoDiv {
   margin: auto;
+  max-height: 720px;
+  overflow: visible !important;
 }
 canvas {
-  height: 100%;
   box-shadow: 0 10px 15px 2px black;
 }

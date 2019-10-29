@@ -25,6 +25,9 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('fondo_menu', 'res/fondo_menu.png');
     this.load.image('mapa', 'res/mapa.png');
     this.load.image('reloj', 'res/reloj.png');
+    this.load.image('barraFondo', 'res/barraFondo.png');
+    this.load.image('barraArriba', 'res/barraArriba.png');
+    this.load.image('reloj', 'res/reloj.png');
     this.load.image('item_frame', 'res/item_frame.png');
     this.load.image('cajaItem', 'res/cajaItem.png');
     this.load.image('boton', 'res/boton.png');
@@ -86,6 +89,7 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.audio('in', 'res/audio/in.ogg');
     this.load.audio('out', 'res/audio/out.ogg');
     this.load.audio('bell', 'res/audio/bell.ogg');
+    this.load.audio('click', 'res/audio/click.ogg');
 
     this.load.audio('musica_juego', 'res/audio/musica_juego.ogg');
     this.load.audio('musica_menu', 'res/audio/musica_menu.ogg');

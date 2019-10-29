@@ -121,13 +121,6 @@ server.listen(80, function() {
   console.log(`Escuchando en ${server.address().port}`);
 });
 
-function crearInstancias() {
-  for(let i=0; i<5; i++) {
-    let instancia = new Instancia(i, nivel, recetas);
-    instancias[instancia.id] = instancia;
-  }
-}
-
 function joinInstancia(socket, id) {
   let yaOnline = false;
 
