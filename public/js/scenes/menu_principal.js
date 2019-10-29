@@ -44,6 +44,11 @@ class SceneMenuPrincipal extends Phaser.Scene {
     elemento.style.display = "block";
     elemento.focus();
 
+    var nombre_cookie = Cookies.get('nick_overcrafted');
+    if(nombre_cookie) {
+      elemento.value = nombre_cookie;
+    }
+
     this.crearBoton(50, 60, 'JUGAR', function() {
       if(!elemento.value || !elemento.value.trim()) {
         elemento.value = "";
@@ -51,6 +56,9 @@ class SceneMenuPrincipal extends Phaser.Scene {
         elemento.focus();
         return;
       }
+
+      Cookies.set('nick_overcrafted', elemento.value, {expires: 30});
+
       self.game.socket.emit('matchMaking', elemento.value);
     });
 
