@@ -29,6 +29,35 @@ var nivel = [
 ];
 //crearInstancias();
 
+setInterval(function() {
+  let instancias_borrar = [];
+
+  for(let instancia_id in instancias) {
+    let instancia = instancias[instancia_id];
+
+    let tiempoAhora = new Date();
+    let diff = (tiempoAhora - instancia.fechaCreacion) / 1000;
+
+    if(diff > instancia.tiempoMax) {
+      instancias_borrar.push(instancia);
+    }
+  }
+
+  for(let i in instancias_borrar) {
+    let instancia = instancias_borrar[i];
+
+    for(let socket_id in instancia.sockets) {
+      let socket = instancia.sockets[socket_id];
+      socket.emit('dejarInstancia');
+    }
+
+    instancia.destroy();
+    if(instancias[instancia.id]) {
+      delete instancias[instancia.id];
+    }
+  }
+}, 250);
+
 io.on('connection', function(socket) {
   console.log(`Nuevo usuario: ${socket.id}`);
 

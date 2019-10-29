@@ -63,29 +63,59 @@ class SceneHud extends Phaser.Scene {
   }
 
   cronometro() {
-      let xFinal = this.game.config.width*0.85;
+    let self = this;
 
-      let ctCronometro = this.add.container(this.game.config.width+200, 40);
-      let fondoPuntuacion = this.add.image(-44,-25,'backTexto').setOrigin(0,0);
-      fondoPuntuacion.setScale(1.4,2.5)
-      ctCronometro.add(fondoPuntuacion);
+    let xFinal = this.game.config.width*0.85;
 
-      let iconoReloj = this.add.image(0,13, 'reloj');
-      iconoReloj.setScale(0.8)
-      ctCronometro.add(iconoReloj);
+    let ctCronometro = this.add.container(this.game.config.width+200, 40);
+    let fondoPuntuacion = this.add.image(-44,-25,'backTexto').setOrigin(0,0);
+    fondoPuntuacion.setScale(1.4,2.5)
+    ctCronometro.add(fondoPuntuacion);
 
-      let textoCronometro = this.add.text(40,0,'1230');
-      textoCronometro.setFontSize(25);
-      textoCronometro.setFontFamily('Verdana');
-      textoCronometro.setFontStyle('bold');
-      ctCronometro.add(textoCronometro);
+    let iconoReloj = this.add.image(0,13, 'reloj');
+    iconoReloj.setScale(0.8)
+    ctCronometro.add(iconoReloj);
 
-      this.tweens.add({
-        targets: ctCronometro,
-        x: xFinal,
-        duration: 200
-      });
-    }
+    let textoCronometro = this.add.text(40,0,'00:00');
+    textoCronometro.setFontSize(25);
+    textoCronometro.setFontFamily('Verdana');
+    textoCronometro.setFontStyle('bold');
+    ctCronometro.add(textoCronometro);
+
+    this.tweens.add({
+      targets: ctCronometro,
+      x: xFinal,
+      duration: 200
+    });
+
+    this.time.addEvent({
+      delay: 250,
+      loop: true,
+      callback: function() {
+        let tiempoAhora = new Date();
+        let diff = (tiempoAhora - self.game.fechaCreacion) / 1000;
+        diff = self.game.tiempoMax - diff;
+
+        let mins = Math.floor(diff / 60);
+        if(mins < 0) {
+          mins = 0;
+        }
+        if(mins < 10) {
+          mins = "0"+mins;
+        }
+
+        let secs = Math.floor(diff % 60);
+        if(secs < 0) {
+          secs = 0;
+        }
+        if(secs < 10) {
+          secs = "0"+secs;
+        }
+
+        textoCronometro.setText(mins+":"+secs);
+      }
+    });
+  }
 
   crearPuntuacion(){
     let xFinal = this.game.config.width*0.85;

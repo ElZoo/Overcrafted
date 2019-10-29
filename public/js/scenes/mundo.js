@@ -8,6 +8,12 @@ class SceneMundo extends Phaser.Scene {
 
       this.sound.setVolume(0.2);
 
+      this.game.socket.on('dejarInstancia', function() {
+        self.scene.start('menu_principal');
+        self.scene.stop();
+        self.scene.stop('hud');
+      });
+
       this.game.socket.on('instancia_nuevoJugador', function(jg) {
         let jugador = new Player(self, false, jg.id, 200, 200, jg.pj);
         self.physics.add.collider(jugador.container, self.fisicaMundo);

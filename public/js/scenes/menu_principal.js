@@ -15,6 +15,8 @@ class SceneMenuPrincipal extends Phaser.Scene {
       self.game.comandas = datos[3];
       self.game.nombrePj = datos[4];
       self.game.puntos = datos[5];
+      self.game.fechaCreacion = new Date(datos[6]);
+      self.game.tiempoMax = datos[7];
       self.scene.get('menu_principal').scene.start('scene_mundo');
     });
   }
@@ -39,6 +41,9 @@ class SceneMenuPrincipal extends Phaser.Scene {
       window.location = 'https://elzoo.es/';
     });
 
+    if(this.game.cancion) {
+      this.game.cancion.destroy();
+    }
     this.game.cancion = this.sound.add('musica_menu', {loop: true, volume: 0.25});
     this.game.cancion.play();
   }
