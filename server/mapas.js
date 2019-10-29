@@ -85,7 +85,44 @@ module.exports = {
         "10,4": ITEMS.ItemPlatoCrafteo,
       };
 
-      super(casillas, recetas, cofres, items, 180, 20000, 60, [550, 200], false);
+      super(casillas, recetas, cofres, items, 180, 20000, 60, [550, 200], module.exports.MapaHorno);
     }
-  }
+  },
+
+  MapaHorno: class MapaHorno extends Mapa {
+    constructor() {
+      let casillas = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,2,7,7,8,2,8,2,8,2,0,0,0,1,1,1,1],
+        [1,1,1,1,2,0,0,0,0,0,0,0,2,0,0,0,1,1,1,1],
+        [1,1,1,1,2,2,2,2,0,0,2,2,2,2,2,2,1,1,1,1],
+        [1,1,1,1,4,0,0,0,0,0,0,0,0,0,0,6,1,1,1,1],
+        [1,1,1,1,10,0,0,0,0,0,0,0,0,0,0,9,1,1,1,1],
+        [1,1,1,1,2,2,2,2,0,0,2,2,2,2,2,2,1,1,1,1],
+        [1,1,1,1,2,0,0,0,0,0,0,0,2,0,0,0,1,1,1,1],
+        [1,1,1,1,2,5,2,5,2,2,2,3,2,0,0,0,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      ];
+
+      let recetas = [
+        RECETAS.RecetaArco,
+        RECETAS.RecetaEspadaHierro,
+      ];
+
+      let cofres = {
+        "7,2": ITEMS.ItemTronco,
+        "9,2": ITEMS.ItemCobweb,
+        "11,2": ITEMS.ItemMenaHierro,
+      };
+
+      let items = {
+        "6,4": ITEMS.ItemPlatoCrafteo,
+        "6,7": ITEMS.ItemPlatoCrafteo,
+      };
+
+      super(casillas, recetas, cofres, items, 240, 20000, 120, [540, 260], false);
+    }
+  },
 };
