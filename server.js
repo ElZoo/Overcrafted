@@ -106,7 +106,7 @@ io.on('connection', function(socket) {
       }
     }
 
-    mapaClase = MAPA.MapaHorno;
+    mapaClase = MAPA.MapaFacil;
     if(tutorial) {
       mapaClase = MAPA.MapaTutorial;
     }

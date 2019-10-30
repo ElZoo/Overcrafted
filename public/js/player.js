@@ -54,17 +54,25 @@ class Player {
       this.colorResaltado = Phaser.Display.Color.RGBStringToColor('rgb(208, 208, 208)');
 
       if(principal) {
-        scene.input.keyboard.on('keydown', function (event) {
-          if(event.code == "KeyE") {
-            if(self.target) {
-              scene.game.socket.emit('coger_bloque', [self.target.x, self.target.y]);
-            }
+        let teclaE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
+        teclaE.on('down', function() {
+          if(!principal) {
+            return;
           }
 
-          else if (event.code == "KeyQ") {
-            if(self.target) {
-              scene.game.socket.emit('usar_bloque', [self.target.x, self.target.y]);
-            }
+          if(self.target) {
+            scene.game.socket.emit('coger_bloque', [self.target.x, self.target.y]);
+          }
+        });
+
+        let teclaQ = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q)
+        teclaQ.on('down', function() {
+          if(!principal) {
+            return;
+          }
+
+          if(self.target) {
+            scene.game.socket.emit('usar_bloque', [self.target.x, self.target.y]);
           }
         });
       }
