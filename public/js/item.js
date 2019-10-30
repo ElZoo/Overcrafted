@@ -22,6 +22,14 @@ function itemByNombre(nombre) {
       return ItemMenaHierro;
     case 'lingote_hierro':
       return ItemLingoteHierro;
+    case 'mena_oro':
+      return ItemMenaOro;
+    case 'lingote_oro':
+      return ItemLingoteOro;
+    case 'bloque_carbon':
+      return ItemBloqueCarbon;
+    case 'carbon':
+      return ItemCarbon;
   }
 }
 

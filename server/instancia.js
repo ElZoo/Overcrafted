@@ -17,6 +17,7 @@ module.exports = class Instancia {
     this.sockets = {};
     this.recetasTimers = {};
     this.timers = [];
+    this.oscurecer = mapa.oscurecer;
     this.puntos = 0;
     this.puntosMinimos = mapa.puntosMinimos;
     this.siguienteNivel = mapa.siguienteNivel;
@@ -263,6 +264,7 @@ module.exports = class Instancia {
       this.puntos,
       this.fechaCreacion,
       this.tiempoMax,
+      this.oscurecer,
     ]);
 
     setTimeout(function() {

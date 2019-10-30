@@ -22,6 +22,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
       self.game.puntos = datos[5];
       self.game.fechaCreacion = new Date(datos[6]);
       self.game.tiempoMax = datos[7];
+      self.game.oscurecer = datos[8];
       self.scene.start('scene_mundo');
     });
   }

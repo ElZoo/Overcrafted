@@ -115,5 +115,23 @@ module.exports = {
         new ItemReceta('carbon', false)
       ]
     }
-  }
+  },
+
+  RecetaMinecart: class RecetaMinecart extends Receta {
+    constructor(id) {
+      super(id, 'minecart', 120, 25);
+
+      this.items = [
+        new ItemReceta('mena_hierro', 'fundir'),
+        new ItemReceta('mena_hierro', 'fundir'),
+        new ItemReceta('mena_hierro', 'fundir'),
+      ];
+
+      this.itemsFinales = [
+        new ItemReceta('lingote_hierro', false),
+        new ItemReceta('lingote_hierro', false),
+        new ItemReceta('lingote_hierro', false),
+      ]
+    }
+  },
 }

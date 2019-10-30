@@ -80,6 +80,7 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('antorcha', 'res/antorcha.png');
     this.load.image('bloque_carbon', 'res/bloque_carbon.png');
     this.load.image('carbon', 'res/carbon.png');
+    this.load.image('minecart', 'res/minecart.png');
 
     //items finales
     this.load.image('arco', 'res/arco.png');

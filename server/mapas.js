@@ -13,6 +13,7 @@ class Mapa {
     this.siguienteNivel = siguienteNivel;
     this.coords = coords;
     this.tutorial = false;
+    this.oscurecer = false;
   }
 }
 
@@ -128,7 +129,88 @@ module.exports = {
         "6,7": ITEMS.ItemPlatoCrafteo,
       };
 
-      super(casillas, recetas, cofres, items, 240, 20000, 120, [540, 260], false);
+      super(casillas, recetas, cofres, items, 240, 20000, 120, [540, 260], module.exports.MapaFundicion);
+    }
+  },
+
+  MapaFundicion: class MapaFundicion extends Mapa {
+    constructor() {
+      let casillas = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,7,7,7,7,2,8,2,8,2,8,4,10,1,1,1,1],
+        [1,1,1,1,0,0,0,0,2,0,0,0,0,0,0,0,1,1,1,1],
+        [1,1,1,1,0,0,0,0,2,0,0,0,0,0,0,0,1,1,1,1],
+        [1,1,1,1,3,0,2,2,2,2,2,2,2,2,0,2,1,1,1,1],
+        [1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1],
+        [1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1],
+        [1,1,1,1,2,0,0,2,0,0,0,0,0,0,0,2,1,1,1,1],
+        [1,1,1,1,2,5,5,2,2,2,2,2,2,6,9,2,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      ];
+
+      let recetas = [
+        RECETAS.RecetaEspadaHierro,
+        RECETAS.RecetaHachaOro,
+        RECETAS.RecetaEscudo,
+        RECETAS.RecetaMinecart,
+      ];
+
+      let cofres = {
+        "9,2": ITEMS.ItemTronco,
+        "11,2": ITEMS.ItemMenaOro,
+        "13,2": ITEMS.ItemMenaHierro,
+      };
+
+      let items = {
+        "8,9": ITEMS.ItemPlatoCrafteo,
+        "9,9": ITEMS.ItemPlatoCrafteo,
+        "10,9": ITEMS.ItemPlatoCrafteo,
+      };
+
+      super(casillas, recetas, cofres, items, 240, 10000, 160, [575, 240], module.exports.MapaOscuro);
+    }
+  },
+
+  MapaOscuro: class MapaOscuro extends Mapa {
+    constructor() {
+      let casillas = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      	[1,1,1,1,2,2,8,2,8,2,2,7,7,7,7,2,1,1,1,1],
+      	[1,1,1,1,2,0,0,0,0,0,2,0,0,0,0,2,1,1,1,1],
+      	[1,1,1,1,2,0,0,0,0,0,2,0,2,2,0,2,1,1,1,1],
+      	[1,1,1,1,2,2,2,2,0,2,2,2,2,0,0,2,1,1,1,1],
+      	[1,1,1,1,3,0,0,0,0,0,2,0,0,0,0,2,1,1,1,1],
+      	[1,1,1,1,2,2,0,2,2,2,2,0,0,0,0,2,1,1,1,1],
+      	[1,1,1,1,2,0,0,0,0,0,0,0,2,0,0,2,1,1,1,1],
+      	[1,1,1,1,2,5,2,5,2,10,4,2,2,6,9,2,1,1,1,1],
+      	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      ];
+
+      let recetas = [
+        RECETAS.RecetaAntorcha,
+        RECETAS.RecetaAntorcha,
+        RECETAS.RecetaAntorcha,
+        RECETAS.RecetaMinecart,
+      ];
+
+      let cofres = {
+        "6,2": ITEMS.ItemTronco,
+        "8,2": ITEMS.ItemMenaHierro,
+      };
+
+      let items = {
+        "5,5": ITEMS.ItemPlatoCrafteo,
+        "6,5": ITEMS.ItemPlatoCrafteo,
+        "7,5": ITEMS.ItemPlatoCrafteo,
+      };
+
+      super(casillas, recetas, cofres, items, 240, 20000, 160, [540, 260], false);
+
+      this.oscurecer = true;
     }
   },
 };

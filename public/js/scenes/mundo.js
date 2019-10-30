@@ -263,6 +263,27 @@ class SceneMundo extends Phaser.Scene {
       }, 100);
 
       this.scene.get('hud').comenzarTutorial(this);
+
+      if(this.game.oscurecer) {
+        this.game.ticksOscuro = 0;
+        this.time.addEvent({
+          delay: 5000,
+          loop: true,
+          callback: function() {
+            if(self.game.oscuro) {
+              self.game.oscuro = false;
+              self.cameras.main.fadeIn(1000);
+            } else {
+              self.game.ticksOscuro++;
+              if(self.game.ticksOscuro >= 2) {
+                self.game.ticksOscuro = 0;
+                self.game.oscuro = true;
+                self.cameras.main.fadeOut(1000);
+              }
+            }
+          }
+        });
+      }
     }
 
     update() {

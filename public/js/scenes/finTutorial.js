@@ -18,10 +18,13 @@ class SceneFinTutorial extends Phaser.Scene {
     this.add.text(pw(50), ph(50), "Dale a salir y juega de nuevo para entrar a un nivel de verdad")
       .setFontSize(24).setFontFamily('Verdana').setOrigin(0.5);
 
+    this.add.text(pw(50), ph(60), "El juego es más divertido con amigos. Terminad el tutorial todos y dadle a la vez a jugar para ir juntos")
+      .setFontSize(18).setFontFamily('Verdana').setOrigin(0.5);
+
     let self = this;
 
     let x = pw(50);
-    let y = ph(70);
+    let y = ph(80);
 
     let boton = this.add.container(x, y);
 
