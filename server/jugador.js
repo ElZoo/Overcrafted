@@ -6,6 +6,7 @@ module.exports = class Jugador {
     this.accY = 0;
     this.pj = pj;
     this.nick = nick;
+    this.puntos = 0;
 
     this.item = null;
   }

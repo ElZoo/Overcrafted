@@ -4,6 +4,12 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('datos.json');
+const db = low(adapter);
+db.defaults({usuarios: {}});
+
 var Instancia = require('./server/instancia.js');
 var MAPA = require('./server/mapas.js');
 var uuid = require('uuid/v4');
@@ -44,6 +50,15 @@ setInterval(function() {
       let socket = instancia.sockets[socket_id];
       sockets_reconect.push(socket);
       socket.emit('dejarInstancia', [gameover, looser, final, instancia.tutorial]);
+
+      let jg = instancia.jugadores[socket_id];
+      if(jg.puntos > 0) {
+        if(!db.has('usuarios.'+jg.nick).value()) {
+          db.set('usuarios.'+jg.nick, 0).write();
+        }
+
+        db.update('usuarios.'+jg.nick, n => n + jg.puntos).write();
+      }
     }
 
     instancia.destroy();
@@ -106,7 +121,7 @@ io.on('connection', function(socket) {
       }
     }
 
-    mapaClase = MAPA.MapaOscuro;
+    mapaClase = MAPA.MapaFacil;
     if(tutorial) {
       mapaClase = MAPA.MapaTutorial;
     }

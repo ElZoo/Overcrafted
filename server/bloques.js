@@ -207,6 +207,11 @@ module.exports = {
         let comanda = instancia.comandas[comanda_id];
         instancia.puntos += comanda.puntos;
 
+        for(let jg_id in instancia.jugadores) {
+          let jg = instancia.jugadores[jg_id];
+          jg.puntos += comanda.puntos;
+        }
+
         instancia.borrarComanda(comanda_id);
 
         setTimeout(function() {
