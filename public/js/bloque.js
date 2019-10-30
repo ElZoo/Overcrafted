@@ -117,6 +117,9 @@ class BloqueCofre extends Bloque {
 
       let hud = this.scene.scene.get('hud');
       if(hud.pasoTuto == 1 || hud.pasoTuto == 4) {
+        if(!player.principal) {
+          return;
+        }
         hud.siguientePasoTuto(this.scene);
       }
     }
@@ -165,6 +168,9 @@ class BloqueEncimera extends Bloque {
 
       let hud = this.scene.scene.get('hud');
       if(hud.pasoTuto == 3 || hud.pasoTuto == 6 || hud.pasoTuto == 11) {
+        if(!player.principal) {
+          return;
+        }
         hud.siguientePasoTuto(this.scene);
       }
     } else {
@@ -198,6 +204,9 @@ class BloqueBasura extends Bloque {
 
       let hud = this.scene.scene.get('hud');
       if(hud.pasoTuto == 12) {
+        if(!player.principal) {
+          return;
+        }
         hud.siguientePasoTuto(this.scene);
       }
 
@@ -311,6 +320,9 @@ class BloqueFregadero extends Bloque {
 
     let hud = this.scene.scene.get('hud');
     if(hud.pasoTuto == 10) {
+      if(!player.principal) {
+        return;
+      }
       hud.siguientePasoTuto(this.scene);
     }
   }
@@ -396,6 +408,9 @@ class BloqueEntregar extends Bloque {
 
       let hud = this.scene.scene.get('hud');
       if(hud.pasoTuto == 7) {
+        if(!player.principal) {
+          return;
+        }
         hud.siguientePasoTuto(this.scene);
       }
 
@@ -441,6 +456,9 @@ class BloqueRecibir extends Bloque {
 
       let hud = this.scene.scene.get('hud');
       if(hud.pasoTuto == 9) {
+        if(!player.principal) {
+          return;
+        }
         hud.siguientePasoTuto(this.scene);
       }
     }
