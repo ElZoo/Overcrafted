@@ -8,13 +8,20 @@ class SceneMundo extends Phaser.Scene {
 
       this.sound.setVolume(0.2);
 
-      this.game.socket.on('dejarInstancia', function(gameover) {
+      this.game.socket.on('dejarInstancia', function(data) {
+        let gameover = data[0];
         if(gameover) {
           self.game.segunda = false;
         }
-        self.scene.start('menu_principal');
+
         self.scene.stop();
         self.scene.stop('hud');
+
+        if(data[1]) {
+          self.scene.start('gameover');
+        } else {
+          self.scene.start('menu_principal');
+        }
       });
 
       this.game.socket.on('instancia_nuevoJugador', function(jg) {

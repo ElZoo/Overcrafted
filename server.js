@@ -28,14 +28,18 @@ setInterval(function() {
     let sockets_reconect = [];
 
     let gameover = false;
+    let looser = false;
     if(instancia.puntos < instancia.puntosMinimos || !instancia.siguienteNivel) {
       gameover = true;
+    }
+    if(instancia.puntos < instancia.puntosMinimos) {
+      looser = true;
     }
 
     for(let socket_id in instancia.sockets) {
       let socket = instancia.sockets[socket_id];
       sockets_reconect.push(socket);
-      socket.emit('dejarInstancia', gameover);
+      socket.emit('dejarInstancia', [gameover, looser]);
     }
 
     instancia.destroy();
