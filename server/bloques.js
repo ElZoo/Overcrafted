@@ -140,7 +140,7 @@ module.exports = {
         this.enEspera = true;
         setTimeout(function() {
           self.enEspera = false;
-          if(self.items.length > 0 && Math.abs(jugador.coords[0]/64 - self.x) < 0.6 && Math.abs(jugador.coords[1]/64 - self.y) < 2) {
+          if(self.items.length > 0 && Math.abs(jugador.coords[0]/64 - self.x) < 1 && Math.abs(jugador.coords[1]/64 - self.y) < 2) {
             let item = self.items.pop();
             let nuevoItem = item.lavar();
             for(let bloque_id in instancia.bloques) {
