@@ -429,14 +429,18 @@ class BloqueHorno extends Bloque {
     this.colision = true;
     this.usable = true;
     this.setTextura('horno_off');
+    this.fundiendo = false;
   }
 
   coger(player) {
-    if(!this.item && player.item) {
+    if(!this.item && player.item && !this.fundiendo) {
       //Cogerle el item al player
       if(!player.item.bloquesAceptados.includes(this.nombre)) {
         return;
       }
+
+      this.fundiendo = true;
+      this.textura.setTexture('horno_on');
 
       this.item = player.item;
       player.item = null;
@@ -445,8 +449,7 @@ class BloqueHorno extends Bloque {
         this.item.textura.destroy();
       }
       this.scene.sound.play('meter_horno');
-      this.item = this.item.fundir();
-    } else if(this.item && !player.item) {
+    } else if(this.item && !player.item && !this.fundiendo) {
       //Darle el item al player
       player.item = this.item;
       this.item = null;
@@ -455,6 +458,15 @@ class BloqueHorno extends Bloque {
         player.item.textura.destroy();
       }
       player.pintarItem();
+
+      this.textura.setTexture('horno_off');
     }
+  }
+
+  update_bloque() {
+    this.item = this.item.fundir();
+    this.fundiendo = false;
+
+    this.textura.setTexture('horno_lleno');
   }
 }

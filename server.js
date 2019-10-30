@@ -10,7 +10,7 @@ var uuid = require('uuid/v4');
 var instancias = {};
 
 let mapas = [
-  MAPA.MapaTutorial,
+  MAPA.MapaHorno,
 ];
 
 setInterval(function() {

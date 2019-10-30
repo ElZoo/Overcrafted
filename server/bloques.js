@@ -246,19 +246,31 @@ module.exports = {
   BloqueHorno: class BloqueHorno extends Bloque {
     constructor(x, y) {
       super(x, y, 'horno_off');
+
+      this.fundiendo = false;
+      this.tiempoFundicion = 10000;
     }
 
-    coger(jugador) {
-      if(!this.item && jugador.item) {
+    coger(jugador, instancia) {
+      let self = this;
+
+      if(!this.item && jugador.item && !this.fundiendo) {
         if(!jugador.item.bloquesAceptados.includes(this.nombre)) {
           return;
         }
 
+        this.fundiendo = true;
+
         this.item = jugador.item;
         jugador.item = null;
 
-        this.item = this.item.fundir(this);
-      } else if(this.item && !jugador.item) {
+        setTimeout(function() {
+          self.item = self.item.fundir();
+          self.fundiendo = false;
+
+          instancia.update_bloque([self.x+","+self.y, jugador.id]);
+        }, self.tiempoFundicion);
+      } else if(this.item && !jugador.item && !this.fundiendo) {
         jugador.item = this.item;
         this.item = null;
       }
