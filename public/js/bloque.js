@@ -37,6 +37,8 @@ class Bloque {
     this.item = null;
   }
 
+  update_bloque() {}
+
   coger(player) {
     if(this.item && !player.item) {
       //Darle el item al player
@@ -272,20 +274,23 @@ class BloqueFregadero extends Bloque {
 
   usar(player) {
     if(this.items.length > 0) {
-      let item = this.items.pop();
-      item.textura.destroy();
-
-      this.pintarItem();
-
       this.scene.sound.play('lavar');
-      let nuevoItem = item.lavar();
+    }
+  }
 
-      for(let bloque_id in player.scene.tilesMundo) {
-        let bloque = player.scene.tilesMundo[bloque_id];
-        if(bloque.nombre == 'pila') {
-          bloque.ponerPlatoLimpio(nuevoItem);
-          break;
-        }
+  update_bloque(player) {
+    let item = this.items.pop();
+    item.textura.destroy();
+
+    this.pintarItem();
+
+    let nuevoItem = item.lavar();
+
+    for(let bloque_id in player.scene.tilesMundo) {
+      let bloque = player.scene.tilesMundo[bloque_id];
+      if(bloque.nombre == 'pila') {
+        bloque.ponerPlatoLimpio(nuevoItem);
+        break;
       }
     }
   }
@@ -323,18 +328,23 @@ class BloqueMesaCortar extends Bloque {
 
     this.item.pintarItem(dx, dy, this.scene);
     this.item.textura.depth = dy + this.scene.tileTam*0.25;
+
+    this.enEspera = false;
   }
 
   usar() {
     if(this.item) {
       this.scene.sound.play('cortar');
-      let itemRes = this.item.cortar();
+    }
+  }
 
-      if(itemRes) {
-        this.item.textura.destroy();
-        this.item = itemRes;
-        this.pintarItem();
-      }
+  update_bloque() {
+    let itemRes = this.item.cortar();
+
+    if(itemRes) {
+      this.item.textura.destroy();
+      this.item = itemRes;
+      this.pintarItem();
     }
   }
 }

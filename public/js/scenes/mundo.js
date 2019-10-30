@@ -95,6 +95,19 @@ class SceneMundo extends Phaser.Scene {
         jugador.usar(bloque);
       });
 
+      this.game.socket.on('update_bloque', function(data) {
+        let jugador = self.jugadores[data[1]];
+        if(!jugador) {
+          return;
+        }
+
+        let coords = data[0];
+        let bloque = self.tilesMundo[coords];
+        if(bloque) {
+          bloque.update_bloque(jugador);
+        }
+      })
+
       this.game.socket.on('nuevo_plato_sucio', function() {
         for(let bloque_id in self.tilesMundo) {
           let bloque = self.tilesMundo[bloque_id];

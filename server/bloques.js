@@ -117,6 +117,8 @@ module.exports = {
     constructor(x, y) {
       super(x, y, 'fregadero');
       this.items = [];
+      this.tiempoEspera = 1000;
+      this.enEspera = false;
     }
 
     coger(jugador) {
@@ -132,17 +134,26 @@ module.exports = {
     }
 
     usar(jugador, instancia) {
-      if(this.items.length > 0) {
-        let item = this.items.pop();
+      let self = this;
 
-        let nuevoItem = item.lavar();
-        for(let bloque_id in instancia.bloques) {
-          let bloque = instancia.bloques[bloque_id];
-          if(bloque.nombre == 'pila') {
-            bloque.nuevoPlatoLimpio(nuevoItem);
-            break;
+      if(this.items.length > 0 && !this.enEspera) {
+        this.enEspera = true;
+        setTimeout(function() {
+          self.enEspera = false;
+          if(self.items.length > 0 && Math.abs(jugador.coords[0]/64 - self.x) < 0.6 && Math.abs(jugador.coords[1]/64 - self.y) < 2) {
+            let item = self.items.pop();
+            let nuevoItem = item.lavar();
+            for(let bloque_id in instancia.bloques) {
+              let bloque = instancia.bloques[bloque_id];
+              if(bloque.nombre == 'pila') {
+                bloque.nuevoPlatoLimpio(nuevoItem);
+                break;
+              }
+            }
+
+            instancia.update_bloque([self.x+","+self.y, jugador.id]);
           }
-        }
+        }, self.tiempoEspera);
       }
     }
   },
@@ -150,14 +161,27 @@ module.exports = {
   BloqueMesaCortar: class BloqueMesaCortar extends Bloque {
     constructor(x, y) {
       super(x, y, 'mesa_cortar');
+
+      this.tiempoEspera = 500;
+      this.enEspera = false;
     }
 
-    usar() {
-      if(this.item) {
-        let itemRes = this.item.cortar(this);
-        if(itemRes) {
-          this.item = itemRes;
-        }
+    usar(jugador, instancia) {
+      let self = this;
+
+      if(this.item && !this.enEspera) {
+        this.enEspera = true;
+        setTimeout(function() {
+          self.enEspera = false;
+          if(self.item && Math.abs(jugador.coords[0]/64 - self.x) < 0.6 && Math.abs(jugador.coords[1]/64 - self.y) < 2) {
+            let itemRes = self.item.cortar(this);
+            if(itemRes) {
+              self.item = itemRes;
+            }
+
+            instancia.update_bloque([self.x+","+self.y, jugador.id]);
+          }
+        }, self.tiempoEspera);
       }
     }
   },
@@ -185,13 +209,15 @@ module.exports = {
 
         instancia.borrarComanda(comanda_id);
 
-        for(let bloque_id in instancia.bloques) {
-          let bloque = instancia.bloques[bloque_id];
-          if(bloque.nombre == 'recibir') {
-            bloque.nuevoPlatoSucio(instancia);
-            break;
+        setTimeout(function() {
+          for(let bloque_id in instancia.bloques) {
+            let bloque = instancia.bloques[bloque_id];
+            if(bloque.nombre == 'recibir') {
+              bloque.nuevoPlatoSucio(instancia);
+              break;
+            }
           }
-        }
+        }, 10000);
       }
     }
   },

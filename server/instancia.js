@@ -87,6 +87,13 @@ module.exports = class Instancia {
     this.recetasTimers[comanda.id] = interval;
   }
 
+  update_bloque(data) {
+    for(let jg_id in this.sockets) {
+      let socket = this.sockets[jg_id];
+      socket.emit('update_bloque', data);
+    }
+  }
+
   borrarComanda(comanda_id) {
     let comanda = this.comandas[comanda_id];
     if(!comanda) {
