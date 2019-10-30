@@ -249,6 +249,8 @@ class SceneMundo extends Phaser.Scene {
       setTimeout(function() {
         self.actualizarMesas();
       }, 100);
+
+      this.scene.get('hud').comenzarTutorial(this);
     }
 
     update() {

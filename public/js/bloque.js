@@ -114,6 +114,11 @@ class BloqueCofre extends Bloque {
       player.pintarItem();
 
       this.pintarItem();
+
+      let hud = this.scene.scene.get('hud');
+      if(hud.pasoTuto == 1 || hud.pasoTuto == 4) {
+        hud.siguientePasoTuto(this.scene);
+      }
     }
   }
 
@@ -157,6 +162,11 @@ class BloqueEncimera extends Bloque {
         return;
       }
       this.item.craftear(player);
+
+      let hud = this.scene.scene.get('hud');
+      if(hud.pasoTuto == 3 || hud.pasoTuto == 6 || hud.pasoTuto == 11) {
+        hud.siguientePasoTuto(this.scene);
+      }
     } else {
       super.coger(player);
     }
@@ -184,6 +194,11 @@ class BloqueBasura extends Bloque {
       //Cogerle el item al player
       if(!player.item.bloquesAceptados.includes(this.nombre)) {
         return;
+      }
+
+      let hud = this.scene.scene.get('hud');
+      if(hud.pasoTuto == 12) {
+        hud.siguientePasoTuto(this.scene);
       }
 
       if(player.item.nombre == 'plato_crafteo') {
@@ -293,6 +308,11 @@ class BloqueFregadero extends Bloque {
         break;
       }
     }
+
+    let hud = this.scene.scene.get('hud');
+    if(hud.pasoTuto == 10) {
+      hud.siguientePasoTuto(this.scene);
+    }
   }
 
   pintarItem() {
@@ -346,6 +366,11 @@ class BloqueMesaCortar extends Bloque {
       this.item = itemRes;
       this.pintarItem();
     }
+
+    let hud = this.scene.scene.get('hud');
+    if(hud.pasoTuto == 2 || hud.pasoTuto == 5) {
+      hud.siguientePasoTuto(this.scene);
+    }
   }
 }
 
@@ -367,6 +392,11 @@ class BloqueEntregar extends Bloque {
       let comanda = player.scene.checkReceta(player.item);
       if(!comanda) {
         return;
+      }
+
+      let hud = this.scene.scene.get('hud');
+      if(hud.pasoTuto == 7) {
+        hud.siguientePasoTuto(this.scene);
       }
 
       player.scene.scene.get('hud').sumarPuntos(comanda.puntos);
@@ -393,6 +423,11 @@ class BloqueRecibir extends Bloque {
   nuevoPlatoSucio() {
     this.items.push(new ItemPlatoSucio());
     this.pintarItem();
+
+    let hud = this.scene.scene.get('hud');
+    if(hud.pasoTuto == 8) {
+      hud.siguientePasoTuto(this.scene);
+    }
   }
 
   coger(player) {
@@ -403,6 +438,11 @@ class BloqueRecibir extends Bloque {
         player.item.textura.destroy();
       }
       player.pintarItem();
+
+      let hud = this.scene.scene.get('hud');
+      if(hud.pasoTuto == 9) {
+        hud.siguientePasoTuto(this.scene);
+      }
     }
   }
 

@@ -9,10 +9,6 @@ var MAPA = require('./server/mapas.js');
 var uuid = require('uuid/v4');
 var instancias = {};
 
-let mapas = [
-  MAPA.MapaHorno,
-];
-
 setInterval(function() {
   let instancias_borrar = [];
 
@@ -95,9 +91,7 @@ io.on('connection', function(socket) {
       }
     }
 
-    let mapa = mapas[0];
-
-    let instancia = new Instancia(uuid(), mapa);
+    let instancia = new Instancia(uuid(), MAPA.MapaTutorial);
     instancias[instancia.id] = instancia;
     joinInstancia(socket, instancia.id, nick);
   });

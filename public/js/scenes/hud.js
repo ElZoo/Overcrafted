@@ -57,6 +57,102 @@ class SceneHud extends Phaser.Scene {
     this.crearPuntuacion();
   }
 
+  comenzarTutorial(mundo) {
+    let ctTutorial = this.add.container(this.game.config.width*0.5, 40);
+
+    let fondoTutorial = this.add.image(0,0, 'backTexto');
+    fondoTutorial.setScale(4, 1.75);
+    ctTutorial.add(fondoTutorial);
+
+    this.ctTutorial = ctTutorial;
+
+    this.pasoTuto = 0;
+    this.siguientePasoTuto(mundo);
+  }
+
+  siguientePasoTuto(mundo) {
+    let self = this;
+
+    this.pasoTuto++;
+
+    if(this.textoTutorial) {
+      this.textoTutorial.destroy();
+    }
+    if(this.tweenTutorial) {
+      this.tweenTutorial.stop();
+      this.tweenTutorial.targets[0].setAlpha(1);
+    }
+
+    let msg = "";
+    let targetBlock = false
+
+    if(this.pasoTuto == 1) {
+      msg = 'Para hacer esta receta, necesitas cortar un tronco y una tela de araña. Ve al cofre de arriba y pilla un tronco (Tecla E)';
+      targetBlock = "5,2";
+    } else if(this.pasoTuto == 2) {
+      msg = 'Ahora coloca el tronco en la mesa de cortar y córtalo (Tecla Q)';
+      targetBlock = "5,9";
+    } else if(this.pasoTuto == 3 || this.pasoTuto == 6) {
+      msg = 'Lleva el item hasta el plato de crafteo';
+      targetBlock = "9,9";
+    } else if(this.pasoTuto == 4) {
+      msg = '¡Muy bien! Ahora ve a por la tela de araña';
+      targetBlock = "7,2";
+    } else if(this.pasoTuto == 5) {
+      msg = '¡Córtala! ¡Corre! El tiempo es muy valioso. Puedes ver cuanto te queda arriba a la derecha';
+      targetBlock = "7,9";
+    } else if(this.pasoTuto == 7) {
+      msg = '¡Guay! Ahora entrega el plato en el bloque de arriba a la derecha';
+      targetBlock = "14,2";
+    } else if(this.pasoTuto == 8) {
+      msg = '¡Enhorabuena! Acabas de entregar tu primera comanda. Ahora espera a que te devuelvan el plato';
+      targetBlock = false;
+    } else if(this.pasoTuto == 9) {
+      msg = 'Pilla el plato sucio';
+      targetBlock = "13,2";
+    } else if(this.pasoTuto == 10) {
+      msg = "Y ahora llevalo abajo, al fregadero y lávalo (Tecla Q)";
+      targetBlock = "12,9";
+    } else if(this.pasoTuto == 11) {
+      msg = "¡Enhorabuena! Has completado el tutorial. Entrega todas las comandas que puedas hasta que se te acabe el tiempo";
+      targetBlock = false;
+    } else if(this.pasoTuto == 12) {
+      msg = "Si te equivocas, puedes tirar el plato a la basura (el bloque de abajo a la derecha)";
+      targetBlock = "14,9";
+    } else if(this.pasoTuto == 13) {
+      this.ctTutorial.destroy();
+      return;
+    }
+
+    this.textoTutorial = this.make.text({
+      x: 0,
+      y: 0,
+      text: msg,
+      origin: {x: 0.5, y: 0.5},
+      style: {
+        font: '16px Verdana',
+        fill: 'white',
+        wordWrap: {
+          width: self.ctTutorial.list[0].width*4 - 32,
+          useAdvancedWrap: true
+        }
+      }
+    });
+    this.ctTutorial.add(this.textoTutorial);
+
+    if(targetBlock) {
+      let bloque = mundo.tilesMundo[targetBlock];
+
+      this.tweenTutorial = this.tweens.add({
+        targets: bloque.textura,
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+        alpha: 0.33,
+      });
+    }
+  }
+
   sumarPuntos(cant) {
     this.game.puntos += cant;
     this.textoPuntuacion.setText(this.game.puntos);
