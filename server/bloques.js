@@ -139,6 +139,10 @@ module.exports = {
       if(this.items.length > 0 && !this.enEspera) {
         this.enEspera = true;
         setTimeout(function() {
+          if(instancia.destruida) {
+            return;
+          }
+
           self.enEspera = false;
           if(self.items.length > 0 && Math.abs(jugador.coords[0]/64 - self.x) < 1 && Math.abs(jugador.coords[1]/64 - self.y) < 2) {
             let item = self.items.pop();
@@ -172,6 +176,10 @@ module.exports = {
       if(this.item && !this.enEspera) {
         this.enEspera = true;
         setTimeout(function() {
+          if(instancia.destruida) {
+            return;
+          }
+
           self.enEspera = false;
           if(self.item && Math.abs(jugador.coords[0]/64 - self.x) < 0.6 && Math.abs(jugador.coords[1]/64 - self.y) < 2) {
             let itemRes = self.item.cortar(this);
@@ -215,6 +223,10 @@ module.exports = {
         instancia.borrarComanda(comanda_id);
 
         setTimeout(function() {
+          if(instancia.destruida) {
+            return;
+          }
+
           for(let bloque_id in instancia.bloques) {
             let bloque = instancia.bloques[bloque_id];
             if(bloque.nombre == 'recibir') {
@@ -270,6 +282,10 @@ module.exports = {
         jugador.item = null;
 
         setTimeout(function() {
+          if(instancia.destruida) {
+            return;
+          }
+          
           self.item = self.item.fundir();
           self.fundiendo = false;
 

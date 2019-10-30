@@ -24,6 +24,7 @@ module.exports = class Instancia {
     this.fechaCreacion = new Date();
     this.tiempoMax = mapa.tiempoMax;
     this.coordsSpawn = mapa.coords;
+    this.destruida = false;
     this.pjs = {
       'zombie': false,
       'esqueleto': false,
@@ -40,6 +41,7 @@ module.exports = class Instancia {
   }
 
   destroy() {
+    this.destruida = true;
     for(let i in this.timers) {
       clearInterval(this.timers[i]);
     }
