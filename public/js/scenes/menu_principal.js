@@ -71,7 +71,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
     });
 
     this.crearBoton(50, 80, 'Ir al foro', function() {
-      window.location = 'https://elzoo.es/';
+      window.location = 'https://elzoo.es/?';
     });
 
     if(this.game.cancion) {
