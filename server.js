@@ -29,17 +29,21 @@ setInterval(function() {
 
     let gameover = false;
     let looser = false;
+    let final = false;
     if(instancia.puntos < instancia.puntosMinimos || !instancia.siguienteNivel) {
       gameover = true;
     }
     if(instancia.puntos < instancia.puntosMinimos) {
       looser = true;
     }
+    if(!instancia.siguienteNivel) {
+      final = true;
+    }
 
     for(let socket_id in instancia.sockets) {
       let socket = instancia.sockets[socket_id];
       sockets_reconect.push(socket);
-      socket.emit('dejarInstancia', [gameover, looser]);
+      socket.emit('dejarInstancia', [gameover, looser, final]);
     }
 
     instancia.destroy();

@@ -19,8 +19,10 @@ class SceneMundo extends Phaser.Scene {
 
         if(data[1]) {
           self.scene.start('gameover');
-        } else {
+        } else if(data[2]) {
           self.scene.start('completado');
+        } else {
+          self.scene.start('menu_principal');
         }
       });
 
@@ -188,6 +190,7 @@ class SceneMundo extends Phaser.Scene {
 
       if(this.game.cancion) {
         this.game.cancion.destroy();
+        this.game.cancion = false;
       }
       this.game.cancion = this.sound.add('musica_juego', {loop: true, volume: 0.25});
       this.game.cancion.play();

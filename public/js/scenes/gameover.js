@@ -6,6 +6,7 @@ class SceneGameover extends Phaser.Scene {
   create() {
     if(this.game.cancion) {
       this.game.cancion.destroy();
+      this.game.cancion = false;
     }
 
     let color = Phaser.Display.Color.HexStringToColor('#212121').color;

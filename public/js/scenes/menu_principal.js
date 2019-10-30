@@ -72,6 +72,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
     if(this.game.cancion) {
       this.game.cancion.destroy();
+      this.game.cancion = false;
     }
     this.game.cancion = this.sound.add('musica_menu', {loop: true, volume: 0.25});
     this.game.cancion.play();
