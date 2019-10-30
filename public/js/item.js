@@ -162,12 +162,17 @@ class ItemTronco extends Item {
     this.bloquesAceptados = [
       'encimera',
       'mesa_cortar',
+      'horno_off',
       'basura',
     ];
   }
 
   cortar(){
     return new ItemPalo();
+  }
+
+  fundir() {
+    return new ItemBloqueCarbon();
   }
 }
 
@@ -265,6 +270,60 @@ class ItemMenaHierro extends Item {
 class ItemLingoteHierro extends Item {
   constructor() {
     super('lingote_hierro');
+
+    this.bloquesAceptados = [
+      'encimera',
+      'basura',
+    ];
+  }
+}
+
+class ItemMenaOro extends Item {
+  constructor() {
+    super('mena_oro');
+
+    this.bloquesAceptados = [
+      'encimera',
+      'horno_off',
+      'basura',
+    ];
+  }
+
+  fundir() {
+    return new ItemLingoteOro();
+  }
+}
+
+class ItemLingoteOro extends Item {
+  constructor() {
+    super('lingote_oro');
+
+    this.bloquesAceptados = [
+      'encimera',
+      'basura',
+    ];
+  }
+}
+
+class ItemBloqueCarbon extends Item {
+  constructor() {
+    super('bloque_carbon');
+
+    this.bloquesAceptados = [
+      'encimera',
+      'mesa_cortar',
+      'basura',
+    ];
+  }
+
+  cortar(bloque) {
+    return new ItemCarbon();
+  }
+}
+
+class ItemCarbon extends Item {
+  constructor() {
+    super('carbon');
 
     this.bloquesAceptados = [
       'encimera',

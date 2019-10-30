@@ -73,6 +73,13 @@ class ScenePrecarga extends Phaser.Scene {
     this.load.image('mena_hierro', 'res/mena_hierro.png');
     this.load.image('plato_crafteo', 'res/plato_crafteo.png');
     this.load.image('plato_sucio', 'res/plato_sucio.png');
+    this.load.image('hacha_oro', 'res/hacha_oro.png');
+    this.load.image('mena_oro', 'res/mena_oro.png');
+    this.load.image('lingote_oro', 'res/lingote_oro.png');
+    this.load.image('escudo', 'res/escudo.png');
+    this.load.image('antorcha', 'res/antorcha.png');
+    this.load.image('bloque_carbon', 'res/bloque_carbon.png');
+    this.load.image('carbon', 'res/carbon.png');
 
     //items finales
     this.load.image('arco', 'res/arco.png');

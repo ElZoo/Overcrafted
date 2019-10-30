@@ -37,7 +37,7 @@ module.exports = {
 
   RecetaFlecha: class RecetaFlecha extends Receta {
     constructor(id) {
-      super(id, 'flecha', 60, 15);
+      super(id, 'flecha', 75, 15);
 
       this.items = [
         new ItemReceta('tronco', 'cortar'),
@@ -55,7 +55,7 @@ module.exports = {
 
   RecetaEspadaHierro: class RecetaEspadaHierro extends Receta {
     constructor(id) {
-      super(id, 'espada_hierro', 60, 20);
+      super(id, 'espada_hierro', 90, 20);
 
       this.items = [
         new ItemReceta('tronco', 'cortar'),
@@ -66,6 +66,54 @@ module.exports = {
         new ItemReceta('palo', false),
         new ItemReceta('lingote_hierro', false),
       ];
+    }
+  },
+
+  RecetaHachaOro: class RecetaHachaOro extends Receta {
+    constructor(id) {
+      super(id, 'hacha_oro', 90, 20);
+
+      this.items = [
+        new ItemReceta('tronco', 'cortar'),
+        new ItemReceta('mena_oro', 'fundir'),
+      ];
+
+      this.itemsFinales = [
+        new ItemReceta('palo', false),
+        new ItemReceta('lingote_oro', false),
+      ];
+    }
+  },
+
+  RecetaEscudo: class RecetaEscudo extends Receta {
+    constructor(id) {
+      super(id, 'escudo', 75, 15);
+
+      this.items = [
+        new ItemReceta('tronco', false),
+        new ItemReceta('mena_hierro', 'fundir'),
+      ];
+
+      this.itemsFinales = [
+        new ItemReceta('tronco', false),
+        new ItemReceta('lingote_hierro', false),
+      ];
+    }
+  },
+
+  RecetaAntorcha: class RecetaAntorcha extends Receta {
+    constructor(id) {
+      super(id, 'antorcha', 120, 25);
+
+      this.items = [
+        new ItemReceta('tronco', 'cortar'),
+        new ItemReceta('bloque_carbon', 'cortar'),
+      ];
+
+      this.itemsFinales = [
+        new ItemReceta('palo', false),
+        new ItemReceta('carbon', false)
+      ]
     }
   }
 }
