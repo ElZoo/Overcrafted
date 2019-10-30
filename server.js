@@ -101,6 +101,17 @@ io.on('connection', function(socket) {
   }
   socket.emit('instancias', instancias_emit);
 
+  socket.on('getScore', function() {
+    let resdb = db.get('usuarios').value();
+    let res = [];
+    for(let nick in resdb) {
+      let puntos = resdb[nick];
+      res.push({nick: nick, puntos: puntos});
+    }
+
+    socket.emit('scores', res.sort((a,b) => b.puntos-a.puntos).slice(0,10));
+  });
+
   socket.on('matchMaking', function(datos) {
     let nick = datos[0];
     let tutorial = datos[1];

@@ -66,6 +66,7 @@ class SceneMenuPrincipal extends Phaser.Scene {
     });
 
     this.crearBoton(50, 70, 'Puntuaciones', function() {
+      elemento.style.display = "none";
       self.scene.start('scene_puntuaciones');
     });
 
