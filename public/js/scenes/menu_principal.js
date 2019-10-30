@@ -59,7 +59,9 @@ class SceneMenuPrincipal extends Phaser.Scene {
 
       Cookies.set('nick_overcrafted', elemento.value, {expires: 30});
 
-      self.game.socket.emit('matchMaking', elemento.value);
+      let tutorial_cookie = Cookies.get('tutorial_overcrafted');
+
+      self.game.socket.emit('matchMaking', [elemento.value, !tutorial_cookie]);
     });
 
     this.crearBoton(50, 70, 'Puntuaciones', function() {

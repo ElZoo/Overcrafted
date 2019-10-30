@@ -25,6 +25,7 @@ var config = {
     SceneHud,
     SceneGameover,
     SceneCompletado,
+    SceneFinTutorial,
   ],
 }
 

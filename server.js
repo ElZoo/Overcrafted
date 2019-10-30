@@ -43,7 +43,7 @@ setInterval(function() {
     for(let socket_id in instancia.sockets) {
       let socket = instancia.sockets[socket_id];
       sockets_reconect.push(socket);
-      socket.emit('dejarInstancia', [gameover, looser, final]);
+      socket.emit('dejarInstancia', [gameover, looser, final, instancia.tutorial]);
     }
 
     instancia.destroy();
@@ -52,6 +52,10 @@ setInterval(function() {
     }
 
     if(instancia.puntos >= instancia.puntosMinimos && instancia.siguienteNivel) {
+      if(instancia.tutorial) {
+        return;
+      }
+
       let nuevaInstancia = new Instancia(uuid(), instancia.siguienteNivel);
       instancias[nuevaInstancia.id] = nuevaInstancia;
 
@@ -82,24 +86,31 @@ io.on('connection', function(socket) {
   }
   socket.emit('instancias', instancias_emit);
 
-  socket.on('matchMaking', function(nick) {
+  socket.on('matchMaking', function(datos) {
+    let nick = datos[0];
+    let tutorial = datos[1];
+
     if(!nick || !nick.trim()) {
       return;
     }
     nick = nick.trim().substring(0,12);
 
     let llaves = Object.keys(instancias);
-    if(llaves.length > 0) {
+    if(llaves.length > 0 && !tutorial) {
       let index = Math.floor(Math.random() * llaves.length);
       let id = llaves[index];
       let instancia = instancias[id];
-      if(Object.keys(instancia.jugadores).length < 4) {
+      if(!instancia.tutorial && Object.keys(instancia.jugadores).length < 4) {
         joinInstancia(socket, id, nick);
         return;
       }
     }
 
-    let instancia = new Instancia(uuid(), MAPA.MapaTutorial);
+    mapaClase = MAPA.MapaFacil;
+    if(tutorial) {
+      mapaClase = MAPA.MapaTutorial;
+    }
+    let instancia = new Instancia(uuid(), mapaClase);
     instancias[instancia.id] = instancia;
     joinInstancia(socket, instancia.id, nick);
   });

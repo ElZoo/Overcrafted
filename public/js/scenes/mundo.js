@@ -10,14 +10,16 @@ class SceneMundo extends Phaser.Scene {
 
       this.game.socket.on('dejarInstancia', function(data) {
         let gameover = data[0];
-        if(gameover) {
+        if(gameover || data[3] || data[2]) {
           self.game.segunda = false;
         }
 
         self.scene.stop();
         self.scene.stop('hud');
 
-        if(data[1]) {
+        if(data[3]) {
+          self.scene.start('finTutorial');
+        } else if(data[1]) {
           self.scene.start('gameover');
         } else if(data[2]) {
           self.scene.start('completado');

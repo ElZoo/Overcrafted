@@ -8,6 +8,7 @@ module.exports = class Instancia {
     let mapa = new claseMapa();
     this.id = id;
     this.nivel = mapa.casillas;
+    this.tutorial = mapa.tutorial;
     this.recetas = mapa.recetas;
     this.comandas = {};
     this.bloques = {};
