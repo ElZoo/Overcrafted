@@ -20,7 +20,7 @@ class SceneMundo extends Phaser.Scene {
         if(data[1]) {
           self.scene.start('gameover');
         } else {
-          self.scene.start('menu_principal');
+          self.scene.start('completado');
         }
       });
 

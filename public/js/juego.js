@@ -24,6 +24,7 @@ var config = {
     SceneMundo,
     SceneHud,
     SceneGameover,
+    SceneCompletado,
   ],
 }
 
