@@ -58,6 +58,11 @@ class SceneHud extends Phaser.Scene {
   }
 
   comenzarTutorial(mundo) {
+    let tuto_cookie = Cookies.get('tutorial_overcrafted');
+    if(tuto_cookie) {
+      return;
+    }
+
     let ctTutorial = this.add.container(this.game.config.width*0.5, 40);
 
     let fondoTutorial = this.add.image(0,0, 'backTexto');
@@ -120,6 +125,7 @@ class SceneHud extends Phaser.Scene {
       msg = "Si te equivocas, puedes tirar el plato a la basura (el bloque de abajo a la derecha)";
       targetBlock = "14,9";
     } else if(this.pasoTuto == 13) {
+      Cookies.set('tutorial_overcrafted', true, {expires: 30});
       this.ctTutorial.destroy();
       return;
     }
